@@ -3,7 +3,7 @@ import os
 # Definer BASE_DIR ved hjelp av os.path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-ROOT_URLCONF = 'api.urls'  # Oppdater denne linjen for å peke til riktig plassering av din urls.py
+ROOT_URLCONF = 'api.urls'  
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,6 +39,9 @@ TEMPLATES = [
 ]
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 
 ALLOWED_HOSTS = ['*']  # Tillat alle for lokal utvikling
 
