@@ -8,3 +8,7 @@ urlpatterns = [
     path('logout', views.logout_view, name='logout'),
     path('reigster', views.register_view, name='register')
 ]
+
+# Nødvendig i utvikling for at Django skal kunne servere statiske filer (som CSS, JS, og bilder) direkte fra STATIC_URL-katalogen.
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
