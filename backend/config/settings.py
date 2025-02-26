@@ -40,7 +40,7 @@ TEMPLATES = [
 
 STATIC_URL = '/static/'
 
-ALLOWED_HOSTS = ['*']  # Tillat alle verter for lokal utvikling
+ALLOWED_HOSTS = ['*']  # Tillat alle for lokal utvikling
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
