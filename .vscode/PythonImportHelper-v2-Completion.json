@@ -16,6 +16,46 @@
         "documentation": {}
     },
     {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "logout",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "UserCreationForm",
+        "importPath": "django.contrib.auth.forms",
+        "description": "django.contrib.auth.forms",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.forms",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -38,7 +78,7 @@
         "kind": 5,
         "importPath": "backend.api.urls",
         "description": "backend.api.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', views.home, name='home'),\n    path('about/', views.about, name='about'),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('', views.home, name='home'),\n    path('about/', views.about, name='about'),\n    path('login/', views.login_view, name='login'),\n    path('logout', views.logout_view, name='logout'),\n    path('reigster', views.register_view, name='register')\n]",
         "detail": "backend.api.urls",
         "documentation": {}
     },
@@ -47,7 +87,7 @@
         "kind": 2,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "def home(request):\n    return render(request, 'home.html')\ndef about(request):\n    return render(request, 'about.html')",
+        "peekOfCode": "def home(request):\n    return render(request, 'home.html')\ndef about(request):\n    return render(request, 'about.html')\ndef login_view(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        user = authenticate(request, username = username, password = password)\n        if user is not None:",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -56,7 +96,34 @@
         "kind": 2,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "def about(request):\n    return render(request, 'about.html')",
+        "peekOfCode": "def about(request):\n    return render(request, 'about.html')\ndef login_view(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        user = authenticate(request, username = username, password = password)\n        if user is not None:\n            login(request, user)\n            return redirect('home')",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "login_view",
+        "kind": 2,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "def login_view(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        user = authenticate(request, username = username, password = password)\n        if user is not None:\n            login(request, user)\n            return redirect('home')\n    return render(request, \"login.html\")\ndef logout_view(request):",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "logout_view",
+        "kind": 2,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "def logout_view(request):\n    logout(request)\n    return redirect('home')\ndef register_view(request):\n    form = UserCreationForm()\n    if request.method == \"POST\":\n        form = UserCreationForm(request.POST)\n        if form.is_valid():\n            form.save()\n            return redirect('login')",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "register_view",
+        "kind": 2,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "def register_view(request):\n    form = UserCreationForm()\n    if request.method == \"POST\":\n        form = UserCreationForm(request.POST)\n        if form.is_valid():\n            form.save()\n            return redirect('login')\n    return render(request,'register.html', { 'form': form})",
         "detail": "backend.api.views",
         "documentation": {}
     },

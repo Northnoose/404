@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+        <title>{% block title %} My Learning Platform {% endblock %}</title>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}"> Home </a></li>
+                <li><a href="{% url 'about' %}"> About </a></li>
+                <li><a href="{% url 'login' %}"> Login </a></li>
+            </ul>
+        </nav>
+        <div>
+            {% block content %}{% endblock %}
+        </div>
+        
+    </body>
+</html>
