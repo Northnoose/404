@@ -12,7 +12,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',  # Erstatt med navnet på appen din
+    'api'
 ]
 
 DATABASES = {
