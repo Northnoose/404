@@ -1,7 +1,7 @@
 # Tabeller av databasen i python objektformat. Må "Migrate" til database serveren for å initialisere databasen med disse tabellene.
 
 from django.db import models
-from django.contrib.postgres.fields import JSONField  
+from django.db.models import JSONField  
 
 class UserPermission(models.Model):                                                 # Rettigheter burde kansje endres/formateres på, evt lage liste med rettigheter?
     user_type = models.CharField(max_length=255, unique=True, primary_key=True)
@@ -44,7 +44,7 @@ class Task(models.Model):
 
 
 class Module(models.Model):
-    tasks = models.ForeignKey(Task)
+    tasks = models.ForeignKey(Task, on_delete=models.CASCADE) 
     description = models.TextField()
 
 
