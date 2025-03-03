@@ -1,4 +1,4 @@
-
+# Tabeller av databasen i python objektformat. Må "Migrate" til database serveren for å initialisere databasen med disse tabellene.
 
 from django.db import models
 from django.contrib.postgres.fields import JSONField  
