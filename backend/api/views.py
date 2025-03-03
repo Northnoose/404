@@ -21,7 +21,7 @@ def login_view(request):
         user = authenticate(request, username = username, password = password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('profile')
         else:
             # feil melding ved ugyldig innlogg
             messages.error(request, 'Invalid username or password.')
@@ -44,7 +44,12 @@ def register_view(request):
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    try:
+        progression = UserProgression.objects.get(user=request.user)  # Henter brukerens progresjon
+    except UserProgression.DoesNotExist:
+        progression = None  # Hvis ingen progresjonsdata finnes, settes det til None
+
+    return render(request, 'profile.html', {'progression': progression})
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
