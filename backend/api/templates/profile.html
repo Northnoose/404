@@ -8,5 +8,16 @@
     <p><strong>Brukernavn:</strong> {{ user.username }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
 
+    <!-- Legger til brukerens progresjon (hvis tilgjengelig) -->
+    {% if progression %}
+        <p><strong>Progressjon:</strong> {{ progression.progression }}%</p>
+    {% else %}
+        <p><strong>Progressjon:</strong> Ikke tilgjengelig</p>
+    {% endif %}
+
+    <!-- Legger til datoen brukeren ble registrert -->
+    <p><strong>Registrert siden:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>  <!-- Vist som dd.mm.åååå -->
+
+    <!-- Lenke til å redigere profil -->
     <a href="{% url 'edit_profile' %}">Rediger Profil</a>
 {% endblock %}
