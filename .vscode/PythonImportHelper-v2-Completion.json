@@ -41,6 +41,30 @@
         "documentation": {}
     },
     {
+        "label": "AbstractUser",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "path",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -137,14 +161,6 @@
         "documentation": {}
     },
     {
-        "label": "User",
-        "importPath": "django.contrib.auth.models",
-        "description": "django.contrib.auth.models",
-        "isExtraImport": true,
-        "detail": "django.contrib.auth.models",
-        "documentation": {}
-    },
-    {
         "label": "forms",
         "importPath": "django",
         "description": "django",
@@ -193,7 +209,7 @@
         "kind": 6,
         "importPath": "backend.api.models",
         "description": "backend.api.models",
-        "peekOfCode": "class User(models.Model):\n    user_type = models.ForeignKey(UserPermission, on_delete=models.PROTECT)\n    user_name = models.CharField(max_length=255, unique=True)\n    password = models.CharField(max_length=128)                               # Usikker på sikker lagring av passord i Django??              \n    first_name = models.CharField(max_length=255, blank=True) \n    last_name = models.CharField(max_length=255, blank=True)\n    email_address = models.EmailField(unique=True)\n    def __str__(self):\n        return self.user_name\nclass Task(models.Model):",
+        "peekOfCode": "class User(AbstractUser):\n    user_type = models.ForeignKey('UserPermission', on_delete=models.PROTECT)\n    email = models.EmailField(unique=True) #Bruker AbstractUser fra Django, som automatisk hånderer passord og hasing. \n    def __str__(self):\n        return self.user_name\nclass Task(models.Model):\n    description = models.TextField()\n    task_object = JSONField(null=True, blank=True)  \n    def __str__(self):\n        return self.description[:50] ",
         "detail": "backend.api.models",
         "documentation": {}
     },
@@ -231,6 +247,24 @@
         "description": "backend.api.models",
         "peekOfCode": "class UserModule(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    module = models.ForeignKey(Module, on_delete=models.CASCADE)\n    score = models.IntegerField(default=0)\n    finished = models.BooleanField(default=False)\n    class Meta:\n        unique_together = ('user', 'module')",
         "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    class Meta():\n        model = User\n        fields = ['id', 'username', 'email', 'user_type']\nclass UserPermissionSerializer(serializers.ModelSerializer):\n    class Meta():\n        model = UserPermission\n        fields = '__all__'",
+        "detail": "backend.api.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "UserPermissionSerializer",
+        "kind": 6,
+        "importPath": "backend.api.serializers",
+        "description": "backend.api.serializers",
+        "peekOfCode": "class UserPermissionSerializer(serializers.ModelSerializer):\n    class Meta():\n        model = UserPermission\n        fields = '__all__'",
+        "detail": "backend.api.serializers",
         "documentation": {}
     },
     {

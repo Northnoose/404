@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.db.models import JSONField  
+from django.contrib.auth.models import AbstractUser
 
 class UserPermission(models.Model):                                                 # Rettigheter burde kansje endres/formateres på, evt lage liste med rettigheter?
     user_type = models.CharField(max_length=255, unique=True, primary_key=True)
@@ -24,13 +25,9 @@ class UserPermission(models.Model):                                             
         return self.user_type
 
 
-class User(models.Model):
-    user_type = models.ForeignKey(UserPermission, on_delete=models.PROTECT)
-    user_name = models.CharField(max_length=255, unique=True)
-    password = models.CharField(max_length=128)                               # Usikker på sikker lagring av passord i Django??              
-    first_name = models.CharField(max_length=255, blank=True) 
-    last_name = models.CharField(max_length=255, blank=True)
-    email_address = models.EmailField(unique=True)
+class User(AbstractUser):
+    user_type = models.ForeignKey('UserPermission', on_delete=models.PROTECT)
+    email = models.EmailField(unique=True) #Bruker AbstractUser fra Django, som automatisk hånderer passord og hasing. 
 
     def __str__(self):
         return self.user_name
