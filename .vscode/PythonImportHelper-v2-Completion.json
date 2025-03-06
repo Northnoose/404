@@ -1,10 +1,75 @@
 [
     {
+        "label": "django.db.models.deletion",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.db.models.deletion",
+        "description": "django.db.models.deletion",
+        "detail": "django.db.models.deletion",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "JSONField",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
         "label": "path",
         "importPath": "django.urls",
         "description": "django.urls",
         "isExtraImport": true,
         "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "static",
+        "importPath": "django.conf.urls.static",
+        "description": "django.conf.urls.static",
+        "isExtraImport": true,
+        "detail": "django.conf.urls.static",
         "documentation": {}
     },
     {
@@ -56,6 +121,38 @@
         "documentation": {}
     },
     {
+        "label": "messages",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -74,12 +171,84 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "backend.api.migrations.0001_initial",
+        "description": "backend.api.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Task',\n            fields=[\n                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('description', models.TextField()),",
+        "detail": "backend.api.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "UserPermission",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class UserPermission(models.Model):                                                 # Rettigheter burde kansje endres/formateres på, evt lage liste med rettigheter?\n    user_type = models.CharField(max_length=255, unique=True, primary_key=True)\n    access_right_Tasks = models.BooleanField(default=False)       \n    access_right_Modules = models.BooleanField(default=False)  \n    access_right_Self = models.BooleanField(default=False)     \n    access_right_other_users = models.BooleanField(default=False)                                \n    edit_right_modules = models.BooleanField(default=False)\n    edit_right_tasks = models.BooleanField(default=False)\n    edit_right_user_premissions = models.BooleanField(default=False)\n    edit_right_self = models.BooleanField(default=False)",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class User(models.Model):\n    user_type = models.ForeignKey(UserPermission, on_delete=models.PROTECT)\n    user_name = models.CharField(max_length=255, unique=True)\n    password = models.CharField(max_length=128)                               # Usikker på sikker lagring av passord i Django??              \n    first_name = models.CharField(max_length=255, blank=True) \n    last_name = models.CharField(max_length=255, blank=True)\n    email_address = models.EmailField(unique=True)\n    def __str__(self):\n        return self.user_name\nclass Task(models.Model):",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Task",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Task(models.Model):\n    description = models.TextField()\n    task_object = JSONField(null=True, blank=True)  \n    def __str__(self):\n        return self.description[:50] \nclass Module(models.Model):\n    tasks = models.ForeignKey(Task, on_delete=models.CASCADE) \n    description = models.TextField()\nclass UserTask(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "Module",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class Module(models.Model):\n    tasks = models.ForeignKey(Task, on_delete=models.CASCADE) \n    description = models.TextField()\nclass UserTask(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    task = models.ForeignKey(Task, on_delete=models.CASCADE)\n    score = models.IntegerField(default=0)\n    finished = models.BooleanField(default=False)\n    class Meta:\n        unique_together = ('user', 'task') ",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserTask",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class UserTask(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    task = models.ForeignKey(Task, on_delete=models.CASCADE)\n    score = models.IntegerField(default=0)\n    finished = models.BooleanField(default=False)\n    class Meta:\n        unique_together = ('user', 'task') \nclass UserModule(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    module = models.ForeignKey(Module, on_delete=models.CASCADE)",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserModule",
+        "kind": 6,
+        "importPath": "backend.api.models",
+        "description": "backend.api.models",
+        "peekOfCode": "class UserModule(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    module = models.ForeignKey(Module, on_delete=models.CASCADE)\n    score = models.IntegerField(default=0)\n    finished = models.BooleanField(default=False)\n    class Meta:\n        unique_together = ('user', 'module')",
+        "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
         "label": "urlpatterns",
         "kind": 5,
         "importPath": "backend.api.urls",
         "description": "backend.api.urls",
-        "peekOfCode": "urlpatterns = [\n    path('', views.home, name='home'),\n    path('about/', views.about, name='about'),\n    path('login/', views.login_view, name='login'),\n    path('logout', views.logout_view, name='logout'),\n    path('reigster', views.register_view, name='register')\n]",
+        "peekOfCode": "urlpatterns = [\n    path('', views.home, name='home'),\n    path('about/', views.about, name='about'),\n    path('login/', views.login_view, name='login'),\n    path('logout/', views.logout_view, name='logout'), \n    path('register/', views.register_view, name='register'), \n    path('profile/', views.profile, name='profile'),  \n    path('profile/edit/', views.edit_profile, name='edit_profile'),  \n]\n# Serve static files during development",
         "detail": "backend.api.urls",
+        "documentation": {}
+    },
+    {
+        "label": "EditProfileForm",
+        "kind": 6,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "class EditProfileForm(forms.ModelForm):\n    class Meta:\n        model = User\n        fields = ['username', 'email']\n@login_required\ndef edit_profile(request):\n    if request.method == 'POST':\n        form = EditProfileForm(request.POST, instance=request.user)\n        if form.is_valid():\n            form.save()",
+        "detail": "backend.api.views",
         "documentation": {}
     },
     {
@@ -96,7 +265,7 @@
         "kind": 2,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "def about(request):\n    return render(request, 'about.html')\ndef login_view(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        user = authenticate(request, username = username, password = password)\n        if user is not None:\n            login(request, user)\n            return redirect('home')",
+        "peekOfCode": "def about(request):\n    return render(request, 'about.html')\ndef login_view(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        user = authenticate(request, username = username, password = password)\n        if user is not None:\n            login(request, user)\n            return redirect('profile')",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -105,7 +274,7 @@
         "kind": 2,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "def login_view(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        user = authenticate(request, username = username, password = password)\n        if user is not None:\n            login(request, user)\n            return redirect('home')\n    return render(request, \"login.html\")\ndef logout_view(request):",
+        "peekOfCode": "def login_view(request):\n    if request.method == \"POST\":\n        username = request.POST[\"username\"]\n        password = request.POST[\"password\"]\n        user = authenticate(request, username = username, password = password)\n        if user is not None:\n            login(request, user)\n            return redirect('profile')\n        else:\n            # feil melding ved ugyldig innlogg",
         "detail": "backend.api.views",
         "documentation": {}
     },
@@ -123,8 +292,125 @@
         "kind": 2,
         "importPath": "backend.api.views",
         "description": "backend.api.views",
-        "peekOfCode": "def register_view(request):\n    form = UserCreationForm()\n    if request.method == \"POST\":\n        form = UserCreationForm(request.POST)\n        if form.is_valid():\n            form.save()\n            return redirect('login')\n    return render(request,'register.html', { 'form': form})",
+        "peekOfCode": "def register_view(request):\n    form = UserCreationForm()\n    if request.method == \"POST\":\n        form = UserCreationForm(request.POST)\n        if form.is_valid():\n            form.save()\n            return redirect('login')\n    return render(request,'register.html', { 'form': form})\n@login_required\ndef profile(request):",
         "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "profile",
+        "kind": 2,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "def profile(request):\n    try:\n        progression = UserProgression.objects.get(user=request.user)  # Henter brukerens progresjon\n    except UserProgression.DoesNotExist:\n        progression = None  # Hvis ingen progresjonsdata finnes, settes det til None\n    return render(request, 'profile.html', {'progression': progression})\nclass EditProfileForm(forms.ModelForm):\n    class Meta:\n        model = User\n        fields = ['username', 'email']",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "edit_profile",
+        "kind": 2,
+        "importPath": "backend.api.views",
+        "description": "backend.api.views",
+        "peekOfCode": "def edit_profile(request):\n    if request.method == 'POST':\n        form = EditProfileForm(request.POST, instance=request.user)\n        if form.is_valid():\n            form.save()\n            return redirect('profile')\n    else:\n        form = EditProfileForm(instance=request.user)\n    return render(request, 'edit_profile.html', {'form': form})",
+        "detail": "backend.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_DIR",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))\nROOT_URLCONF = 'api.urls'  \nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'api'",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "ROOT_URLCONF",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "ROOT_URLCONF = 'api.urls'  \nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'api'\n]",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "INSTALLED_APPS",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'api'\n]\nDATABASES = {",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASES",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "DATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.sqlite3',\n        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # Bruk os.path.join for å sette sammen stien\n    }\n}\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [os.path.join(BASE_DIR, 'api', 'templates')],  # Korrekt sti",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "TEMPLATES",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [os.path.join(BASE_DIR, 'api', 'templates')],  # Korrekt sti\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',\n                'django.template.context_processors.request',\n                'django.contrib.auth.context_processors.auth',",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATIC_URL",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "STATIC_URL = '/static/'\nSTATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]\nALLOWED_HOSTS = ['*']  # Tillat alle for lokal utvikling\nMIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATICFILES_DIRS",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]\nALLOWED_HOSTS = ['*']  # Tillat alle for lokal utvikling\nMIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Korrekt middleware",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "ALLOWED_HOSTS",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "ALLOWED_HOSTS = ['*']  # Tillat alle for lokal utvikling\nMIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Korrekt middleware\n]",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MIDDLEWARE",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "MIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Korrekt middleware\n]\nDEBUG = True",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "DEBUG",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "DEBUG = True\n# Sett en unik SECRET_KEY for ditt lokale miljø\nSECRET_KEY = 'your_generated_secret_key_here'  # Erstatt med din genererte hemmelige nøkkel",
+        "detail": "backend.config.settings",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "kind": 5,
+        "importPath": "backend.config.settings",
+        "description": "backend.config.settings",
+        "peekOfCode": "SECRET_KEY = 'your_generated_secret_key_here'  # Erstatt med din genererte hemmelige nøkkel",
+        "detail": "backend.config.settings",
         "documentation": {}
     },
     {
