@@ -57,27 +57,43 @@
         "documentation": {}
     },
     {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "importPath": "backend.api.urls",
+        "description": "backend.api.urls",
+        "isExtraImport": true,
+        "detail": "backend.api.urls",
+        "documentation": {}
+    },
+    {
         "label": "serializers",
         "importPath": "rest_framework",
         "description": "rest_framework",
         "isExtraImport": true,
         "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
         "documentation": {}
     },
     {
@@ -247,6 +263,15 @@
         "description": "backend.api.models",
         "peekOfCode": "class UserModule(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    module = models.ForeignKey(Module, on_delete=models.CASCADE)\n    score = models.IntegerField(default=0)\n    finished = models.BooleanField(default=False)\n    class Meta:\n        unique_together = ('user', 'module')",
         "detail": "backend.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "backend.api.routers",
+        "description": "backend.api.routers",
+        "peekOfCode": "urlpatterns = [\n    path(\"users/\", UserView.as_view(), name='user-list'),\n    path(\"permissions/\", UserPermissionView.as_view(), name='user-permissions')\n]",
+        "detail": "backend.api.routers",
         "documentation": {}
     },
     {
