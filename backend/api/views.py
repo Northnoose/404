@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django import forms
+from .models import UserProgression  # Importer UserProgression-modellen
+
 
 
 def home(request):
