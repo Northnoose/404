@@ -3,6 +3,8 @@
 from django.db import models
 from django.db.models import JSONField  
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model  # Hent brukerens modell fra Django
+
 
 class UserPermission(models.Model):                                                 # Rettigheter burde kansje endres/formateres på, evt lage liste med rettigheter?
     user_type = models.CharField(max_length=255, unique=True, primary_key=True)
@@ -62,5 +64,12 @@ class UserModule(models.Model):
     
     class Meta:
         unique_together = ('user', 'module') 
+
+class UserProgression(models.Model):
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+    progression_score = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"Progression of {self.user.username}"
 
     
