@@ -55,6 +55,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Korrekt middleware
 ]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # Sett standard auto-felt til BigAutoField
+
+
 DEBUG = True
 
 # Sett en unik SECRET_KEY for ditt lokale miljø
