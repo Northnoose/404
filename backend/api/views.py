@@ -6,7 +6,33 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django import forms
 from .models import UserProgression  # Importer UserProgression-modellen
+import re
 
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+
+    email = forms.EmailField(required=True, help_text="En gyldig e-postadresse er påkrevd.")
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        return email
+    
+    
+    def clean_password2(self):
+        password = self.cleaned_data.get("password2")
+        
+        if not re.search(r'[A-Z]', password):
+            raise forms.ValidationError("Passordet må inneholde minst én stor bokstav, minst ett tall og ett spesialtegn.")
+        
+        if not re.search(r'\d', password):
+            raise forms.ValidationError("Passordet må inneholde minst én stor bokstav, minst ett tall og ett spesialtegn")
+        
+        if not re.search(r'[@$!%*?&]', password):
+            raise forms.ValidationError("Passordet må inneholde minst én stor bokstav, minst ett tall og ett spesialtegn")
+        
+        return password
 
 
 def home(request):
@@ -34,9 +60,9 @@ def logout_view(request):
     return redirect('home')
 
 def register_view(request):
-    form = UserCreationForm()
+    form = CustomUserCreationForm()
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('login')
