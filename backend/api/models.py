@@ -29,7 +29,9 @@ class UserPermission(models.Model):                                             
 
 class User(AbstractUser):
     user_type = models.ForeignKey('UserPermission', on_delete=models.PROTECT)
-    email = models.EmailField(unique=True) #Bruker AbstractUser fra Django, som automatisk hånderer passord og hasing. 
+    email = models.EmailField(unique=True) #Bruker AbstractUser fra Django, som automatisk hånderer passord og hasing.
+    groups = models.ManyToManyField('auth.Group', related_name='custom_user_set', blank=True)  # Legger til en tilpasset related_name for grupper
+    user_permissions = models.ManyToManyField('auth.Permission', related_name='custom_user_permissions_set', blank=True)  # Legger til en tilpasset related_name for brukerrettigheter
 
     def __str__(self):
         return self.user_name
