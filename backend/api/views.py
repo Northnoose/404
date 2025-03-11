@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django import forms
 from .models import UserProgression  # Importer UserProgression-modellen
+from .models import Module
 import re
 
 class CustomUserCreationForm(UserCreationForm):
@@ -95,3 +96,10 @@ def edit_profile(request):
         form = EditProfileForm(instance=request.user)
 
     return render(request, 'editprofile.html', {'form': form})
+
+
+def module_overview(request):
+    # Hent alle moduler fra databasen
+    modules = Module.objects.all()
+    context = {'modules': modules}
+    return render(request, 'modules_overview.html', context)
