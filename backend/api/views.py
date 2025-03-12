@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import UserProgression  # Importer UserProgression-modellen
 from .models import Module
+from .models import UserQuizScore
+from django.utils import timezone
 import re
 
 class CustomUserCreationForm(UserCreationForm):
@@ -103,3 +105,142 @@ def module_overview(request):
     modules = Module.objects.all()
     context = {'modules': modules}
     return render(request, 'modules_overview.html', context)
+
+def python_lesson_view(request):
+    return render (request, 'lesson_python.html')
+
+QUIZ_QUESTIONS = [
+    {
+        "question": "Hva er riktig måte å skrive en print-setning i Python?",
+        "choices": [
+            "echo('Hello')",
+            "System.out.println('Hello')",
+            "print('Hello')",
+            "console.log('Hello')"
+        ],
+        "correct": 2,  # Index 2: "print('Hello')"
+        "explanation": "I Python bruker du print('Hello') for å skrive ut tekst."
+    },
+    {
+        "question": "Hvilket nøkkelord definerer en funksjon i Python?",
+        "choices": [
+            "function",
+            "func",
+            "def",
+            "lambda"
+        ],
+        "correct": 2,  # Index 2: "def"
+        "explanation": "Funksjoner defineres med 'def' i Python."
+    },
+    
+]
+
+@login_required
+def python_quiz_view(request):
+    if request.method == "POST":
+        correct_count = 0
+        feedback = []
+
+        
+        QUIZ_QUESTIONS = [
+            {
+                "question": "Hva er riktig måte å skrive en print-setning i Python?",
+                "choices": ["echo('Hello')", "System.out.println('Hello')", "print('Hello')", "console.log('Hello')"],
+                "correct": 2,
+                "explanation": "I Python bruker du print('Hello') for å skrive ut tekst."
+            },
+            {
+                "question": "Hvilket nøkkelord definerer en funksjon i Python?",
+                "choices": ["function", "func", "def", "lambda"],
+                "correct": 2,
+                "explanation": "Funksjoner defineres med 'def' i Python."
+            },
+            {
+                "question": "Hvilken setning skriver 'Hello World' til konsollen?",
+                "choices": ["echo \"Hello World\"", "printf(\"Hello World\")", "console.log(\"Hello World\")", "print(\"Hello World!\")"],
+                "correct": 3,
+                "explanation": "I Python er print(\"Hello World!\") riktig."
+            }
+        ]
+
+       
+        for i, question in enumerate(QUIZ_QUESTIONS):
+            chosen_str = request.POST.get(f'answer_{i}', None)
+            chosen = int(chosen_str) if chosen_str is not None else -1
+            is_correct = (chosen == question["correct"])
+
+            if is_correct:
+                correct_count += 1
+
+            feedback.append({
+                "question": question["question"],
+                "chosen_answer": question["choices"][chosen] if 0 <= chosen < len(question["choices"]) else "Ingen svar",
+                "correct_answer": question["choices"][question["correct"]],
+                "is_correct": is_correct,
+                "explanation": question["explanation"] if not is_correct else ""
+            })
+
+        
+        context = {
+            "feedback": feedback,
+            "correct_count": correct_count,
+            "total": len(QUIZ_QUESTIONS),
+        }
+        return render(request, 'quiz_python_result.html', context)
+
+    
+    return render(request, 'quiz_python.html')
+
+def python_quiz_result_view(request):
+    
+    QUIZ_QUESTIONS = [
+        {
+            "question": "Hva er riktig måte å skrive en print-setning i Python?",
+            "choices": ["echo('Hello')", "System.out.println('Hello')", "print('Hello')", "console.log('Hello')"],
+            "correct": 2,
+            "explanation": "I Python bruker du print('Hello') for å skrive ut tekst."
+        },
+        {
+            "question": "Hvilket nøkkelord definerer en funksjon i Python?",
+            "choices": ["function", "func", "def", "lambda"],
+            "correct": 2,
+            "explanation": "Funksjoner defineres med 'def' i Python."
+        },
+        {
+            "question": "Hvilken setning skriver 'Hello World' til konsollen?",
+            "choices": ["echo \"Hello World\"", "printf(\"Hello World\")", "console.log(\"Hello World\")", "print(\"Hello World!\")"],
+            "correct": 3,
+            "explanation": "I Python er print(\"Hello World!\") riktig."
+        }
+    ]
+
+    answers = []
+    feedback = []
+    correct_count = 0
+
+    
+    for i, question in enumerate(QUIZ_QUESTIONS):
+        chosen_str = request.GET.get(f'answer_{i}', "")
+        try:
+            chosen = int(chosen_str)
+        except ValueError:
+            chosen = -1
+
+        is_correct = (chosen == question["correct"])
+        if is_correct:
+            correct_count += 1
+
+        feedback.append({
+            "question": question["question"],
+            "chosen_answer": question["choices"][chosen] if 0 <= chosen < len(question["choices"]) else "Ingen svar",
+            "correct_answer": question["choices"][question["correct"]],
+            "is_correct": is_correct,
+            "explanation": question["explanation"] if not is_correct else ""
+        })
+
+    context = {
+        "feedback": feedback,
+        "correct_count": correct_count,
+        "total": len(QUIZ_QUESTIONS),
+    }
+    return render(request, "quiz_python_result.html", context)

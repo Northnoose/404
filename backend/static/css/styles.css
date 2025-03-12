@@ -149,3 +149,108 @@ a:hover {
 .module-card-footer a:hover {
     background-color: #2980b9;
 }
+
+.lesson-title {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  /* Selve “kortet” for leksjonen – bredere enn modulene */
+  .lesson-card {
+    width: 80%; /* Juster bredde */
+    max-width: 900px; /* Maks bredde, så det ikke blir for bredt på store skjermer */
+    margin: 20px auto; /* Sentrerer boksen horisontalt */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  
+  .lesson-card-header {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 15px;
+  }
+  
+  .lesson-card-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  
+  
+  .lesson-card-content {
+    padding: 20px;
+    line-height: 1.6;
+    color: #555;
+    text-align: left;
+  }
+  
+  .lesson-card-content pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto; 
+  }
+  
+
+  .lesson-card-footer {
+    background-color: #3498db;
+    text-align: center;
+  }
+  
+  .lesson-card-footer a.lesson-btn {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 15px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .lesson-card-footer a.lesson-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .quiz-header {
+    display: flex;
+    justify-content: space-between; /* Title on the left, back link on the right */
+    align-items: center;
+  }
+  
+  .back-to-lesson {
+    color: #fff; 
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .back-to-lesson:hover {
+    text-decoration: underline;
+  }
+  
+  /* Spacing for questions */
+  .quiz-question {
+    margin-bottom: 20px;
+  }
+  
+  .quiz-result-footer {
+    display: flex;
+    justify-content: space-evenly; /* Buttons side by side */
+  }
+  .retake-btn {
+    background-color: #3498db; /* Orange */
+  }
+  .retake-btn:hover {
+    background-color: #3498db;
+  }
+  .exit-btn {
+    background-color: #3498db; /* Blue */
+  }
+  .exit-btn:hover {
+    background-color: #2980b9;
+  }
+

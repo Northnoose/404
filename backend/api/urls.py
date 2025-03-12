@@ -16,7 +16,7 @@ urlpatterns = [
     path('profile/edit/', views.edit_profile, name='edit_profile'),  
 ]
 
-# Serve static files during development
+
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
@@ -34,6 +34,8 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('profile/', views.profile, name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
-    # Ny rute for moduloversikt
     path('modules/', views.module_overview, name='module_overview'),
+    path('modules/python-lesson/', views.python_lesson_view, name='python_lesson'),
+    path('modules/python-quiz/', views.python_quiz_view, name='python_quiz'),
+    path('modules/python-quiz-result/', views.python_quiz_result_view, name='quiz_python_result')
 ]
