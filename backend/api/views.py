@@ -100,11 +100,17 @@ def edit_profile(request):
     return render(request, 'editprofile.html', {'form': form})
 
 
+
 def module_overview(request):
     # Hent alle moduler fra databasen
     modules = Module.objects.all()
     context = {'modules': modules}
     return render(request, 'modules_overview.html', context)
+
+@login_required
+def block_coding(request):
+    #Logikk for håndtering av blokkkodingsmodulen
+    return render(request, 'block_coding.html')
 
 def python_lesson_view(request):
     return render (request, 'lesson_python.html')
