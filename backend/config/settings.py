@@ -62,3 +62,5 @@ DEBUG = True
 
 # Sett en unik SECRET_KEY for ditt lokale miljø
 SECRET_KEY = 'your_generated_secret_key_here'  # Erstatt med din genererte hemmelige nøkkel
+
+LOGIN_URL = 'login' 
