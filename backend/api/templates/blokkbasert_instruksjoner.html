@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Blokkbasert Koding{% endblock %}
+
+{% block content %}
+  <h1>Blokkbasert Koding</h1>
+  <p>Sett sammen kodeblokker for å lage programmer!</p>
+
+  <h2>Blokkene i arbeidsområdet</h2>
+  <p>Her kan du lære hvordan hver blokk fungerer. Bruk disse blokkene for å lage enkle programmer!</p>
+
+  <!-- Kontroll: Løkker og Betingelser -->
+  <div class="block-instruction">
+    <h3>1. If-Else Betingelse Blokk</h3>
+    <p>Bruk denne blokken for å lage beslutninger i programmet ditt. Hvis betingelsen er sann, utføres en handling; hvis den er usann, utføres en annen.</p>
+  </div>
+
+  <div class="block-instruction">
+    <h3>2. Løkke Blokk (Repeat)</h3>
+    <p>Bruk denne blokken for å utføre en handling flere ganger. Du kan spesifisere hvor mange ganger handlingen skal gjentas.</p>
+  </div>
+
+  <div class="block-instruction">
+    <h3>3. For Løkke Blokk</h3>
+    <p>Bruk denne blokken for å lage en løkke som gjentar en handling et spesifisert antall ganger. Den er nyttig for å iterere gjennom en rekke elementer.</p>
+  </div>
+
+  <div class="block-instruction">
+    <h3>4. While Løkke Blokk</h3>
+    <p>Bruk denne blokken for å utføre en handling gjentatte ganger så lenge en bestemt betingelse er oppfylt.</p>
+  </div>
+
+  <!-- Logikk: Sammenligninger og logiske operasjoner -->
+  <div class="block-instruction">
+    <h3>5. Sammenligning Blokk</h3>
+    <p>Bruk denne blokken for å sammenligne to verdier. Blokken returnerer enten 'sant' eller 'usant' basert på sammenligningen.</p>
+  </div>
+
+  <div class="block-instruction">
+    <h3>6. Negasjon Blokk</h3>
+    <p>Denne blokken lar deg nekte en boolsk verdi (true/false). Hvis inngangen er 'true', blir resultatet 'false', og omvendt.</p>
+  </div>
+
+  <!-- Matematikk: Enkel matematiske operasjoner -->
+  <div class="block-instruction">
+    <h3>7. Tall Blokk</h3>
+    <p>Bruk denne blokken for å sette inn et tall i programmet ditt.</p>
+  </div>
+
+  <div class="block-instruction">
+    <h3>8. Aritmetikk Blokk</h3>
+    <p>Denne blokken lar deg gjøre matematiske operasjoner som addisjon, subtraksjon, multiplikasjon og divisjon.</p>
+  </div>
+
+  <!-- Tekst: Enkel tekstbehandling -->
+  <div class="block-instruction">
+    <h3>9. Tekst Blokk</h3>
+    <p>Bruk denne blokken for å sette inn tekst i programmet ditt. Du kan sette inn statisk tekst eller tekst som genereres dynamisk.</p>
+  </div>
+
+  <div class="block-instruction">
+    <h3>10. Skriv ut Tekst Blokk</h3>
+    <p>Bruk denne blokken for å skrive ut tekst til skjermen. Dette er nyttig for å vise tilbakemeldinger til brukeren eller for debugging.</p>
+  </div>
+
+  <!-- Variabler: Opprette, sette og hente variabler -->
+  <div class="block-instruction">
+    <h3>11. Hent Variabel Blokk</h3>
+    <p>Bruk denne blokken for å hente verdien til en variabel som du har definert tidligere i programmet.</p>
+  </div>
+
+  <div class="block-instruction">
+    <h3>12. Sett Variabel Blokk</h3>
+    <p>Bruk denne blokken for å sette verdien til en variabel. Dette gjør det mulig å lagre og manipulere data i programmet ditt.</p>
+  </div>
+
+  <div class="module-card-footer">
+    <a href="{% url 'block_coding_module' %}" class="btn btn-primary">
+      Start modul
+    </a>
+  </div>
+
+{% endblock %}
