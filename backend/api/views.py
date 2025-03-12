@@ -107,11 +107,6 @@ def module_overview(request):
     context = {'modules': modules}
     return render(request, 'modules_overview.html', context)
 
-@login_required
-def block_coding(request):
-    #Logikk for håndtering av blokkkodingsmodulen
-    return render(request, 'block_coding.html')
-
 def python_lesson_view(request):
     return render (request, 'lesson_python.html')
 
@@ -250,3 +245,13 @@ def python_quiz_result_view(request):
         "total": len(QUIZ_QUESTIONS),
     }
     return render(request, "quiz_python_result.html", context)
+
+
+
+def blokkbasert_instruksjoner(request):
+    return render(request, 'blokkbasert_instruksjoner.html')
+
+# View for blokkbasert koding
+@login_required
+def blokkbasert_koding(request):
+    return render(request, 'block_coding.html')  # Renders the 'block_coding.html' template
