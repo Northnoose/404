@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Blokkbasert Koding{% endblock %}
+
+{% block content %}
+  <h1>Blokkbasert Koding</h1>
+  <p>Sett sammen kodeblokker for å lage programmer!</p>
+
+  <!-- Legg til container for Blockly arbeidsområde -->
+  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+
+  <!-- Legg til knapper for å generere, utføre og fjerne kode -->
+  <button onclick="generateCode()">Generer Kode</button>
+  <button onclick="executeCode()">Kjør Kode</button>
+  <button onclick="clearWorkspace()">Fjern Kode</button>
+
+  <!-- Inkluder Blockly JavaScript-bibliotek -->
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+
+  <script type="text/javascript">
+    // Initialiser Blockly arbeidsområde
+    var workspace = Blockly.inject('blocklyDiv', {
+      toolbox: `<xml xmlns="https://developers.google.com/blockly/xml">
+                  <block type="controls_if"></block>
+                  <block type="logic_compare"></block>
+                  <block type="controls_repeat_ext"></block>
+                  <block type="math_number"></block>
+                  <block type="math_arithmetic"></block>
+                </xml>`,
+      trashcan: true
+    });
+
+    // Funksjon for å generere JavaScript kode fra blokkene
+    function generateCode() {
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      alert('Generert Kode:\n' + code); // Vis den genererte koden som tilbakemelding
+    }
+
+    // Funksjon for å utføre den genererte koden og gi tilbakemelding
+    function executeCode() {
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      try {
+        eval(code);  // Kjør den genererte koden
+        alert('Programmet ble kjørt vellykket!'); // Tilbakemelding på vellykket kjøring
+      } catch (e) {
+        alert('Feil i programmet: ' + e.message); // Feilmelding ved feil i koden
+      }
+    }
+
+    // Funksjon for å tømme arbeidsområdet
+    function clearWorkspace() {
+      workspace.clear();
+    }
+  </script>
+{% endblock %}
+ 
