@@ -246,7 +246,11 @@ def python_quiz_result_view(request):
     }
     return render(request, "quiz_python_result.html", context)
 
+def drag_and_drop_lesson_view(request):
+    return render(request, 'drag_and_drop_lesson.html')
 
+def drag_and_drop_exercise_view(request):
+    return render(request,'drag_and_drop_exercise.html')
 
 def blokkbasert_instruksjoner(request):
     return render(request, 'blokkbasert_instruksjoner.html')
@@ -255,3 +259,67 @@ def blokkbasert_instruksjoner(request):
 @login_required
 def blokkbasert_koding(request):
     return render(request, 'block_coding.html')  # Renders the 'block_coding.html' template
+
+def drag_and_drop_result_view(request):
+    # Definer fasiten for hver dropzone
+    dropzone_data = [
+        {
+            "question": "Setning 1 – if-setning",
+            "correct_answer": "if x > 10:"
+        },
+        {
+            "question": "Setning 1 – else",
+            "correct_answer": "else:"
+        },
+        {
+            "question": "Setning 2 – x = 7",
+            "correct_answer": "x = 7"
+        },
+        {
+            "question": "Setning 2 – print (x er større enn 10)",
+            "correct_answer": "print('x er større enn 10')"
+        },
+        {
+            "question": "Setning 2 – print (x er 10 eller mindre)",
+            "correct_answer": "print('x er 10 eller mindre')"
+        },
+    ]
+
+    correct_count = 0
+    feedback = []
+
+    # Loop gjennom alle dropzones og hent brukerens svar fra GET-parametere
+    for i, dz in enumerate(dropzone_data):
+        user_answer = request.GET.get(f'answer_{i}', "").strip()
+        is_correct = (user_answer == dz["correct_answer"])
+        if is_correct:
+            correct_count += 1
+
+        feedback.append({
+            "question": dz["question"],
+            "chosen_answer": user_answer if user_answer else "Ingen svar",
+            "correct_answer": dz["correct_answer"],
+            "is_correct": is_correct,
+            "explanation": ""  # Du kan legge til forklaring her om ønskelig
+        })
+
+    total = len(dropzone_data)
+
+    if request.user.is_authenticated:
+        quiz_name = "drag_and_drop"  
+        user_quiz, created = UserQuizScore.objects.get_or_create(
+            user=request.user,
+            quiz_name=quiz_name
+        )
+        user_quiz.attempts += 1
+        user_quiz.score = correct_count
+        if correct_count > user_quiz.best_score:
+            user_quiz.best_score = correct_count
+        user_quiz.save()
+
+    context = {
+        "feedback": feedback,
+        "correct_count": correct_count,
+        "total": total,
+    }
+    return render(request, "drag_and_drop_result.html", context)

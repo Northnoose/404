@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Drag and Drop-oppgaver{% endblock %}
+
+{% block content %}
+<h1 class="lesson-title">Videre med Python: Drag and Drop Oppgaver</h1>
+
+<div class="lesson-card">
+  <div class="lesson-card-header">
+    <h2>Utvid dine Python-kunnskaper</h2>
+  </div>
+  <div class="lesson-card-content">
+    <p>
+      I forrige leksjon lærte du grunnleggende konsepter i Python, 
+      som <strong>print-setninger</strong>, <strong>variabler</strong>, 
+      og <strong>enkle funksjoner</strong>. Nå skal vi bygge videre på disse 
+      konseptene ved å se på hvordan du kan sette sammen kodeblokker 
+      for å skape mer komplekse programmer.
+    </p>
+    <ul>
+      <li><strong>If-setninger</strong> for å kontrollere flyten i programmet</li>
+      <li><strong>Løkker</strong> for å håndtere gjentakende oppgaver</li>
+      <li><strong>Funksjoner</strong> for å strukturere koden din</li>
+    </ul>
+    <p>
+      I denne leksjonen får du en kort gjennomgang av hvordan du 
+      kan plassere kodeblokker i riktig rekkefølge ved hjelp av 
+      <strong>drag and drop</strong>. Dette gir deg en visuell måte 
+      å lære kodestruktur på, og du får umiddelbar tilbakemelding 
+      når noe er feil.
+    </p>
+    <h3>Eksempel: If-setning</h3>
+    <p>
+      Her er et eksempel på en enkel if-setning i Python:
+      <pre><code>if x &gt; 10:
+    print("x er større enn 10")
+else:
+    print("x er 10 eller mindre")</code></pre>
+      Ved å bruke en <code>if</code>-blokk kan du styre hva som skal skje 
+      basert på en betingelse.
+    </p>
+    <p>
+      I oppgaven du skal løse, vil du flytte slike kodeblokker rundt for å lage 
+      et korrekt program. Når du er klar, trykk på knappen under for å starte oppgaven.
+    </p>
+  </div>
+  <div class="lesson-card-footer">
+    <a href="{% url 'drag_and_drop_exercise' %}" class="lesson-btn">Start oppgave</a>
+  </div>
+</div>
+{% endblock %}

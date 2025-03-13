@@ -254,3 +254,29 @@ a:hover {
     background-color: #2980b9;
   }
 
+  .dropzone {
+    display: inline-block;
+    min-width: 120px;      /* litt bredde så det synes */
+    min-height: 20px;
+    margin: 0 5px;
+    padding: 2px 5px;
+    border: 1px dashed #aaa;
+    background-color: #f9f9f9;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .word-bank {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .draggable-word {
+    background-color: #eee;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none; /* hindrer at teksten markeres ved dragging */
+  }

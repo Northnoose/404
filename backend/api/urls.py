@@ -39,5 +39,9 @@ urlpatterns = [
     path('modules/', views.module_overview, name='module_overview'),
     path('modules/python-lesson/', views.python_lesson_view, name='python_lesson'),
     path('modules/python-quiz/', views.python_quiz_view, name='python_quiz'),
-    path('modules/python-quiz-result/', views.python_quiz_result_view, name='quiz_python_result')
+    path('modules/python-quiz-result/', views.python_quiz_result_view, name='quiz_python_result'),
+    path('modules/drag-and-drop-lesson/', views.drag_and_drop_lesson_view, name='drag_and_drop_lesson'),
+    path('modules/drag-and-drop-exercise/', views.drag_and_drop_exercise_view, name='drag_and_drop_exercise'),
+    path('modules/drag-and-drop-result/', views.drag_and_drop_result_view, name='drag_and_drop_result')
+    
 ]

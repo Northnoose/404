@@ -77,10 +77,10 @@ class UserProgression(models.Model):
     
 class UserQuizScore(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quiz_name = models.CharField(max_length=100)  # Navn på quiz, f.eks. "python_quiz"
-    score = models.IntegerField(default=0)         # Score fra siste forsøk
-    best_score = models.IntegerField(default=0)    # Beste oppnådde score
-    attempts = models.IntegerField(default=0)      # Antall forsøk
+    quiz_name = models.CharField(max_length=100)  
+    score = models.IntegerField(default=0)         
+    best_score = models.IntegerField(default=0)    
+    attempts = models.IntegerField(default=0)      
     last_attempt = models.DateTimeField(auto_now=True)
 
     def __str__(self):
