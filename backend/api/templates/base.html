@@ -21,8 +21,9 @@
         <ul>
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'login' %}{% endif %}">Login</a></li>
             <li><a href="{% url 'register' %}">Register</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
             <li><a href="{% url 'module_overview' %}">Moduler</a></li>
         </ul>
     </nav>
