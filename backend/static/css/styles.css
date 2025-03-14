@@ -280,3 +280,54 @@ a:hover {
     cursor: move;
     user-select: none; /* hindrer at teksten markeres ved dragging */
   }
+
+/* Sørger for at footeren alltid er nederst */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1; /* Sørger for at innholdet fyller plassen */
+}
+
+/* Footer styling */
+.footer {
+  background-color: #f8f9fa;
+  padding: 20px;
+  text-align: left;
+  width: 100%;
+  margin-top: auto; /* Plasserer footeren nederst */
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 8px;
+}
+
+.footer ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.footer ul li a:hover {
+  text-decoration: underline;
+}

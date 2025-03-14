@@ -10,6 +10,10 @@ from .models import Module
 from .models import UserQuizScore
 from django.utils import timezone
 import re
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import user_passes_test
+
+
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -70,7 +74,12 @@ def register_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            
+            # Legg brukeren automatisk til "Brukere"-gruppen
+            brukere_group, created = Group.objects.get_or_create(name='Brukere')
+            brukere_group.user_set.add(user)
+            
             return redirect('login')
     return render(request,'register.html', { 'form': form})
 
@@ -326,3 +335,13 @@ def drag_and_drop_result_view(request):
         "total": total,
     }
     return render(request, "drag_and_drop_result.html", context)
+
+def is_admin(user):
+    return user.groups.filter(name='Administratorer').exists()
+
+@user_passes_test(is_admin)
+def admin_dashboard(request):
+    users = User.objects.all()
+    return render(request, 'admin_dashboard.html', {'users': users})
+
+

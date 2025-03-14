@@ -4,9 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static  
 from django.urls import path
 from .views import profile, edit_profile
+from django.contrib import admin
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('login/', views.login_view, name='login'),
