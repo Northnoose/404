@@ -36,36 +36,37 @@ class User(AbstractUser):
     def __str__(self):
         return self.user_name
 
-class Task(models.Model):
+class Module(models.Model):
+    ModuleNr = models.AutoField(primary_key=True)
+    Description = models.models.TextField()
+
+
+class QuizBlokkOppgave(models.Model):
+    task_id = models.AutoField(primary_key=True)
+    module = models.ForeignKey(Module, on_delete=models.CASCADE)
     description = models.TextField()
-    task_object = JSONField(null=True, blank=True)  
+    quiz_blokk_data = models.JSONField()
 
     def __str__(self):
-        return self.description[:50] 
-
-
-class Module(models.Model):
-    tasks = models.ForeignKey(Task, on_delete=models.CASCADE) 
-    description = models.TextField()
-
-
-class UserTask(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    score = models.IntegerField(default=0)
-    finished = models.BooleanField(default=False)
-
-    class Meta:
-        unique_together = ('user', 'task') 
-
-class UserModule(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    module = models.ForeignKey(Module, on_delete=models.CASCADE)
-    score = models.IntegerField(default=0)
-    finished = models.BooleanField(default=False)
+        return str(self.task_id)
     
+    
+class UserScore(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, primary_key=True) 
+    task = models.ForeignKey(QuizBlokkOppgave, on_delete=models.CASCADE, primary_key=True)  
+    oppgave_name = models.CharField(max_length=255) 
+    score = models.IntegerField()
+    best_score = models.IntegerField()
+    finished = models.BooleanField()
+    attempts = models.IntegerField()
+    last_attempt = models.DateTimeField()
+
     class Meta:
-        unique_together = ('user', 'module') 
+        unique_together = (('user', 'task'),) 
+
+    def __str__(self):
+        return f"{self.user.user_name} - {self.task.task_id}"
+
 
 class UserProgression(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
@@ -74,7 +75,7 @@ class UserProgression(models.Model):
     def __str__(self):
         return f"Progression of {self.user.username}"
 
-    
+
 class UserQuizScore(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz_name = models.CharField(max_length=100)  
@@ -85,3 +86,23 @@ class UserQuizScore(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.quiz_name}: {self.best_score}"
+
+class Rewards(models.Model):
+    reward_id = models.AutoField(primary_key=True)
+    description = models.TextField()
+    points_required = models.IntegerField()
+
+    def __str__(self):
+        return str(self.reward_id)
+
+class UserRewards(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, primary_key=True)
+    reward = models.ForeignKey(Rewards, on_delete=models.CASCADE, primary_key=True) 
+    date_awarded = models.DateTimeField(auto_now_add=True)  
+
+    class Meta:
+        unique_together = (('user', 'reward'),) 
+
+
+    def __str__(self):
+        return f"{self.user.user_name} - {self.reward.description}"

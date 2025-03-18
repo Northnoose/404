@@ -8,6 +8,7 @@ from django import forms
 from .models import UserProgression  # Importer UserProgression-modellen
 from .models import Module
 from .models import UserQuizScore
+from .models import UserPermission, User, QuizBlokkOppgave, UserScore, Rewards, UserRewards, UserProgression, Module, UserQuizScore
 from django.utils import timezone
 import re
 from django.contrib.auth.models import User, Group
@@ -91,8 +92,9 @@ def profile(request):
         progression = UserProgression.objects.get(user=request.user)  # Henter brukerens progresjon
     except UserProgression.DoesNotExist:
         progression = None  # Hvis ingen progresjonsdata finnes, settes det til None
-
-    return render(request, 'profile.html', {'progression': progression})
+        
+        user_rewards = UserRewards.objects.filter(user=request.user)
+    return render(request, 'profile.html', {'progression': progression, 'user_rewards': user_rewards})
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
