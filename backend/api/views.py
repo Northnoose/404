@@ -85,7 +85,6 @@ def register_view(request):
     return render(request,'register.html', { 'form': form})
 
 
-
 @login_required
 def profile(request):
     try:
@@ -93,8 +92,7 @@ def profile(request):
     except UserProgression.DoesNotExist:
         progression = None  # Hvis ingen progresjonsdata finnes, settes det til None
         
-        user_rewards = UserRewards.objects.filter(user=request.user)
-    return render(request, 'profile.html', {'progression': progression, 'user_rewards': user_rewards})
+    return render(request, 'profile.html', {'progression': progression})
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
