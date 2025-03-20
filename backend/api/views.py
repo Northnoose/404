@@ -92,7 +92,12 @@ def profile(request):
     except UserProgression.DoesNotExist:
         progression = None  # Hvis ingen progresjonsdata finnes, settes det til None
         
-    return render(request, 'profile.html', {'progression': progression})
+    try:
+        user_rewards = UserRewards.objects.filter(user=request.user)
+    except:
+        user_rewards = None
+        
+    return render(request, 'profile.html', {'progression': progression, "user_rewards": user_rewards})
 
 class EditProfileForm(forms.ModelForm):
     class Meta:

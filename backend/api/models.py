@@ -57,8 +57,8 @@ class QuizBlokkOppgave(models.Model):
     
     
 class UserScore(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, primary_key=True) 
-    task = models.ForeignKey(QuizBlokkOppgave, on_delete=models.CASCADE, primary_key=True)  
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(QuizBlokkOppgave, on_delete=models.CASCADE)
     oppgave_name = models.CharField(max_length=255) 
     score = models.IntegerField()
     best_score = models.IntegerField()
@@ -101,8 +101,8 @@ class Rewards(models.Model):
         return str(self.reward_id)
 
 class UserRewards(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, primary_key=True)
-    reward = models.ForeignKey(Rewards, on_delete=models.CASCADE, primary_key=True) 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  
+    reward = models.ForeignKey(Rewards, on_delete=models.CASCADE) 
     date_awarded = models.DateTimeField(auto_now_add=True)  
 
     class Meta:
