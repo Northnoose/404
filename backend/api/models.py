@@ -36,10 +36,15 @@ class User(AbstractUser):
     def __str__(self):
         return self.user_name
 
-class Module(models.Model):
-    ModuleNr = models.AutoField(primary_key=True)
-    Description = models.models.TextField()
+class Task(models.Model):
+ 
+    description = models.TextField()
+    task_object = JSONField(null=True, blank=True)  
+    def __str__(self):
+        return self.description[:50] 
 
+class Module(models.Model):
+    tasks = models.ForeignKey(Task, on_delete=models.CASCADE) 
 
 class QuizBlokkOppgave(models.Model):
     task_id = models.AutoField(primary_key=True)
