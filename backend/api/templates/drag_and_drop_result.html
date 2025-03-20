@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Resultater{% endblock %}
+{% block content %}
+<div class="lesson-card">
+  <div class="lesson-card-header quiz-header">
+    <h2>Resultater</h2>
+  </div>
+  <div class="lesson-card-content">
+    <p>Du fikk {{ correct_count }} av {{ total }} riktige!</p>
+    {% for item in feedback %}
+      <div class="quiz-result-item">
+        <p><strong>{{ forloop.counter }}. {{ item.question }}</strong></p>
+        <p>
+          Du svarte: <em>{{ item.chosen_answer }}</em><br>
+          Riktig svar: <em>{{ item.correct_answer }}</em>
+        </p>
+        {% if not item.is_correct %}
+          <p class="explanation"><strong>Forklaring:</strong> {{ item.explanation }}</p>
+        {% endif %}
+        <hr>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="lesson-card-footer quiz-result-footer">
+    <a href="{% url 'drag_and_drop_exercise' %}" class="lesson-btn retake-btn">Prøv på nytt</a>
+    <a href="{% url 'module_overview' %}" class="lesson-btn exit-btn">Avslutt</a>
+  </div>
+</div>
+{% endblock %}

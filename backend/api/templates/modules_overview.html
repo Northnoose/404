@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Moduloversikt{% endblock %}
+
+{% block content %}
+<!-- Sentrerer overskriften -->
+<h1 class="modules-title">Moduloversikt</h1>
+
+<div class="module-list">
+  
+  <!-- Modul 1: Grunnleggende Quiz -->
+  <div class="module-card">
+    <div class="module-card-header">
+      <h2>Grunnleggende Quiz</h2>
+    </div>
+    <div class="module-card-content">
+      <p>
+        Lær det helt grunnleggende om koding og test deg selv 
+        med en enkel quiz med flervalgsspørsmål. Perfekt for nybegynnere 
+        eller deg som ønsker en rask oppfriskning!
+      </p>
+    </div>
+    <div class="module-card-footer">
+      <a href="{% url 'python_lesson' %}">
+        Start modul
+      </a>
+    </div>
+  </div>
+
+  <!-- Modul 2: Drag and Drop-oppgaver -->
+  <div class="module-card">
+    <div class="module-card-header">
+      <h2>Drag and Drop-oppgaver</h2>
+    </div>
+    <div class="module-card-content">
+      <p>
+        Utforsk koding på en interaktiv måte ved å dra og slippe kodeblokker 
+        på riktig plass. Systemet gir deg umiddelbar tilbakemelding, 
+        slik at du raskt ser hva som fungerer og hva som ikke gjør det.
+      </p>
+    </div>
+    <div class="module-card-footer">
+      <a href="{% url 'drag_and_drop_lesson' %}">
+        Start modul
+      </a>
+    </div>
+  </div>
+
+  <!-- Modul 3: Blokkbasert Koding -->
+  <div class="module-card">
+    <div class="module-card-header">
+      <h2>Blokkbasert Koding</h2>
+    </div>
+    <div class="module-card-content">
+      <p>
+        Sett sammen kodeblokker som representerer handlinger, løkker og betingelser 
+        for å lage små programmer – helt uten å skrive en eneste linje kode. 
+        Du får tilbakemelding underveis, slik at du enkelt kan justere løsningene dine.
+      </p>
+    </div>
+    <div class="module-card-footer">
+      <a href="{% url 'blokkbasert_instruksjoner' %}" class="btn btn-primary">
+        Start Modul
+      </a>
+      
+    </div>
+  </div>
+
+</div>
+{% endblock %}

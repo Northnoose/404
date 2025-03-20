@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Drag and Drop Oppgave{% endblock %}
+
+{% block content %}
+
+<style>
+  
+  .dropzone {
+    display: inline-block;
+    min-width: 100px;
+    min-height: 20px;
+    margin: 0 5px;
+    padding: 2px 5px;
+    border: 1px dashed #aaa;
+    background-color: #f9f9f9;
+    vertical-align: middle;
+  }
+  
+  .word-bank {
+    margin-top: 20px;
+  }
+  .draggable-word {
+    background-color: #eee;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none;
+    margin: 5px;
+    display: inline-block;
+  }
+</style>
+
+<div class="lesson-card">
+  <div class="lesson-card-header">
+    <h2>Bygg et if-statement i riktig rekkefølge</h2>
+  </div>
+
+  <div class="lesson-card-content">
+    <p>
+      Her skal du plassere de riktige kodelinjene i riktig rekkefølge for å lage et 
+      enkelt Python-program som sjekker om <code>x</code> er større enn 10.
+      Dra linjene fra ordlisten nedenfor og slipp dem i de grå boksene 
+      der de hører hjemme. Når du er ferdig, trykk <strong>Fullfør oppgave</strong>
+      for å se resultatet.
+    </p>
+
+    <p>
+      <strong>Setning 1:</strong><br>
+      For å sjekke om <code>x</code> er større enn 10, skriv 
+      <span class="dropzone" data-index="0"></span> 
+      og 
+      <span class="dropzone" data-index="1"></span>.
+    </p>
+
+    <p>
+      <strong>Setning 2:</strong><br>
+      Definer variabelen og skriv ut resultatet: 
+      <span class="dropzone" data-index="2"></span>, 
+      <span class="dropzone" data-index="3"></span> 
+      og 
+      <span class="dropzone" data-index="4"></span>.
+    </p>
+
+    >
+    <div class="word-bank">
+      <span class="draggable-word" draggable="true">if x &gt; 10:</span>
+      <span class="draggable-word" draggable="true">else:</span>
+      <span class="draggable-word" draggable="true">x = 7</span>
+      <span class="draggable-word" draggable="true">print('x er større enn 10')</span>
+      <span class="draggable-word" draggable="true">print('x er 10 eller mindre')</span>
+    </div>
+  </div>
+
+  <div class="lesson-card-footer">
+    <a href="#" class="lesson-btn" onclick="submitDragDrop()">Fullfør oppgave</a>
+  </div>
+</div>
+
+<script>
+  
+  const draggables = document.querySelectorAll('.draggable-word');
+  const dropzones = document.querySelectorAll('.dropzone');
+
+  
+  draggables.forEach(word => {
+    word.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', word.textContent);
+    });
+  });
+
+  
+  dropzones.forEach(zone => {
+    zone.addEventListener('dragover', e => {
+      e.preventDefault();
+    });
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      const text = e.dataTransfer.getData('text/plain');
+      zone.textContent = text.trim();
+    });
+  });
+
+  
+  function submitDragDrop() {
+    let queryParts = [];
+    dropzones.forEach(zone => {
+      const index = zone.getAttribute('data-index');
+      const answer = zone.textContent.trim();
+      queryParts.push(`answer_${index}=${encodeURIComponent(answer)}`);
+    });
+
+    
+    const baseUrl = "{% url 'drag_and_drop_result' %}";
+    const queryString = "?" + queryParts.join("&");
+    window.location.href = baseUrl + queryString;
+  }
+</script>
+{% endblock %}

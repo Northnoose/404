@@ -1,36 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} My Learning Platform {% endblock %}</title>
+    <title>{% block title %} Min Læringsplattform {% endblock %}</title>
 
     {% load static %}
-      
-    <!-- Link to static CSS file for styling -->
+
+    <!-- Lenke til CSS-fil for styling -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <h1>Welcome to My Learning Platform</h1>
-    </header>
+    <div class="page-container">
+        <header>
+            <h1>Velkommen til Min Læringsplattform</h1>
+        </header>
 
-    <!-- Navigation Bar -->
-    <nav>
-        <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'register' %}">Register</a></li>
-        </ul>
-    </nav>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Hjem</a></li>
+                <li><a href="{% url 'about' %}">Om oss</a></li>
 
-    <!-- Main Content Section -->
-    <div class="content">
-        {% block content %}
-        {% endblock %}
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">Profil</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Logg inn</a></li>
+                    <li><a href="{% url 'register' %}">Registrer deg</a></li>
+                {% endif %}
+
+                <li><a href="{% url 'module_overview' %}">Moduler</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <footer class="footer">
+            <div class="footer-container">
+                <ul>
+                    <li><a href="{% url 'admin:index' %}">Admin Panel</a></li>
+                </ul>
+            </div>
+        </footer>
     </div>
-
 </body>
 </html>

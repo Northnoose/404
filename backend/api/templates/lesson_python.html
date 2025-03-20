@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Grunnleggende Python{% endblock %}
+
+{% block content %}
+<h1 class="lesson-title">Grunnleggende Python</h1>
+
+<!-- En større boks for leksjonen -->
+<div class="lesson-card">
+  <div class="lesson-card-header">
+    <h2>Introduksjon til Python</h2>
+  </div>
+  <div class="lesson-card-content">
+    <p>
+      Python er et populært, allsidig og lettlest programmeringsspråk som 
+      ofte brukes til alt fra webutvikling og datavitenskap til scripting 
+      og automatisering. I denne korte leksjonen skal vi se på noen 
+      grunnleggende konsepter som:
+    </p>
+    <ul>
+      <li>Hvordan man skriver en enkel print-setning</li>
+      <li>Variabler og datatyper</li>
+      <li>Enkle funksjoner</li>
+    </ul>
+
+    <h3>1. Hello World!</h3>
+    <p>
+      I Python kan du skrive:
+      <pre><code>print("Hello World!")</code></pre>
+      for å vise tekst i konsollen.
+    </p>
+
+    <h3>2. Variabler</h3>
+    <p>
+      En variabel opprettes automatisk når du tildeler en verdi:
+      <pre><code>x = 5
+y = "Hello"
+print(x, y)</code></pre>
+    </p>
+
+    <h3>3. Enkle funksjoner</h3>
+    <p>
+      Funksjoner defineres med <code>def</code>-nøkkelordet:
+      <pre><code>def min_funksjon():
+    print("Dette er en funksjon!")</code></pre>
+    </p>
+
+    <p>
+      Dette var en veldig kort introduksjon. Du er nå klar for å teste 
+      kunnskapen din med en liten quiz!
+    </p>
+  </div>
+
+  <!-- Bunnbar med "Start quiz"-knapp -->
+  <div class="lesson-card-footer">
+    <a href="{% url 'python_quiz' %}" class="lesson-btn">Start quiz</a>
+  </div>
+</div>
+{% endblock %}

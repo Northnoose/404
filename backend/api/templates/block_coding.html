@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Blokkbasert Koding{% endblock %}
+
+{% block content %}
+  <h1>Blokkbasert Koding</h1>
+  <p>Sett sammen kodeblokker for å lage programmer!</p>
+
+  <!-- Legg til container for Blockly arbeidsområde -->
+  <div id="blocklyDiv" style="height: 600px; width: 1200px;"></div>
+
+  <!-- Legg til knapper for å generere, utføre og fjerne kode -->
+  <button onclick="generateCode()">Generer Kode</button>
+  <button onclick="executeCode()">Kjør Kode</button>
+  <button onclick="clearWorkspace()">Fjern Kode</button>
+
+  <!-- Inkluder Blockly JavaScript-bibliotek -->
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+
+  <script type="text/javascript">
+    // Initialiser Blockly arbeidsområde
+    var workspace = Blockly.inject('blocklyDiv', {
+      toolbox: `<xml xmlns="https://developers.google.com/blockly/xml">
+  <!-- Kontroll: Løkker og Betingelser -->
+  <block type="controls_if"></block> <!-- If-else betingelser -->
+  <block type="controls_repeat_ext"></block> <!-- Løkke for å gjenta et bestemt antall ganger -->
+  <block type="controls_for"></block> <!-- For-løkke som gjentar et spesifisert antall ganger -->
+  <block type="controls_whileUntil"></block> <!-- While-løkke som gjentar til en betingelse er oppfylt -->
+  
+  <!-- Logikk: Sammenligninger og logiske operasjoner -->
+  <block type="logic_compare"></block> <!-- Sammenligning av to verdier -->
+  <block type="logic_negate"></block> <!-- Negasjon av en boolsk verdi (true/false) -->
+  
+  <!-- Matematikk: Enkel matematiske operasjoner -->
+  <block type="math_number"></block> <!-- Blokk for å sette inn tall -->
+  <block type="math_arithmetic"></block> <!-- Blokk for grunnleggende aritmetiske operasjoner (addisjon, subtraksjon, osv.) -->
+  
+  <!-- Tekst: Enkel tekstbehandling -->
+  <block type="text"></block> <!-- Blokk for å sette inn tekst -->
+  <block type="text_print"></block> <!-- Blokk for å skrive ut tekst -->
+  
+  <!-- Variabler: Opprette, sette og hente variabler -->
+  <block type="variables_get"></block> <!-- Hente verdien til en variabel -->
+  <block type="variables_set"></block> <!-- Sette verdien til en variabel -->
+</xml>
+`,
+      trashcan: true
+    });
+
+    // Funksjon for å generere JavaScript kode fra blokkene
+    function generateCode() {
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      if (code.trim() === "") {
+        alert('Feil: Ingen kode ble generert. Vennligst legg til handlinger i blokkene.');
+      } else {
+        // Kontrollere om betingelsen er tom, og sette den til en standard verdi som brukeren kan redigere
+        if (code.includes('if (false)') || code.includes('else if (false)')) {
+          alert('Betingelsen er satt til "false". Vennligst rediger betingelsen i blokkene.');
+        } else {
+          alert('Generert Kode:\n' + code); // Vis den genererte koden som tilbakemelding
+        }
+      }
+    }
+
+    // Funksjon for å utføre den genererte koden og gi tilbakemelding
+    function executeCode() {
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      if (code.trim() === "") {
+        alert('Feil: Ingen kode er skrevet. Vennligst legg til blokker og generer kode.');
+        return;
+      }
+
+      try {
+        eval(code);  // Kjør den genererte koden
+
+        // Kontrollere om betingelsen faktisk ble vurdert
+        if (code.includes("if (0 != 0)")) {
+          alert('Programmet ble kjørt, men betingelsen var falsk. Ingen handling ble utført.');
+        } else {
+          alert('Programmet ble kjørt vellykket!'); // Tilbakemelding på vellykket kjøring
+        }
+
+      } catch (e) {
+        alert('Feil i programmet: ' + e.message); // Feilmelding ved feil i koden
+      }
+    }
+
+    // Funksjon for å tømme arbeidsområdet
+    function clearWorkspace() {
+      workspace.clear();
+    }
+  </script>
+{% endblock %}
