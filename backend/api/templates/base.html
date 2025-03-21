@@ -29,6 +29,9 @@
                 {% endif %}
 
                 <li><a href="{% url 'module_overview' %}">Moduler</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'scoreboard' %}">Scoreboard</a></li>
+                {% endif %}
             </ul>
         </nav>
 

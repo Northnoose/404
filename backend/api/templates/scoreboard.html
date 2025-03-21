@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Scoreboard{% endblock %}
+
+{% block content %}
+<div class="scoreboard-container">
+    <h1>Scoreboard</h1>
+    <table class="scoreboard-table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for progression in user_progressions %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ progression.user.username }}</td>
+                <td>{{ progression.progression_score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

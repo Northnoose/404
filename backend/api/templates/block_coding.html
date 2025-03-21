@@ -13,6 +13,7 @@
   <button onclick="generateCode()">Generer Kode</button>
   <button onclick="executeCode()">Kjør Kode</button>
   <button onclick="clearWorkspace()">Fjern Kode</button>
+  <button onclick="submitTask()">Fullfør Oppgave</button>  <!-- New Submit Button -->
 
   <!-- Inkluder Blockly JavaScript-bibliotek -->
   <script src="https://unpkg.com/blockly/blockly.min.js"></script>
@@ -42,8 +43,7 @@
   <!-- Variabler: Opprette, sette og hente variabler -->
   <block type="variables_get"></block> <!-- Hente verdien til en variabel -->
   <block type="variables_set"></block> <!-- Sette verdien til en variabel -->
-</xml>
-`,
+</xml>`,
       trashcan: true
     });
 
@@ -53,12 +53,7 @@
       if (code.trim() === "") {
         alert('Feil: Ingen kode ble generert. Vennligst legg til handlinger i blokkene.');
       } else {
-        // Kontrollere om betingelsen er tom, og sette den til en standard verdi som brukeren kan redigere
-        if (code.includes('if (false)') || code.includes('else if (false)')) {
-          alert('Betingelsen er satt til "false". Vennligst rediger betingelsen i blokkene.');
-        } else {
-          alert('Generert Kode:\n' + code); // Vis den genererte koden som tilbakemelding
-        }
+        alert('Generert Kode:\n' + code); // Vis den genererte koden som tilbakemelding
       }
     }
 
@@ -72,14 +67,7 @@
 
       try {
         eval(code);  // Kjør den genererte koden
-
-        // Kontrollere om betingelsen faktisk ble vurdert
-        if (code.includes("if (0 != 0)")) {
-          alert('Programmet ble kjørt, men betingelsen var falsk. Ingen handling ble utført.');
-        } else {
-          alert('Programmet ble kjørt vellykket!'); // Tilbakemelding på vellykket kjøring
-        }
-
+        alert('Programmet ble kjørt vellykket!'); // Tilbakemelding på vellykket kjøring
       } catch (e) {
         alert('Feil i programmet: ' + e.message); // Feilmelding ved feil i koden
       }
@@ -89,5 +77,13 @@
     function clearWorkspace() {
       workspace.clear();
     }
+
+    // Funksjon for å sende inn oppgaven
+    function submitTask() {
+      // Her kan du legge til logikk for å evaluere oppgaven
+      alert('Oppgaven er sendt inn!');
+      window.location.href = "{% url 'blokkbasert_koding_result' %}";  // Redirect til resultatsiden
+    }
   </script>
 {% endblock %}
+

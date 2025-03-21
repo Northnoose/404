@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Blokkbasert Koding Resultat{% endblock %}
+
+{% block content %}
+<div class="result-container">
+    <h1>Blokkbasert Koding Resultat</h1>
+    <p>Du har fullført oppgaven og tjent <strong>{{ points_earned }} poeng</strong>!</p>
+    <p>Totalt antall poeng: <strong>{{ total_points }}</strong></p>
+    <a href="{% url 'module_overview' %}" class="btn btn-primary">Tilbake til moduler</a>
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static  
 from django.urls import path
-from .views import profile, edit_profile
+from .views import blokkbasert_koding_result_view, profile, edit_profile, scoreboard
 from django.contrib import admin
 
 
@@ -19,13 +19,15 @@ urlpatterns = [
     path('profile/edit/', views.edit_profile, name='edit_profile'),  # Single edit_profile path
     path('blokkbasert-instruksjoner/', views.blokkbasert_instruksjoner, name='blokkbasert_instruksjoner'),
     path('blokkbasert-koding/', views.blokkbasert_koding, name='block_coding_module'),
+    path('blokkbasert-koding/result/', blokkbasert_koding_result_view, name='blokkbasert_koding_result'),
     path('modules/', views.module_overview, name='module_overview'),
     path('modules/python-lesson/', views.python_lesson_view, name='python_lesson'),
     path('modules/python-quiz/', views.python_quiz_view, name='python_quiz'),
     path('modules/python-quiz-result/', views.python_quiz_result_view, name='quiz_python_result'),
     path('modules/drag-and-drop-lesson/', views.drag_and_drop_lesson_view, name='drag_and_drop_lesson'),
     path('modules/drag-and-drop-exercise/', views.drag_and_drop_exercise_view, name='drag_and_drop_exercise'),
-    path('modules/drag-and-drop-result/', views.drag_and_drop_result_view, name='drag_and_drop_result')
+    path('modules/drag-and-drop-result/', views.drag_and_drop_result_view, name='drag_and_drop_result'),
+    path('scoreboard/', scoreboard, name='scoreboard')
     
 ]
 

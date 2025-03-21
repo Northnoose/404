@@ -210,7 +210,6 @@ def python_quiz_view(request):
     return render(request, 'quiz_python.html')
 
 def python_quiz_result_view(request):
-    
     QUIZ_QUESTIONS = [
         {
             "question": "Hva er riktig måte å skrive en print-setning i Python?",
@@ -236,7 +235,7 @@ def python_quiz_result_view(request):
     feedback = []
     correct_count = 0
 
-    
+    # Loop gjennom alle spørsmål og sjekk brukerens svar
     for i, question in enumerate(QUIZ_QUESTIONS):
         chosen_str = request.GET.get(f'answer_{i}', "")
         try:
@@ -255,6 +254,12 @@ def python_quiz_result_view(request):
             "is_correct": is_correct,
             "explanation": question["explanation"] if not is_correct else ""
         })
+
+    # Update the user's progression score
+    if request.user.is_authenticated:
+        user_progression, created = UserProgression.objects.get_or_create(user=request.user)
+        user_progression.progression_score += correct_count  # Add points based on correct answers
+        user_progression.save()
 
     context = {
         "feedback": feedback,
@@ -322,6 +327,12 @@ def drag_and_drop_result_view(request):
 
     total = len(dropzone_data)
 
+    # Update the user's progression score
+    if request.user.is_authenticated:
+        user_progression, created = UserProgression.objects.get_or_create(user=request.user)
+        user_progression.progression_score += correct_count  # Add points based on correct answers
+        user_progression.save()
+
     if request.user.is_authenticated:
         quiz_name = "drag_and_drop"  
         user_quiz, created = UserQuizScore.objects.get_or_create(
@@ -340,6 +351,31 @@ def drag_and_drop_result_view(request):
         "total": total,
     }
     return render(request, "drag_and_drop_result.html", context)
+
+
+@login_required
+def blokkbasert_koding_result_view(request):
+    # Example: Calculate points based on the user's performance
+    points_earned = 10  # Replace with actual logic to calculate points
+
+    # Update the user's progression score
+    if request.user.is_authenticated:
+        user_progression, created = UserProgression.objects.get_or_create(user=request.user)
+        user_progression.progression_score += points_earned  # Add points based on performance
+        user_progression.save()
+
+    # Prepare context for the result page
+    context = {
+        "points_earned": points_earned,
+        "total_points": user_progression.progression_score if request.user.is_authenticated else 0,
+    }
+    return render(request, 'blokkbasert_koding_result.html', context)
+
+def scoreboard(request):
+    user_progressions = UserProgression.objects.all().order_by('-progression_score')
+    return render(request, 'scoreboard.html', {'user_progressions': user_progressions})
+
+
 
 def is_admin(user):
     return user.groups.filter(name='Administratorer').exists()
