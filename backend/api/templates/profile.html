@@ -3,33 +3,50 @@
 {% block title %}Min Profil{% endblock %}
 
 {% block content %}
-    <div class="profile-container">
-        <h1>Min Profil</h1>
-        
-        <!-- Vist brukerens detaljer -->
-        <div class="profile-details">
-            <p><strong>Brukernavn:</strong> {{ user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Registrert siden:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>  <!-- Vist som dd.mm.åååå -->
-        </div>
+<div class="profile-container">
+    <h1>Min Profil</h1>
 
-        <!-- Vist progresjon (hvis tilgjengelig) -->
-        <div class="progression">
-            {% if progression %}
-                <p><strong>Progressjon:</strong> {{ progression.progression }}%</p>
-            {% else %}
-                <p><strong>Progressjon:</strong> Ikke tilgjengelig</p>
-            {% endif %}
-        </div>
-
-        <!-- Lenke til å redigere profil -->
-        <div class="profile-actions">
-            <a href="{% url 'edit_profile' %}" class="btn btn-primary">Rediger Profil</a>
-        </div>
-
-        <!-- Legg til en logout knapp -->
-        <div class="logout-actions">
-            <a href="{% url 'logout' %}" class="btn btn-danger">Logg ut</a>
-        </div>
+    <!-- Vist brukerens detaljer -->
+    <div class="profile-details">
+        <p><strong>Brukernavn:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Registrert siden:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
     </div>
+
+    <!-- Vist progresjon (hvis tilgjengelig) -->
+    <div class="progression">
+        {% if progression %}
+            <p><strong>Progressjon:</strong> {{ progression.progression }}%</p>
+        {% else %}
+            <p><strong>Progressjon:</strong> Ikke tilgjengelig</p>
+        {% endif %}
+    </div>
+
+    <!-- Ny seksjon: Oversikt over opptjente belønninger -->
+    <div class="rewards">
+        <h2>Mine Belønninger</h2>
+        {% if user_rewards %}
+            <ul>
+                {% for reward in user_rewards %}
+                    <li>
+                        {{ reward.reward.description }}
+                        (Tildelt: {{ reward.date_awarded|date:"d.m.Y H:i" }})
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Ingen belønninger opptjent enda.</p>
+        {% endif %}
+    </div>
+
+    <!-- Lenke til å redigere profil -->
+    <div class="profile-actions">
+        <a href="{% url 'edit_profile' %}" class="btn btn-primary">Rediger Profil</a>
+    </div>
+
+    <!-- Legg til en logout knapp -->
+    <div class="logout-actions">
+        <a href="{% url 'logout' %}" class="btn btn-danger">Logg ut</a>
+    </div>
+</div>
 {% endblock %}
