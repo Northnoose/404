@@ -4,7 +4,50 @@
 
 {% block content %}
 <div class="profile-container">
-    <h1>Min Profil</h1>
+    <h1>
+        {% if user != request.user %}
+            {{ user.username }}s profil
+            <a href="{% url 'send_friend_request' user.id %}" class="btn btn-success" style="margin-left: 15px;">
+                Send venneforespørsel
+            </a>
+        {% else %}
+            Min Profil
+        {% endif %}
+    </h1>
+
+     <!-- Venneseksjon - vises bare på egen profil -->
+     {% if user == request.user %}
+     <div class="friends-section">
+         <h3>Dine venner ({{ request.user.friends.count }})</h3>
+         
+         {% if request.user.friends.exists %}
+         <ul class="friends-list">
+             {% for friendship in request.user.friends.all %}
+             <li class="friend-item">
+                 <a href="{% url 'profile' %}?user_id={{ friendship.user2.id }}">
+                     {{ friendship.user2.username }}
+                 </a>
+                 <form method="post" action="{% url 'remove_friend' friendship.id %}" class="remove-friend-form">
+                     {% csrf_token %}
+                     <button type="submit" class="btn btn-sm btn-danger">Fjern</button>
+                 </form>
+             </li>
+             {% endfor %}
+         </ul>
+         {% else %}
+         <div class="alert alert-info">
+             <p>Du har ingen venner ennå.</p>
+             <a href="{% url 'user_search' %}" class="btn btn-primary">Finn venner</a>
+         </div>
+         {% endif %}
+         
+         <div class="friend-requests-link">
+             <a href="{% url 'friend_requests' %}" class="btn btn-secondary">
+                 Se venneforespørsler ({{ request.user.received_requests.count }})
+             </a>
+         </div>
+     </div>
+     {% endif %}
 
     <!-- Vist brukerens detaljer -->
     <div class="profile-details">
@@ -12,6 +55,19 @@
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Registrert siden:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
     </div>
+
+
+     <!-- Ny seksjon: Vennestatus -->
+     {% if user != request.user %}
+     <div class="friend-status">
+         <h2>Vennestatus</h2>
+         {% if already_friends %}
+             <p class="text-success">Du og {{ user.username }} er venner!</p>
+         {% elif request_sent %}
+             <p class="text-warning">Venneforespørsel sendt - venter på svar</p>
+         {% endif %}
+     </div>
+    {% endif %}
 
     <!-- Vist progresjon (hvis tilgjengelig) -->
     <div class="progression">

@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from .views import blokkbasert_koding_result_view, profile, edit_profile, scoreboard
 from django.contrib import admin
-
+from .views import send_friend_request, accept_friend_request, reject_friend_request, friend_requests, user_search
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +27,13 @@ urlpatterns = [
     path('modules/drag-and-drop-lesson/', views.drag_and_drop_lesson_view, name='drag_and_drop_lesson'),
     path('modules/drag-and-drop-exercise/', views.drag_and_drop_exercise_view, name='drag_and_drop_exercise'),
     path('modules/drag-and-drop-result/', views.drag_and_drop_result_view, name='drag_and_drop_result'),
-    path('scoreboard/', scoreboard, name='scoreboard')
+    path('scoreboard/', scoreboard, name='scoreboard'),
+    path('friend-request/send/<int:user_id>/', send_friend_request, name='send_friend_request'),
+    path('friend-request/accept/<int:request_id>/', accept_friend_request, name='accept_friend_request'),
+    path('friend-request/reject/<int:request_id>/', reject_friend_request, name='reject_friend_request'),
+    path('friend-requests/', friend_requests, name='friend_requests'),
+    path('remove-friend/<int:friendship_id>/', views.remove_friend, name='remove_friend'),
+    path('user-search/', user_search, name='user_search')
     
 ]
 

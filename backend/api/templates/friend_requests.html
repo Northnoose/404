@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Venneforespørsler</h2>
+<ul>
+    {% for request in received_requests %}
+        <li>
+            {{ request.sender.username }} vil være venn med deg.
+            <a href="{% url 'accept_friend_request' request.id %}">Godta</a>
+            <a href="{% url 'reject_friend_request' request.id %}">Avslå</a>
+        </li>
+    {% empty %}
+        <li>Ingen ventende forespørsler.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
