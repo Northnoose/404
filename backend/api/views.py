@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -99,29 +100,47 @@ def profile(request):
     except:
         user_rewards = None
         
-    viewed_user = request.user  # Standardverdi
+    friends = User.objects.filter(
+        id__in=Friendship.objects.filter(user1=request.user).values('user2')
+    )
+    
+    # Hent ventende forespørsler
+    pending_requests = FriendRequest.objects.filter(
+        receiver=request.user,
+        status='pending'
+    )
+    
+    # Sjekk vennestatus hvis man ser på andres profil
     already_friends = False
     request_sent = False
     
     if 'user_id' in request.GET and request.GET['user_id'] != str(request.user.id):
-        try:
-            viewed_user = User.objects.get(id=request.GET['user_id'])
-            already_friends = Friendship.objects.filter(
-                (models.Q(user1=request.user, user2=viewed_user) |
-                 models.Q(user1=viewed_user, user2=request.user))
-            ).exists()
-            request_sent = FriendRequest.objects.filter(
-                sender=request.user,
-                receiver=viewed_user,
-                status='pending'
-            ).exists()
-        except User.DoesNotExist:
-            viewed_user = request.user
-
+        viewed_user = get_object_or_404(User, id=request.GET['user_id'])
+        already_friends = viewed_user in friends
+        request_sent = FriendRequest.objects.filter(
+            sender=request.user,
+            receiver=viewed_user,
+            status='pending'
+        ).exists()
+    else:
+        viewed_user = request.user
+    
+    if 'user_id' in request.GET:
+        viewed_user = get_object_or_404(User, id=request.GET['user_id'])
+        already_friends = Friendship.objects.filter(
+            (Q(user1=request.user, user2=viewed_user) |
+             Q(user1=viewed_user, user2=request.user))
+        ).exists()
+    else:
+        viewed_user = request.user
+        already_friends = False
+    
     context = {
         'user': viewed_user,
         'progression': progression,
         'user_rewards': user_rewards,
+        'friends': friends,
+        'pending_requests_count': pending_requests.count(),
         'already_friends': already_friends,
         'request_sent': request_sent
     }
@@ -419,26 +438,29 @@ def admin_dashboard(request):
 def send_friend_request(request, user_id):
     receiver = get_object_or_404(User, id=user_id)
     
-    # Sjekk om forespørsel allerede finnes
     if FriendRequest.objects.filter(sender=request.user, receiver=receiver).exists():
         messages.error(request, "Venneforespørsel allerede sendt!")
     else:
         FriendRequest.objects.create(sender=request.user, receiver=receiver, status='pending')
         messages.success(request, "Venneforespørsel sendt!")
     
-    return redirect('profile')  # Eller en annen side
+    return redirect('profile')
 
 @login_required
 def accept_friend_request(request, request_id):
     friend_request = get_object_or_404(FriendRequest, id=request_id, receiver=request.user)
     
     if friend_request.status == 'pending':
-        friend_request.status = 'accepted'
-        friend_request.save()
+        Friendship.objects.get_or_create(user1=friend_request.sender, user2=friend_request.receiver)
+        Friendship.objects.get_or_create(user1=friend_request.receiver, user2=friend_request.sender)
         
-        # Opprett vennskap
-        Friendship.objects.create(user1=friend_request.sender, user2=friend_request.receiver)
+        FriendRequest.objects.filter(
+            (Q(sender=friend_request.sender, receiver=friend_request.receiver) |
+            Q(sender=friend_request.receiver, receiver=friend_request.sender)
+        ).delete())
+        
         messages.success(request, f"Du og {friend_request.sender.username} er nå venner!")
+        return redirect('friend_requests')
     
     return redirect('friend_requests')
 
@@ -455,14 +477,25 @@ def reject_friend_request(request, request_id):
 
 @login_required
 def friend_requests(request):
-    received_requests = FriendRequest.objects.filter(receiver=request.user, status='pending')
-    return render(request, 'friend_requests.html', {'received_requests': received_requests})
+    received_requests = FriendRequest.objects.filter(
+        receiver=request.user,
+        status='pending'
+    ).select_related('sender')
+    
+    FriendRequest.objects.filter(
+        receiver=request.user,
+        status='pending',
+        created_at__lt=timezone.now() - timedelta(days=30)
+    ).delete()
+    
+    return render(request, 'friend_requests.html', {
+        'received_requests': received_requests
+    })
 
 @login_required
 def remove_friend(request, friendship_id):
     friendship = get_object_or_404(Friendship, id=friendship_id)
     
-    # Sikrer at kun en av partene kan fjerne vennskapet
     if request.user in [friendship.user1, friendship.user2]:
         friendship.delete()
         messages.success(request, "Venn fjernet")
@@ -471,6 +504,7 @@ def remove_friend(request, friendship_id):
     
     return redirect('profile')
 
+
 @login_required
 def user_search(request):
     query = request.GET.get('q', '')
@@ -478,9 +512,19 @@ def user_search(request):
     
     if query:
         users = users.filter(
-            Q(username__icontains=query) |
-            Q(email__icontains=query)
+            Q(username__icontains=query) 
         )
+    
+    existing_friends = request.user.friends.all()
+    pending_requests = FriendRequest.objects.filter(
+        sender=request.user,
+        status='pending'
+    ).values_list('receiver_id', flat=True)
+    
+    users = users.exclude(
+        Q(id__in=existing_friends.values_list('id', flat=True)) |
+        Q(id__in=pending_requests)
+    )
     
     return render(request, 'user_search.html', {
         'users': users,
