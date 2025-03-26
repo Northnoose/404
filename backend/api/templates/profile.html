@@ -1,135 +1,134 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Min Profil{% endblock %}
 
 {% block content %}
-<div class="profile-container">
-    <h1>
-        {% if user != request.user %}
-            {{ user.username }}s profil
-            {% if not already_friends and not request_sent %}
-                <a href="{% url 'send_friend_request' user.id %}" class="btn btn-success" style="margin-left: 15px;">
-                    Send venneforespørsel
-                </a>
-            {% endif %}
-        {% else %}
-            Min Profil
-        {% endif %}
-    </h1>
-
-    {% if user == request.user %}
-    <div class="friend-search mb-4">
-        <form method="get" action="{% url 'user_search' %}" class="d-flex">
-            <input type="text" name="q" class="form-control" placeholder="Søk etter brukernavn...">
-            <button type="submit" class="btn btn-primary ms-2">Søk</button>
-        </form>
-    </div>
+<!-- Hovedoverskrift for profilsiden -->
+<h1>
+    {% if user != request.user %}
+        {{ user.username }}s profil
+    {% else %}
+        Min Profil
     {% endif %}
+</h1>
 
-     <!-- Venneseksjon - vises bare på egen profil -->
-     {% if user == request.user %}
-     
-     <div class="friends-section">
-        <h3>Dine venner ({{ friends.count }})</h3>
-        
-        {% if friends %}
-        <ul class="friends-list">
-            {% for friend in friends %}
-            <li class="friend-item">
-                <a href="{% url 'profile' %}?user_id={{ friend.id }}">
-                    {{ friend.username }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>Ingen venner ennå.</p>
-        {% endif %}
-    </div>
+<!-- Første rad: Brukerdetaljer + Venner/venneforespørsler -->
+<div class="row">
 
-    
-    
-    <!-- Vise antall ventende forespørsler -->
-    <div class="friend-requests-link">
-        <a href="{% url 'friend_requests' %}" class="btn btn-secondary">
-            Se venneforespørsler 
-            {% if pending_requests_count > 0 %}
-            <span class="badge bg-danger">{{ pending_requests_count }}</span>
+    <!-- Venstre kolonne: Brukerdetaljer  -->
+    <div class="col-6 col-12-medium">
+        <section class="box">
+            <h3>Brukerdetaljer</h3>
+            <p><strong>Brukernavn:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Registrert siden:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
+
+            <!-- Hvis det er din egen profil, vis rediger/logg ut-knapper -->
+            {% if user == request.user %}
+            <div style="margin-top: 1em;">
+                <a href="{% url 'edit_profile' %}" class="button">Rediger Profil</a>
+                <a href="{% url 'logout' %}" class="button alt">Logg ut</a>
+            </div>
             {% endif %}
-        </a>
+
+            <!-- Hvis du ser på en annen brukers profil, vis vennestatus/venneforespørsel -->
+            {% if user != request.user %}
+            <div style="margin-top: 1em;">
+                {% if already_friends %}
+                    <p style="color: green;">Du og {{ user.username }} er allerede venner!</p>
+                {% elif request_sent %}
+                    <p style="color: orange;">Venneforespørsel sendt - venter på svar</p>
+                {% else %}
+                    <a href="{% url 'send_friend_request' user.id %}" class="button special">
+                        Send venneforespørsel
+                    </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </section>
     </div>
 
-    {% endif %}
+    <!-- Høyre kolonne: Dine venner og venneforespørsler (col-6 col-12-medium) -->
+    <div class="col-6 col-12-medium">
+        <section class="box">
+            {% if user == request.user %}
+                <h3>Dine venner ({{ friends.count }})</h3>
+                {% if friends %}
+                    <ul>
+                        {% for friend in friends %}
+                        <li>
+                            <a href="{% url 'profile' %}?user_id={{ friend.id }}">{{ friend.username }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Ingen venner ennå.</p>
+                {% endif %}
 
-     {% if user != request.user %}
-        <div class="friend-actions">
-            {% if already_friends %}
-                <p class="text-success">Du og {{ user.username }} er allerede venner!</p>
-            {% elif request_sent %}
-                <p class="text-warning">Venneforespørsel sendt - venter på svar</p>
+                <!-- Venneforespørsler-knapp -->
+                <div style="margin-top: 1em;">
+                    <a href="{% url 'friend_requests' %}" class="button alt">
+                        Se venneforespørsler
+                        {% if pending_requests_count > 0 %}
+                        <span style="background: red; color: #fff; padding: 0 6px; border-radius: 4px;">
+                            {{ pending_requests_count }}
+                        </span>
+                        {% endif %}
+                    </a>
+                </div>
+
+                <!-- Søkefunksjon -->
+                <div style="margin-top: 1em;">
+                    <h4>Søk etter venner</h4>
+                    <form method="get" action="{% url 'user_search' %}" style="display: flex; gap: 0.5em;">
+                        <input type="text" name="q" placeholder="Søk brukernavn..." style="flex: 1;">
+                        <button type="submit" class="button">Søk</button>
+                    </form>
+                </div>
             {% else %}
-                <a href="{% url 'send_friend_request' user.id %}" class="btn btn-primary">
-                    Legg til som venn
-                </a>
+                <!-- Hvis du ser på en annen brukers profil, kan denne kolonnen stå tom eller brukes til noe annet -->
+                <p>Informasjon om vennestatus etc. vises i venstre kolonne.</p>
             {% endif %}
-        </div>
-    {% endif %}
-
-    <!-- Vist brukerens detaljer -->
-    <div class="profile-details">
-        <p><strong>Brukernavn:</strong> {{ user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Registrert siden:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
+        </section>
     </div>
 
+</div> <!-- /row -->
 
-     <!-- Ny seksjon: Vennestatus -->
-     {% if user != request.user %}
-     <div class="friend-status">
-         <h2>Vennestatus</h2>
-         {% if already_friends %}
-             <p class="text-success">Du og {{ user.username }} er venner!</p>
-         {% elif request_sent %}
-             <p class="text-warning">Venneforespørsel sendt - venter på svar</p>
-         {% endif %}
-     </div>
-    {% endif %}
-    
 
-    <!-- Vist progresjon (hvis tilgjengelig) -->
-    <div class="progression">
-        {% if progression %}
-            <p><strong>Progressjon:</strong> {{ progression.progression }}%</p>
-        {% else %}
-            <p><strong>Progressjon:</strong> Ikke tilgjengelig</p>
-        {% endif %}
+<!-- Andre rad: Progresjon + Belønninger -->
+<div class="row">
+
+    <!-- Venstre kolonne: Progresjon -->
+    <div class="col-6 col-12-medium">
+        <section class="box">
+            <h3>Progresjon</h3>
+            {% if progression %}
+                <p>{{ progression.progression }}%</p>
+            {% else %}
+                <p>Ikke tilgjengelig</p>
+            {% endif %}
+        </section>
     </div>
 
-    <!-- Ny seksjon: Oversikt over opptjente belønninger -->
-    <div class="rewards">
-        <h2>Mine Belønninger</h2>
-        {% if user_rewards %}
-            <ul>
-                {% for reward in user_rewards %}
+    <!-- Høyre kolonne: Mine Belønninger -->
+    <div class="col-6 col-12-medium">
+        <section class="box">
+            <h3>Mine Belønninger</h3>
+            {% if user_rewards %}
+                <ul>
+                    {% for reward in user_rewards %}
                     <li>
                         {{ reward.reward.description }}
                         (Tildelt: {{ reward.date_awarded|date:"d.m.Y H:i" }})
                     </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Ingen belønninger opptjent enda.</p>
-        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Ingen belønninger opptjent enda.</p>
+            {% endif %}
+        </section>
     </div>
 
-    <!-- Lenke til å redigere profil -->
-    <div class="profile-actions">
-        <a href="{% url 'edit_profile' %}" class="btn btn-primary">Rediger Profil</a>
-    </div>
-
-    <!-- Legg til en logout knapp -->
-    <div class="logout-actions">
-        <a href="{% url 'logout' %}" class="btn btn-danger">Logg ut</a>
-    </div>
-</div>
+</div> <!-- /row -->
 {% endblock %}

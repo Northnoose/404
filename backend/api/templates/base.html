@@ -1,52 +1,131 @@
-<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE HTML>
 <html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %} Min Læringsplattform {% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>{% block title %}Min Læringsplattform{% endblock %}</title>
 
-    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
 
-    <!-- Lenke til CSS-fil for styling -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    
+    <style>
+      
+      #banner {
+        background: url("{% static 'assets/images/pic01.jpg' %}") no-repeat center center;
+        background-size: cover;
+        margin-top: 0;
+        padding: 2em 0; 
+      }
+      #banner header {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 3em 3em;
+        max-width: 800px;
+        margin: 0 auto;
+        border-radius: 6px;
+        text-align: center;
+      }
+      #banner header h2 {
+        margin-bottom: 0.5em;
+      }
+      #banner header p {
+        line-height: 1.5;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      
+      #header {
+        padding-bottom: 0;
+      }
+
+      
+      #main {
+        padding-top: 2em;
+      }
+    </style>
 </head>
-<body>
-    <div class="page-container">
-        <header>
-            <h1>Velkommen til Min Læringsplattform</h1>
-        </header>
+<body class="homepage is-preload">
+    <div id="page-wrapper">
 
-        <nav>
-            <ul>
-                <li><a href="{% url 'home' %}">Hjem</a></li>
-                <li><a href="{% url 'about' %}">Om oss</a></li>
+        <!-- Header -->
+        <section id="header">
+            <!-- Logo -->
+            <h1><a href="{% url 'home' %}">Min Læringsplattform</a></h1>
 
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'profile' %}">Profil</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Logg inn</a></li>
-                    <li><a href="{% url 'register' %}">Registrer deg</a></li>
-                {% endif %}
+            <!-- Navigasjon -->
+            <nav id="nav">
+                <ul>
+                    <li class="{% if request.resolver_match.url_name == 'home' %}current{% endif %}">
+                        <a href="{% url 'home' %}">Hjem</a>
+                    </li>
+                    <li class="{% if request.resolver_match.url_name == 'about' %}current{% endif %}">
+                        <a href="{% url 'about' %}">Om oss</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="{% if request.resolver_match.url_name == 'profile' %}current{% endif %}">
+                            <a href="{% url 'profile' %}">Profil</a>
+                        </li>
+                    {% else %}
+                        <li class="{% if request.resolver_match.url_name == 'login' %}current{% endif %}">
+                            <a href="{% url 'login' %}">Logg inn</a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'register' %}current{% endif %}">
+                            <a href="{% url 'register' %}">Registrer deg</a>
+                        </li>
+                    {% endif %}
+                    <li class="{% if request.resolver_match.url_name == 'module_overview' %}current{% endif %}">
+                        <a href="{% url 'module_overview' %}">Moduler</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="{% if request.resolver_match.url_name == 'scoreboard' %}current{% endif %}">
+                            <a href="{% url 'scoreboard' %}">Scoreboard</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
 
-                <li><a href="{% url 'module_overview' %}">Moduler</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'scoreboard' %}">Scoreboard</a></li>
-                {% endif %}
-            </ul>
-        </nav>
+            <!-- Banner: vises bare hvis vi er på 'home' -->
+            {% if request.resolver_match.url_name == 'home' %}
+            <section id="banner">
+                <header>
+                    <h2>Velkommen!</h2>
+                    <p>
+                        Her kan du lære objektorientert programmering på en engasjerende måte –
+                        med poeng, belønninger og mulighet til å sammenligne fremgangen din med
+                        venner. Utforsk modulene, løs interaktive oppgaver og få en praktisk
+                        innføring i koding, helt i ditt eget tempo.
+                    </p>
+                </header>
+            </section>
+            {% endif %}
+        </section>
 
-        <div class="content">
-            {% block content %}
-            {% endblock %}
-        </div>
+        <!-- Main -->
+        <section id="main">
+            <div class="container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </section>
 
-        <footer class="footer">
-            <div class="footer-container">
+        <!-- Footer -->
+        <section id="footer">
+            <div class="container">
                 <ul>
                     <li><a href="{% url 'admin:index' %}">Admin Panel</a></li>
                 </ul>
             </div>
-        </footer>
+        </section>
     </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
+    <script src="{% static 'assets/js/browser.min.js' %}"></script>
+    <script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/util.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
 </body>
 </html>
