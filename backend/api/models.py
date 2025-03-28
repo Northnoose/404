@@ -28,13 +28,13 @@ class UserPermission(models.Model):                                             
 
 
 class User(AbstractUser):
-    user_type = models.ForeignKey('UserPermission', on_delete=models.PROTECT)
-    email = models.EmailField(unique=True) #Bruker AbstractUser fra Django, som automatisk hånderer passord og hasing.
-    groups = models.ManyToManyField('auth.Group', related_name='custom_user_set', blank=True)  # Legger til en tilpasset related_name for grupper
+    user_type = models.ForeignKey('UserPermission', on_delete=models.PROTECT, null=True, blank=True)
+    email = models.EmailField(unique=True) 
+    groups = models.ManyToManyField('auth.Group', related_name='custom_user_set', blank=True)  
     user_permissions = models.ManyToManyField('auth.Permission', related_name='custom_user_permissions_set', blank=True)  # Legger til en tilpasset related_name for brukerrettigheter
 
     def __str__(self):
-        return self.user_name
+        return self.username
 
 class Task(models.Model):
  
@@ -70,7 +70,7 @@ class UserScore(models.Model):
         unique_together = (('user', 'task'),) 
 
     def __str__(self):
-        return f"{self.user.user_name} - {self.task.task_id}"
+        return f"{self.user.username} - {self.task.task_id}"
 
 
 class UserProgression(models.Model):
@@ -110,9 +110,9 @@ class UserRewards(models.Model):
 
 
     def __str__(self):
-        return f"{self.user.user_name} - {self.reward.description}"
+        return f"{self.user.username} - {self.reward.description}"
 
-User = get_user_model()    
+
     
 class FriendRequest(models.Model):
     sender = models.ForeignKey(User, related_name='sent_requests', on_delete=models.CASCADE)

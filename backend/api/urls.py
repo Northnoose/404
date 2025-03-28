@@ -33,7 +33,8 @@ urlpatterns = [
     path('friend-request/reject/<int:request_id>/', reject_friend_request, name='reject_friend_request'),
     path('friend-requests/', friend_requests, name='friend_requests'),
     path('remove-friend/<int:friendship_id>/', views.remove_friend, name='remove_friend'),
-    path('user-search/', user_search, name='user_search')
+    path('user-search/', user_search, name='user_search'),
+    path('blokkbasert-koding/', views.blokkbasert_koding, name='block_coding')
     
 ]
 

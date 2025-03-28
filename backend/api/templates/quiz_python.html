@@ -1,99 +1,110 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}Grunnleggende Python – Quiz{% endblock %}
 
 {% block content %}
+<h1 class="lesson-title">Grunnleggende Python – Quiz</h1>
+
+<!-- Hovedboksen for quizen -->
 <div class="lesson-card">
   <div class="lesson-card-header">
-    <h2>Grunnleggende Python – Quiz</h2>
+    <h2>Test kunnskapen din!</h2>
   </div>
 
-  
   <div class="lesson-card-content">
-    <h3>1. Hva er riktig måte å skrive en print-setning i Python?</h3>
-    <label>
-      <input type="radio" name="answer_0" value="0">
-      echo('Hello')
-    </label><br>
-    <label>
-      <input type="radio" name="answer_0" value="1">
-      System.out.println('Hello')
-    </label><br>
-    <label>
-      <input type="radio" name="answer_0" value="2">
-      print('Hello')
-    </label><br>
-    <label>
-      <input type="radio" name="answer_0" value="3">
-      console.log('Hello')
-    </label><br>
+
+    <!-- Spørsmål 1 -->
+    <div class="quiz-question">
+      <h3>1. Hva er riktig måte å skrive en print-setning i Python?</h3>
+      <label>
+        <input type="radio" name="answer_0" value="0">
+        echo('Hello')
+      </label>
+      <label>
+        <input type="radio" name="answer_0" value="1">
+        System.out.println('Hello')
+      </label>
+      <label>
+        <input type="radio" name="answer_0" value="2">
+        print('Hello')
+      </label>
+      <label>
+        <input type="radio" name="answer_0" value="3">
+        console.log('Hello')
+      </label>
+    </div>
     <hr>
 
-    <h3>2. Hvilket nøkkelord definerer en funksjon i Python?</h3>
-    <label>
-      <input type="radio" name="answer_1" value="0">
-      function
-    </label><br>
-    <label>
-      <input type="radio" name="answer_1" value="1">
-      func
-    </label><br>
-    <label>
-      <input type="radio" name="answer_1" value="2">
-      def
-    </label><br>
-    <label>
-      <input type="radio" name="answer_1" value="3">
-      lambda
-    </label><br>
+    <!-- Spørsmål 2 -->
+    <div class="quiz-question">
+      <h3>2. Hvilket nøkkelord definerer en funksjon i Python?</h3>
+      <label>
+        <input type="radio" name="answer_1" value="0">
+        function
+      </label>
+      <label>
+        <input type="radio" name="answer_1" value="1">
+        func
+      </label>
+      <label>
+        <input type="radio" name="answer_1" value="2">
+        def
+      </label>
+      <label>
+        <input type="radio" name="answer_1" value="3">
+        lambda
+      </label>
+    </div>
     <hr>
 
-    <h3>3. Hvilken setning skriver "Hello World" til konsollen?</h3>
-    <label>
-      <input type="radio" name="answer_2" value="0">
-      echo "Hello World"
-    </label><br>
-    <label>
-      <input type="radio" name="answer_2" value="1">
-      printf("Hello World")
-    </label><br>
-    <label>
-      <input type="radio" name="answer_2" value="2">
-      console.log("Hello World")
-    </label><br>
-    <label>
-      <input type="radio" name="answer_2" value="3">
-      print("Hello World!")
-    </label><br>
-  </div>
+    <!-- Spørsmål 3 -->
+    <div class="quiz-question">
+      <h3>3. Hvilken setning skriver "Hello World" til konsollen?</h3>
+      <label>
+        <input type="radio" name="answer_2" value="0">
+        echo "Hello World"
+      </label>
+      <label>
+        <input type="radio" name="answer_2" value="1">
+        printf("Hello World")
+      </label>
+      <label>
+        <input type="radio" name="answer_2" value="2">
+        console.log("Hello World")
+      </label>
+      <label>
+        <input type="radio" name="answer_2" value="3">
+        print("Hello World!")
+      </label>
+    </div>
 
-  
+  </div> <!-- lesson-card-content -->
+
   <div class="lesson-card-footer">
-    <a href="#" class="lesson-btn" onclick="leverQuiz();">Lever quiz</a>
+    <!-- Bytter “lesson-btn” ut med Dopetrope sin “button”-klasse -->
+    <a href="#" class="button" onclick="leverQuiz();">Lever quiz</a>
   </div>
 </div>
 
-
+<!-- JavaScript for quiz-logikk -->
 <script>
 function leverQuiz() {
   const totalQuestions = 3;
   const answers = [];
 
-  
   for (let i = 0; i < totalQuestions; i++) {
     const checked = document.querySelector(`input[name="answer_${i}"]:checked`);
     if (!checked) {
-      
       alert("Vennligst svar på alle spørsmål før du leverer quizen!");
       return;
     }
     answers[i] = checked.value;
   }
 
-  
   const baseUrl = "{% url 'quiz_python_result' %}";
   const query = `?answer_0=${answers[0]}&answer_1=${answers[1]}&answer_2=${answers[2]}`;
 
-  
   window.location.href = baseUrl + query;
 }
 </script>

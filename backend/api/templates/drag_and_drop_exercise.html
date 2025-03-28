@@ -1,10 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}Drag and Drop Oppgave{% endblock %}
 
 {% block content %}
 
+<!-- Evt. egen styling for oppgaven – denne kan senere flyttes til main.css -->
 <style>
-  
+  /* Dropzones for å plassere draggede ord */
   .dropzone {
     display: inline-block;
     min-width: 100px;
@@ -16,6 +19,7 @@
     vertical-align: middle;
   }
   
+  /* Ordliste med draggable-ord */
   .word-bank {
     margin-top: 20px;
   }
@@ -28,6 +32,18 @@
     margin: 5px;
     display: inline-block;
   }
+  
+  /* Instruksjoner for quiz: hver paragraf får margin for bedre lesbarhet */
+  .quiz-instruction p {
+    margin-bottom: 1em;
+  }
+  
+  /* Sørg for at label er blokk for at hvert alternativ skal ligge under hverandre */
+  .quiz-instruction label {
+    display: block;
+    margin-bottom: 0.5em;
+    cursor: pointer;
+  }
 </style>
 
 <div class="lesson-card">
@@ -36,32 +52,27 @@
   </div>
 
   <div class="lesson-card-content">
-    <p>
-      Her skal du plassere de riktige kodelinjene i riktig rekkefølge for å lage et 
-      enkelt Python-program som sjekker om <code>x</code> er større enn 10.
-      Dra linjene fra ordlisten nedenfor og slipp dem i de grå boksene 
-      der de hører hjemme. Når du er ferdig, trykk <strong>Fullfør oppgave</strong>
-      for å se resultatet.
-    </p>
+    <div class="quiz-instruction">
+      <p>
+        Her skal du plassere de riktige kodelinjene i riktig rekkefølge for å lage et
+        enkelt Python-program som sjekker om <code>x</code> er større enn 10.
+        Dra linjene fra ordlisten nedenfor og slipp dem i de grå boksene der de hører hjemme.
+      </p>
+      <p>
+        <strong>Setning 1:</strong><br>
+        For å sjekke om <code>x</code> er større enn 10, skriv 
+        <span class="dropzone" data-index="0"></span> og 
+        <span class="dropzone" data-index="1"></span>.
+      </p>
+      <p>
+        <strong>Setning 2:</strong><br>
+        Definer variabelen og skriv ut resultatet: 
+        <span class="dropzone" data-index="2"></span>, 
+        <span class="dropzone" data-index="3"></span> og 
+        <span class="dropzone" data-index="4"></span>.
+      </p>
+    </div>
 
-    <p>
-      <strong>Setning 1:</strong><br>
-      For å sjekke om <code>x</code> er større enn 10, skriv 
-      <span class="dropzone" data-index="0"></span> 
-      og 
-      <span class="dropzone" data-index="1"></span>.
-    </p>
-
-    <p>
-      <strong>Setning 2:</strong><br>
-      Definer variabelen og skriv ut resultatet: 
-      <span class="dropzone" data-index="2"></span>, 
-      <span class="dropzone" data-index="3"></span> 
-      og 
-      <span class="dropzone" data-index="4"></span>.
-    </p>
-
-    >
     <div class="word-bank">
       <span class="draggable-word" draggable="true">if x &gt; 10:</span>
       <span class="draggable-word" draggable="true">else:</span>
@@ -72,23 +83,21 @@
   </div>
 
   <div class="lesson-card-footer">
-    <a href="#" class="lesson-btn" onclick="submitDragDrop()">Fullfør oppgave</a>
+    <!-- Bruk Dopetrope sin standard knappestil -->
+    <a href="#" class="button" onclick="submitDragDrop()">Fullfør oppgave</a>
   </div>
 </div>
 
 <script>
-  
   const draggables = document.querySelectorAll('.draggable-word');
   const dropzones = document.querySelectorAll('.dropzone');
 
-  
   draggables.forEach(word => {
     word.addEventListener('dragstart', e => {
       e.dataTransfer.setData('text/plain', word.textContent);
     });
   });
 
-  
   dropzones.forEach(zone => {
     zone.addEventListener('dragover', e => {
       e.preventDefault();
@@ -100,7 +109,6 @@
     });
   });
 
-  
   function submitDragDrop() {
     let queryParts = [];
     dropzones.forEach(zone => {
@@ -109,10 +117,10 @@
       queryParts.push(`answer_${index}=${encodeURIComponent(answer)}`);
     });
 
-    
     const baseUrl = "{% url 'drag_and_drop_result' %}";
     const queryString = "?" + queryParts.join("&");
     window.location.href = baseUrl + queryString;
   }
 </script>
+
 {% endblock %}

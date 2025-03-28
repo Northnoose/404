@@ -1,10 +1,10 @@
 from datetime import timedelta
+from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django import forms
 from .models import UserProgression  # Importer UserProgression-modellen
 from .models import Module
@@ -12,11 +12,11 @@ from .models import UserQuizScore
 from .models import UserPermission, User, QuizBlokkOppgave, UserScore, Rewards, UserRewards, UserProgression, Module, UserQuizScore, FriendRequest, Friendship
 from django.utils import timezone
 import re
-from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q
 from django.db import models
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -78,14 +78,27 @@ def register_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            # Hent eller opprett standard UserPermission med user_type "Bruker"
+            default_permission, created = UserPermission.objects.get_or_create(
+                user_type="Bruker",
+                defaults={
+                    'access_right_Tasks': False,
+                    'access_right_Modules': False,
+                    'access_right_Self': False,
+                    'access_right_other_users': False,
+                    # Legg til andre felt etter behov
+                }
+            )
+            user.user_type = default_permission
+            user.save()
             
             # Legg brukeren automatisk til "Brukere"-gruppen
             brukere_group, created = Group.objects.get_or_create(name='Brukere')
-            brukere_group.user_set.add(user)
+            user.groups.add(brukere_group)
             
             return redirect('login')
-    return render(request,'register.html', { 'form': form})
+    return render(request, 'register.html', {'form': form})
 
 
 @login_required
@@ -330,28 +343,34 @@ def blokkbasert_instruksjoner(request):
 def blokkbasert_koding(request):
     return render(request, 'block_coding.html')  # Renders the 'block_coding.html' template
 
+@login_required
 def drag_and_drop_result_view(request):
-    # Definer fasiten for hver dropzone
+    # Definer fasiten for hver dropzone med tilhørende forklaring
     dropzone_data = [
         {
             "question": "Setning 1 – if-setning",
-            "correct_answer": "if x > 10:"
+            "correct_answer": "if x > 10:",
+            "explanation": "Du må starte med en if-setning for å sjekke om x er større enn 10."
         },
         {
             "question": "Setning 1 – else",
-            "correct_answer": "else:"
+            "correct_answer": "else:",
+            "explanation": "Else brukes til å definere hva som skal skje dersom betingelsen i if-setningen ikke er oppfylt."
         },
         {
             "question": "Setning 2 – x = 7",
-            "correct_answer": "x = 7"
+            "correct_answer": "x = 7",
+            "explanation": "Denne linjen definerer variabelen x med verdien 7."
         },
         {
             "question": "Setning 2 – print (x er større enn 10)",
-            "correct_answer": "print('x er større enn 10')"
+            "correct_answer": "print('x er større enn 10')",
+            "explanation": "Denne linjen skriver ut at x er større enn 10 hvis betingelsen er oppfylt."
         },
         {
             "question": "Setning 2 – print (x er 10 eller mindre)",
-            "correct_answer": "print('x er 10 eller mindre')"
+            "correct_answer": "print('x er 10 eller mindre')",
+            "explanation": "Denne linjen skriver ut at x er 10 eller mindre hvis betingelsen ikke er oppfylt."
         },
     ]
 
@@ -370,23 +389,24 @@ def drag_and_drop_result_view(request):
             "chosen_answer": user_answer if user_answer else "Ingen svar",
             "correct_answer": dz["correct_answer"],
             "is_correct": is_correct,
-            "explanation": ""  # Du kan legge til forklaring her om ønskelig
+            "explanation": dz["explanation"] if not is_correct else ""
         })
 
     total = len(dropzone_data)
 
-    # Update the user's progression score
+    # Sørg for at vi har et ekte User-objekt
     if request.user.is_authenticated:
-        user_progression, created = UserProgression.objects.get_or_create(user=request.user)
-        user_progression.progression_score += correct_count  # Add points based on correct answers
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        user_obj = request.user
+        if not isinstance(user_obj, User):
+            user_obj = User.objects.get(username=user_obj)
+        user_progression, created = UserProgression.objects.get_or_create(user=user_obj)
+        user_progression.progression_score += correct_count
         user_progression.save()
 
-    if request.user.is_authenticated:
-        quiz_name = "drag_and_drop"  
-        user_quiz, created = UserQuizScore.objects.get_or_create(
-            user=request.user,
-            quiz_name=quiz_name
-        )
+        quiz_name = "drag_and_drop"
+        user_quiz, created = UserQuizScore.objects.get_or_create(user=user_obj, quiz_name=quiz_name)
         user_quiz.attempts += 1
         user_quiz.score = correct_count
         if correct_count > user_quiz.best_score:
@@ -399,6 +419,7 @@ def drag_and_drop_result_view(request):
         "total": total,
     }
     return render(request, "drag_and_drop_result.html", context)
+
 
 
 @login_required

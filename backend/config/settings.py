@@ -64,3 +64,6 @@ DEBUG = True
 SECRET_KEY = 'your_generated_secret_key_here'  # Erstatt med din genererte hemmelige nøkkel
 
 LOGIN_URL = 'login' 
+
+AUTH_USER_MODEL = 'api.User'
+

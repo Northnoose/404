@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}Drag and Drop-oppgaver{% endblock %}
 
 {% block content %}
-<h1 class="lesson-title">Videre med Python: Drag and Drop Oppgaver</h1>
+<h1 class="lesson-title">Videre med Python: Drag and Drop-oppgaver</h1>
 
 <div class="lesson-card">
   <div class="lesson-card-header">
@@ -28,23 +30,27 @@
       å lære kodestruktur på, og du får umiddelbar tilbakemelding 
       når noe er feil.
     </p>
+
     <h3>Eksempel: If-setning</h3>
+    
     <p>
       Her er et eksempel på en enkel if-setning i Python:
-      <pre><code>if x &gt; 10:
-    print("x er større enn 10")
-else:
-    print("x er 10 eller mindre")</code></pre>
-      Ved å bruke en <code>if</code>-blokk kan du styre hva som skal skje 
-      basert på en betingelse.
     </p>
+    <pre style="font-family: 'Source Code Pro', Consolas, monospace; background: #f4f4f4; padding: 1em; border-radius: 5px; overflow-x: auto;">
+    <code>if x &gt; 10:
+        print("x er større enn 10")
+    else:
+        print("x er 10 eller mindre")</code>
+    </pre>
     <p>
-      I oppgaven du skal løse, vil du flytte slike kodeblokker rundt for å lage 
-      et korrekt program. Når du er klar, trykk på knappen under for å starte oppgaven.
+      Ved å bruke en <code>if</code>-blokk kan du styre hva som skal skje basert på en betingelse.
+      I oppgaven du skal løse, vil du flytte slike kodeblokker rundt for å lage et korrekt program.
+      Når du er klar, trykk på knappen under for å starte oppgaven.
     </p>
   </div>
   <div class="lesson-card-footer">
-    <a href="{% url 'drag_and_drop_exercise' %}" class="lesson-btn">Start oppgave</a>
+    
+    <a href="{% url 'drag_and_drop_exercise' %}" class="button">Start oppgave</a>
   </div>
 </div>
 {% endblock %}

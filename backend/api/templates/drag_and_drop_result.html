@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Resultater{% endblock %}
 {% block content %}
+<h1 class="lesson-title">Resultater</h1>
 <div class="lesson-card">
   <div class="lesson-card-header quiz-header">
     <h2>Resultater</h2>
   </div>
   <div class="lesson-card-content">
-    <p>Du fikk {{ correct_count }} av {{ total }} riktige!</p>
+    <p>Du fikk <strong>{{ correct_count }}</strong> av <strong>{{ total }}</strong> riktige!</p>
     {% for item in feedback %}
       <div class="quiz-result-item">
         <p><strong>{{ forloop.counter }}. {{ item.question }}</strong></p>
@@ -22,8 +23,24 @@
     {% endfor %}
   </div>
   <div class="lesson-card-footer quiz-result-footer">
-    <a href="{% url 'drag_and_drop_exercise' %}" class="lesson-btn retake-btn">Prøv på nytt</a>
-    <a href="{% url 'module_overview' %}" class="lesson-btn exit-btn">Avslutt</a>
+    <a href="{% url 'drag_and_drop_exercise' %}" class="button retake-btn">Prøv på nytt</a>
+    <a href="{% url 'module_overview' %}" class="button alt exit-btn">Avslutt</a>
   </div>
 </div>
+
+<!-- Valgfritt: Evt. overstyrende stil for knappene, kan legges i main.css -->
+<style>
+  .quiz-result-footer {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1em;
+  }
+  .quiz-result-item {
+    margin-bottom: 1.5em;
+  }
+  .explanation {
+    margin-top: 0.5em;
+    color: #666;
+  }
+</style>
 {% endblock %}

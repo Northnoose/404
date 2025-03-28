@@ -3,10 +3,28 @@
 {% block title %}Blokkbasert Koding Resultat{% endblock %}
 
 {% block content %}
-<div class="result-container">
-    <h1>Blokkbasert Koding Resultat</h1>
-    <p>Du har fullført oppgaven og tjent <strong>{{ points_earned }} poeng</strong>!</p>
+<h1 class="lesson-title">Blokkbasert Koding Resultat</h1>
+
+<div class="lesson-card">
+  <div class="lesson-card-header">
+    <h2>Resultater</h2>
+  </div>
+  <div class="lesson-card-content">
+    <p>Du har fullført oppgaven og tjent <strong>{{ points_earned }}</strong> poeng!</p>
     <p>Totalt antall poeng: <strong>{{ total_points }}</strong></p>
-    <a href="{% url 'module_overview' %}" class="btn btn-primary">Tilbake til moduler</a>
+  </div>
+  <div class="lesson-card-footer quiz-result-footer">
+    <a href="{% url 'block_coding' %}" class="button retake-btn">Prøv på nytt</a>
+    <a href="{% url 'module_overview' %}" class="button alt exit-btn">Tilbake til moduler</a>
+  </div>
 </div>
+
+<!-- Valgfritt: Du kan legge overstyrende CSS nederst hvis du ønsker justering -->
+<style>
+  .quiz-result-footer {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1em;
+  }
+</style>
 {% endblock %}

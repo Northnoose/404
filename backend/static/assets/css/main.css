@@ -101,7 +101,7 @@ input, select, textarea {
 	body, input, textarea, select {
 		font-family: 'Source Sans Pro';
 		font-weight: 300;
-		color: #5d5d5d;
+		color: #0e0d0d;
 		font-size: 14pt;
 		line-height: 1.75em;
 	}
@@ -2102,7 +2102,7 @@ input, select, textarea {
 
 				#nav > ul > li > a {
 					border-radius: 5px;
-					color: #5d5d5d;
+					color: #1b1b1b;
 					text-decoration: none;
 					padding: 0.6em 1.2em 0.6em 1.2em;
 					-moz-transition: background-color .25s ease-in-out;
@@ -2906,4 +2906,41 @@ input, select, textarea {
 			}
 
 	}
+	
+/* Enkel styling av code-blocks */
+pre code.python {
+	display: block;
+	background: #f4f4f4;
+	padding: 1em;
+	border-radius: 5px;
+	color: #333;
+	font-size: 0.95em; /* Liten justering */
+	line-height: 1.4;
+	font-family: Consolas, "Liberation Mono", Courier, monospace;
+	/* Du kan også legge til en ramme eller skygge om ønskelig */
+	/* box-shadow: 0 1px 3px rgba(0,0,0,0.2); */
+  }
 
+  input[type="radio"] {
+	appearance: radio;
+	-moz-appearance: radio;
+	-webkit-appearance: radio;
+	-ms-appearance: radio;
+	margin-right: 0.5em;
+  }
+
+  .quiz-question {
+	margin-bottom: 1.5em;
+  }
+  
+  .quiz-question h3 {
+	margin-bottom: 0.75em;
+	font-weight: 700;
+	color: #252122;
+  }
+  
+  .quiz-question label {
+	display: block;
+	margin: 0.3em 0;
+	cursor: pointer;
+  }
