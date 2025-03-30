@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Progresjonsoverikt for Venner</h1>
+<table>
+  <thead>
+    <tr>
+       <th>Venn</th>
+       <th>Progresjon</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for friend in friends %}
+       <tr>
+          <td>
+            <a href="{% url 'profile' %}?user_id={{ friend.id }}">
+              {{ friend.username }}
+            </a>
+          </td>
+          <td>
+            {% if friend.userprogression %}
+              {{ friend.userprogression.progression_score }}%
+            {% else %}
+              0%
+            {% endif %}
+          </td>
+       </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

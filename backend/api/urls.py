@@ -34,7 +34,8 @@ urlpatterns = [
     path('friend-requests/', friend_requests, name='friend_requests'),
     path('remove-friend/<int:friendship_id>/', views.remove_friend, name='remove_friend'),
     path('user-search/', user_search, name='user_search'),
-    path('blokkbasert-koding/', views.blokkbasert_koding, name='block_coding')
+    path('blokkbasert-koding/', views.blokkbasert_koding, name='block_coding'),
+    path('friends/progression/', views.friend_progression, name='friend_progression')
     
 ]
 

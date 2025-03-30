@@ -66,6 +66,7 @@
                     <p>Ingen venner ennå.</p>
                 {% endif %}
 
+
                 <!-- Venneforespørsler-knapp -->
                 <div style="margin-top: 1em;">
                     <a href="{% url 'friend_requests' %}" class="button alt">
@@ -75,6 +76,13 @@
                             {{ pending_requests_count }}
                         </span>
                         {% endif %}
+                    </a>
+                </div>
+
+                <!-- NY LENKE TIL PROGRESJONSSIDE FOR VENNER -->
+                <div style="margin-top: 1em;">
+                    <a href="{% url 'friend_progression' %}" class="button">
+                        Se progresjon for venner
                     </a>
                 </div>
 
@@ -104,7 +112,8 @@
         <section class="box">
             <h3>Progresjon</h3>
             {% if progression %}
-                <p>{{ progression.progression }}%</p>
+                <p>{{ progression.progression_score }}%</p>
+
             {% else %}
                 <p>Ikke tilgjengelig</p>
             {% endif %}

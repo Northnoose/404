@@ -16,6 +16,9 @@ from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q
 from django.db import models
 from django.contrib.auth import get_user_model
+from .models import Friendship
+
+
 User = get_user_model()
 
 
@@ -470,20 +473,21 @@ def send_friend_request(request, user_id):
 @login_required
 def accept_friend_request(request, request_id):
     friend_request = get_object_or_404(FriendRequest, id=request_id, receiver=request.user)
-    
+
     if friend_request.status == 'pending':
         Friendship.objects.get_or_create(user1=friend_request.sender, user2=friend_request.receiver)
         Friendship.objects.get_or_create(user1=friend_request.receiver, user2=friend_request.sender)
-        
+
         FriendRequest.objects.filter(
-            (Q(sender=friend_request.sender, receiver=friend_request.receiver) |
+            Q(sender=friend_request.sender, receiver=friend_request.receiver) |
             Q(sender=friend_request.receiver, receiver=friend_request.sender)
-        ).delete())
-        
+        ).delete()
+
         messages.success(request, f"Du og {friend_request.sender.username} er nå venner!")
         return redirect('friend_requests')
-    
+
     return redirect('friend_requests')
+
 
 @login_required
 def reject_friend_request(request, request_id):
@@ -551,3 +555,20 @@ def user_search(request):
         'users': users,
         'query': query
     })
+    
+@login_required
+def friend_progression(request):
+    friend_ids = Friendship.objects.filter(user1=request.user).values_list('user2', flat=True)
+
+    friends = User.objects.filter(id__in=friend_ids).select_related('userprogression')
+
+    friends = sorted(
+        friends,
+        key=lambda f: f.userprogression.progression_score if hasattr(f, 'userprogression') else 0,
+        reverse=True
+    )
+
+    context = {
+        'friends': friends,
+    }
+    return render(request, 'friend_progression.html', context)
