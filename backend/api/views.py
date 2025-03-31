@@ -512,7 +512,7 @@ def admin_dashboard(request):
 
 
 @login_required
-<<<<<<< HEAD
+
 def send_friend_request(request, user_id):
     receiver = get_object_or_404(User, id=user_id)
     
@@ -626,7 +626,7 @@ def friend_progression(request):
         'friends': friends,
     }
     return render(request, 'friend_progression.html', context)
-=======
+
 def oop_quiz_view(request):
     return render(request, 'quiz_oop.html')
 
@@ -708,4 +708,4 @@ OOP_QUIZ_QUESTIONS = [
 
 
 
->>>>>>> 77ebc1c ( lagt til grunnstruktur for OOP-quiz med spørsmål og resultatside (uten poengsystem))
+
