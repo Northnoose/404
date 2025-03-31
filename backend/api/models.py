@@ -37,11 +37,19 @@ class User(AbstractUser):
         return self.username
 
 class Task(models.Model):
- 
+    DIFFICULTY_CHOICES = [
+        ('beginner', 'Nybegynner'),
+        ('intermediate', 'Viderekommen'),
+        ('advanced', 'Avansert'),
+    ]
+
     description = models.TextField()
-    task_object = JSONField(null=True, blank=True)  
+    task_object = JSONField(null=True, blank=True)
+    difficulty_level = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, default='beginner')
+
     def __str__(self):
-        return self.description[:50] 
+        return self.description[:50]
+ 
 
 class Module(models.Model):
     tasks = models.ForeignKey(Task, on_delete=models.CASCADE) 

@@ -104,32 +104,41 @@ def register_view(request):
     return render(request, 'register.html', {'form': form})
 
 
+
 @login_required
 def profile(request):
     try:
-        progression = UserProgression.objects.get(user=request.user)  # Henter brukerens progresjon
+        progression = UserProgression.objects.get(user=request.user)
     except UserProgression.DoesNotExist:
-        progression = None  # Hvis ingen progresjonsdata finnes, settes det til None
-        
-    try:
-        user_rewards = UserRewards.objects.filter(user=request.user)
-    except:
-        user_rewards = None
-        
+        progression = None
+
+    # Skill level function
+    def get_user_skill_level(score):
+        if score <= 10:
+            return 'beginner'
+        elif score <= 25:
+            return 'intermediate'
+        else:
+            return 'advanced'
+
+    user_level = None
+    if progression:
+        user_level = get_user_skill_level(progression.progression_score)
+
+    # Rewards and friends (unchanged)
+    user_rewards = UserRewards.objects.filter(user=request.user)
     friends = User.objects.filter(
         id__in=Friendship.objects.filter(user1=request.user).values('user2')
     )
-    
-    # Hent ventende forespørsler
+
     pending_requests = FriendRequest.objects.filter(
         receiver=request.user,
         status='pending'
     )
-    
-    # Sjekk vennestatus hvis man ser på andres profil
+
     already_friends = False
     request_sent = False
-    
+
     if 'user_id' in request.GET and request.GET['user_id'] != str(request.user.id):
         viewed_user = get_object_or_404(User, id=request.GET['user_id'])
         already_friends = viewed_user in friends
@@ -140,7 +149,7 @@ def profile(request):
         ).exists()
     else:
         viewed_user = request.user
-    
+
     if 'user_id' in request.GET:
         viewed_user = get_object_or_404(User, id=request.GET['user_id'])
         already_friends = Friendship.objects.filter(
@@ -150,10 +159,11 @@ def profile(request):
     else:
         viewed_user = request.user
         already_friends = False
-    
+
     context = {
         'user': viewed_user,
         'progression': progression,
+        'user_level': user_level,
         'user_rewards': user_rewards,
         'friends': friends,
         'pending_requests_count': pending_requests.count(),
@@ -161,6 +171,8 @@ def profile(request):
         'request_sent': request_sent
     }
     return render(request, 'profile.html', context)
+
+
 
 
 class EditProfileForm(forms.ModelForm):
@@ -182,11 +194,52 @@ def edit_profile(request):
 
 
 
+@login_required
 def module_overview(request):
-    # Hent alle moduler fra databasen
-    modules = Module.objects.all()
-    context = {'modules': modules}
-    return render(request, 'modules_overview.html', context)
+    user_progress, _ = UserProgression.objects.get_or_create(user=request.user)
+
+    def get_user_skill_level(score):
+        if score <= 8:
+            return 'beginner'
+        elif score <= 16:
+            return 'intermediate'
+        else:
+            return 'advanced'
+
+    skill_order = {'beginner': 1, 'intermediate': 2, 'advanced': 3}
+    user_level = get_user_skill_level(user_progress.progression_score)
+
+    # Static modules: manually tag them with difficulty levels
+    modules_info = [
+        {
+            "title": "Grunnleggende Quiz",
+            "description": "Lær det helt grunnleggende om koding og test deg selv med en enkel quiz med flervalgsspørsmål.",
+            "url_name": "python_lesson",
+            "difficulty": "beginner"
+        },
+        {
+            "title": "Drag and Drop-oppgaver",
+            "description": "Utforsk koding på en interaktiv måte ved å dra og slippe kodeblokker på riktig plass.",
+            "url_name": "drag_and_drop_lesson",
+            "difficulty": "intermediate"
+        },
+        {
+            "title": "Blokkbasert Koding",
+            "description": "Sett sammen kodeblokker som representerer handlinger, løkker og betingelser for å lage små programmer.",
+            "url_name": "blokkbasert_instruksjoner",
+            "difficulty": "advanced"
+        },
+    ]
+
+    # Add warning flag for modules above user level
+    for module in modules_info:
+        module["is_above_user_level"] = skill_order[module["difficulty"]] > skill_order[user_level]
+
+    return render(request, 'modules_overview.html', {
+        'modules_info': modules_info,
+        'user_level': user_level
+    })
+
 
 def python_lesson_view(request):
     return render (request, 'lesson_python.html')

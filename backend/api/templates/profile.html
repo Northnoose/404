@@ -24,7 +24,6 @@
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>Registrert siden:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
 
-            <!-- Hvis det er din egen profil, vis rediger/logg ut-knapper -->
             {% if user == request.user %}
             <div style="margin-top: 1em;">
                 <a href="{% url 'edit_profile' %}" class="button">Rediger Profil</a>
@@ -32,7 +31,6 @@
             </div>
             {% endif %}
 
-            <!-- Hvis du ser på en annen brukers profil, vis vennestatus/venneforespørsel -->
             {% if user != request.user %}
             <div style="margin-top: 1em;">
                 {% if already_friends %}
@@ -49,7 +47,7 @@
         </section>
     </div>
 
-    <!-- Høyre kolonne: Dine venner og venneforespørsler (col-6 col-12-medium) -->
+    <!-- Høyre kolonne: Dine venner og venneforespørsler -->
     <div class="col-6 col-12-medium">
         <section class="box">
             {% if user == request.user %}
@@ -66,8 +64,6 @@
                     <p>Ingen venner ennå.</p>
                 {% endif %}
 
-
-                <!-- Venneforespørsler-knapp -->
                 <div style="margin-top: 1em;">
                     <a href="{% url 'friend_requests' %}" class="button alt">
                         Se venneforespørsler
@@ -79,14 +75,12 @@
                     </a>
                 </div>
 
-                <!-- NY LENKE TIL PROGRESJONSSIDE FOR VENNER -->
                 <div style="margin-top: 1em;">
                     <a href="{% url 'friend_progression' %}" class="button">
                         Se progresjon for venner
                     </a>
                 </div>
 
-                <!-- Søkefunksjon -->
                 <div style="margin-top: 1em;">
                     <h4>Søk etter venner</h4>
                     <form method="get" action="{% url 'user_search' %}" style="display: flex; gap: 0.5em;">
@@ -95,8 +89,7 @@
                     </form>
                 </div>
             {% else %}
-                <!-- Hvis du ser på en annen brukers profil, kan denne kolonnen stå tom eller brukes til noe annet -->
-                <p>Informasjon om vennestatus etc. vises i venstre kolonne.</p>
+                <p>Informasjon om vennestatus vises i venstre kolonne.</p>
             {% endif %}
         </section>
     </div>
@@ -112,8 +105,14 @@
         <section class="box">
             <h3>Progresjon</h3>
             {% if progression %}
-                <p>{{ progression.progression_score }}%</p>
-
+                <p><strong>Poeng:</strong> {{ progression.progression_score }}%</p>
+                <p><strong>Ferdighetsnivå:</strong>
+                    {% if user_level == 'beginner' %}Nybegynner
+                    {% elif user_level == 'intermediate' %}Viderekommen
+                    {% elif user_level == 'advanced' %}Avansert
+                    {% else %}Ikke beregnet
+                    {% endif %}
+                </p>
             {% else %}
                 <p>Ikke tilgjengelig</p>
             {% endif %}
