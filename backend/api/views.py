@@ -512,6 +512,7 @@ def admin_dashboard(request):
 
 
 @login_required
+<<<<<<< HEAD
 def send_friend_request(request, user_id):
     receiver = get_object_or_404(User, id=user_id)
     
@@ -625,3 +626,86 @@ def friend_progression(request):
         'friends': friends,
     }
     return render(request, 'friend_progression.html', context)
+=======
+def oop_quiz_view(request):
+    return render(request, 'quiz_oop.html')
+
+@login_required
+def oop_quiz_result_view(request):
+    answers = []
+    feedback = []
+    correct_count = 0
+
+    for i, question in enumerate(OOP_QUIZ_QUESTIONS):
+        chosen_str = request.GET.get(f'answer_{i}', "")
+        try:
+            chosen = int(chosen_str)
+        except ValueError:
+            chosen = -1
+
+        is_correct = (chosen == question["correct"])
+        if is_correct:
+            correct_count += 1
+
+        feedback.append({
+            "question": question["question"],
+            "chosen_answer": question["choices"][chosen] if 0 <= chosen < len(question["choices"]) else "Ingen svar",
+            "correct_answer": question["choices"][question["correct"]],
+            "is_correct": is_correct,
+            "explanation": question["explanation"] if not is_correct else ""
+        })
+
+    
+    if request.user.is_authenticated:
+        user_progression, _ = UserProgression.objects.get_or_create(user=request.user)
+        user_progression.progression_score += correct_count
+        user_progression.save()
+
+    context = {
+        "feedback": feedback,
+        "correct_count": correct_count,
+        "total": len(OOP_QUIZ_QUESTIONS),
+    }
+    return render(request, "quiz_oop_result.html", context)
+
+
+OOP_QUIZ_QUESTIONS = [
+    {
+        "question": "Hva er et objekt i objektorientert programmering?",
+        "choices": [
+            "En funksjon som returnerer en verdi",
+            "En instans av en klasse",
+            "En loopstruktur",
+            "En datatype"
+        ],
+        "correct": 1,
+        "explanation": "Et objekt er en instans av en klasse, med egne attributter og metoder."
+    },
+    {
+        "question": "Hva gjør nøkkelordet `self` i Python-klasser?",
+        "choices": [
+            "Refererer til en global variabel",
+            "Er navnet på klassen",
+            "Refererer til instansen av klassen",
+            "Importerer klassen"
+        ],
+        "correct": 2,
+        "explanation": "`self` refererer til det aktuelle objektet/instansen."
+    },
+    {
+        "question": "Hva er arv i objektorientert programmering?",
+        "choices": [
+            "En metode som lager nye objekter",
+            "Evnen til å dele data mellom funksjoner",
+            "En mekanisme der en klasse arver egenskaper fra en annen klasse",
+            "En prosess for å slette objekter"
+        ],
+        "correct": 2,
+        "explanation": "Arv lar en klasse overta attributter og metoder fra en annen klasse."
+    }
+]
+
+
+
+
+>>>>>>> 77ebc1c ( lagt til grunnstruktur for OOP-quiz med spørsmål og resultatside (uten poengsystem))

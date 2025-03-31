@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}OOP – Quiz{% endblock %}
+
+{% block content %}
+<div class="lesson-card">
+  <div class="lesson-card-header">
+    <h2>Objektorientert Programmering – Quiz</h2>
+  </div>
+
+  <form method="get" action="{% url 'quiz_oop_result' %}">
+    <div class="lesson-card-content">
+      <h3>1. Hva er et objekt i objektorientert programmering?</h3>
+      <label><input type="radio" name="answer_0" value="0"> En funksjon som returnerer en verdi</label><br>
+      <label><input type="radio" name="answer_0" value="1"> En instans av en klasse</label><br>
+      <label><input type="radio" name="answer_0" value="2"> En loopstruktur</label><br>
+      <label><input type="radio" name="answer_0" value="3"> En datatype</label><br>
+      <hr>
+
+      <h3>2. Hva gjør nøkkelordet <code>self</code> i Python-klasser?</h3>
+      <label><input type="radio" name="answer_1" value="0"> Refererer til en global variabel</label><br>
+      <label><input type="radio" name="answer_1" value="1"> Er navnet på klassen</label><br>
+      <label><input type="radio" name="answer_1" value="2"> Refererer til instansen av klassen</label><br>
+      <label><input type="radio" name="answer_1" value="3"> Importerer klassen</label><br>
+    </div>
+
+    <div class="lesson-card-footer">
+      <button type="submit" class="lesson-btn">Lever quiz</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

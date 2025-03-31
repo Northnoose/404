@@ -5,6 +5,8 @@ from django.conf.urls.static import static
 from django.urls import path
 from .views import blokkbasert_koding_result_view, profile, edit_profile, scoreboard
 from django.contrib import admin
+from .views import oop_quiz_view, oop_quiz_result_view
+
 from .views import send_friend_request, accept_friend_request, reject_friend_request, friend_requests, user_search
 
 urlpatterns = [
@@ -27,6 +29,12 @@ urlpatterns = [
     path('modules/drag-and-drop-lesson/', views.drag_and_drop_lesson_view, name='drag_and_drop_lesson'),
     path('modules/drag-and-drop-exercise/', views.drag_and_drop_exercise_view, name='drag_and_drop_exercise'),
     path('modules/drag-and-drop-result/', views.drag_and_drop_result_view, name='drag_and_drop_result'),
+    path('scoreboard/', scoreboard, name='scoreboard'), 
+    path('modules/oop-quiz/', views.oop_quiz_view, name='oop_quiz'),
+    path('modules/oop-quiz-result/', views.oop_quiz_result_view, name='quiz_oop_result'),
+    path('modules/oop-quiz/', oop_quiz_view, name='quiz_oop'),
+    path('modules/oop-quiz-result/', oop_quiz_result_view, name='quiz_oop_result'),
+
     path('scoreboard/', scoreboard, name='scoreboard'),
     path('friend-request/send/<int:user_id>/', send_friend_request, name='send_friend_request'),
     path('friend-request/accept/<int:request_id>/', accept_friend_request, name='accept_friend_request'),
