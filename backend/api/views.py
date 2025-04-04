@@ -406,6 +406,10 @@ def blokkbasert_instruksjoner(request):
 def blokkbasert_koding(request):
     return render(request, 'block_coding.html')  # Renders the 'block_coding.html' template
 
+def lesson_oop_view(request):
+    return render(request, 'lesson_oop.html')
+
+
 @login_required
 def drag_and_drop_result_view(request):
     # Definer fasiten for hver dropzone med tilhørende forklaring

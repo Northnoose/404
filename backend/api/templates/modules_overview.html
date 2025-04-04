@@ -83,19 +83,18 @@
         </section>
     </div>
 
-    <!-- Modul 4: Objektorientert Programmering (OOP) -->
+    <!-- Modul 4: Objektorientert Programmering -->
     <div class="col-4 col-12-medium">
         <section class="box">
             <header>
-                <h2>Objektorientert Programmering (OOP)</h2>
+                <h2>Objektorientert Programmering</h2>
             </header>
             <p>
-                Test dine ferdigheter innen objektorientert programmering! 
-                Lær om objekter, klasser, arv og polymorfisme gjennom en 
-                quiz med forklaringer.
+                Lær om klasser, objekter, arv og polymorfisme med praktiske quizoppgaver. 
+                Denne modulen er laget for viderekomne brukere som ønsker å forstå strukturert koding.
                 <br><br>
                 <strong>Vanskelighetsgrad:</strong> Viderekommen
-                {% if modules_info|length > 3 and modules_info.3.is_above_user_level %}
+                {% if user_level == "beginner" %}
                     <br>
                     <span style="color: darkorange; font-weight: bold;">
                         ⚠️ Denne modulen er mer avansert enn ditt ferdighetsnivå.
@@ -103,7 +102,7 @@
                 {% endif %}
             </p>
             <footer>
-                <a href="{% url 'quiz_oop' %}" class="button">Start quiz</a>
+                <a href="{% url 'lesson_oop' %}" class="button">Start modul</a>
             </footer>
         </section>
     </div>

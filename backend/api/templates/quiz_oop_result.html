@@ -2,12 +2,15 @@
 {% block title %}Resultater – OOP{% endblock %}
 
 {% block content %}
+<h1 class="lesson-title">Resultater</h1>
+
 <div class="lesson-card">
   <div class="lesson-card-header quiz-header">
     <h2>Resultater</h2>
   </div>
+
   <div class="lesson-card-content">
-    <p>Du fikk {{ correct_count }} av {{ total }} riktige!</p>
+    <p>Du fikk <strong>{{ correct_count }}</strong> av <strong>{{ total }}</strong> riktige!</p>
 
     {% for item in feedback %}
       <div class="quiz-result-item">
@@ -23,9 +26,25 @@
       </div>
     {% endfor %}
   </div>
+
   <div class="lesson-card-footer quiz-result-footer">
-    <a href="{% url 'quiz_oop' %}" class="lesson-btn retake-btn">Ta quiz på nytt</a>
-    <a href="{% url 'module_overview' %}" class="lesson-btn exit-btn">Avslutt</a>
+    <a href="{% url 'quiz_oop' %}" class="button retake-btn">Ta quiz på nytt</a>
+    <a href="{% url 'module_overview' %}" class="button alt exit-btn">Tilbake til moduler</a>
   </div>
 </div>
+
+<style>
+  .quiz-result-footer {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1em;
+  }
+  .quiz-result-item {
+    margin-bottom: 1.5em;
+  }
+  .explanation {
+    margin-top: 0.5em;
+    color: #666;
+  }
+</style>
 {% endblock %}
