@@ -211,25 +211,32 @@ def module_overview(request):
 
     # Static modules: manually tag them with difficulty levels
     modules_info = [
-        {
-            "title": "Grunnleggende Quiz",
-            "description": "Lær det helt grunnleggende om koding og test deg selv med en enkel quiz med flervalgsspørsmål.",
-            "url_name": "python_lesson",
-            "difficulty": "beginner"
-        },
-        {
-            "title": "Drag and Drop-oppgaver",
-            "description": "Utforsk koding på en interaktiv måte ved å dra og slippe kodeblokker på riktig plass.",
-            "url_name": "drag_and_drop_lesson",
-            "difficulty": "intermediate"
-        },
-        {
-            "title": "Blokkbasert Koding",
-            "description": "Sett sammen kodeblokker som representerer handlinger, løkker og betingelser for å lage små programmer.",
-            "url_name": "blokkbasert_instruksjoner",
-            "difficulty": "advanced"
-        },
-    ]
+    {
+        "title": "Grunnleggende Quiz",
+        "description": "Lær det helt grunnleggende om koding og test deg selv med en enkel quiz med flervalgsspørsmål.",
+        "url_name": "python_lesson",
+        "difficulty": "beginner"
+    },
+    {
+        "title": "Drag and Drop-oppgaver",
+        "description": "Utforsk koding på en interaktiv måte ved å dra og slippe kodeblokker på riktig plass.",
+        "url_name": "drag_and_drop_lesson",
+        "difficulty": "intermediate"
+    },
+    {
+        "title": "Blokkbasert Koding",
+        "description": "Sett sammen kodeblokker som representerer handlinger, løkker og betingelser for å lage små programmer.",
+        "url_name": "blokkbasert_instruksjoner",
+        "difficulty": "advanced"
+    },
+    {
+        "title": "OOP Quiz",
+        "description": "Test dine kunnskaper i objektorientert programmering. Passer for viderekomne brukere.",
+        "url_name": "oop_quiz",
+        "difficulty": "advanced"
+    },
+]
+
 
     # Add warning flag for modules above user level
     for module in modules_info:
@@ -702,7 +709,21 @@ OOP_QUIZ_QUESTIONS = [
         ],
         "correct": 2,
         "explanation": "Arv lar en klasse overta attributter og metoder fra en annen klasse."
-    }
+    },
+    {
+    "question": "Hva er polymorfisme i objektorientert programmering?",
+    "choices": [
+        "Evnen til å endre verdier i objekter",
+        "Muligheten for én funksjon å ha ulike former",
+        "Å bruke flere klasser i én fil",
+        "Å slette objekter dynamisk"
+    ],
+    "correct": 1,
+    "explanation": "Polymorfisme betyr at en metode eller funksjon kan ha forskjellige former, avhengig av hvilken klasse som bruker den."
+}
+
+
+    
 ]
 
 

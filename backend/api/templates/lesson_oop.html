@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Objektorientert Programmering{% endblock %}
+
+{% block content %}
+<h1 class="lesson-title">Objektorientert Programmering</h1>
+
+<div class="lesson-card">
+  <div class="lesson-card-header">
+    <h2>Innledning til OOP</h2>
+  </div>
+  <div class="lesson-card-content">
+    <p>
+      Objektorientert programmering (OOP) handler om å strukturere koden din rundt objekter og klasser.
+      Dette gjør det enklere å organisere større programmer, og gir muligheter for gjenbruk og modularisering.
+    </p>
+    <ul>
+      <li><strong>Klasser</strong> definerer strukturen og oppførselen til objektene.</li>
+      <li><strong>Objekter</strong> er instanser av klasser, med egne data og funksjonalitet.</li>
+      <li><strong>Arv</strong> lar deg gjenbruke kode og utvide funksjonalitet.</li>
+      <li><strong>Polymorfisme</strong> betyr at objekter kan brukes om hverandre så lenge de oppfører seg likt.</li>
+    </ul>
+    <p>Når du føler deg klar, kan du starte OOP-quizen for å teste kunnskapene dine!</p>
+  </div>
+  <div class="lesson-card-footer">
+    <a href="{% url 'oop_quiz' %}" class="button">Start quiz</a>
+  </div>
+</div>
+{% endblock %}
