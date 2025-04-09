@@ -107,12 +107,19 @@ def register_view(request):
 
 @login_required
 def profile(request):
+    # Hvem sin profil skal vises?
+    if 'user_id' in request.GET and request.GET['user_id'] != str(request.user.id):
+        viewed_user = get_object_or_404(User, id=request.GET['user_id'])
+    else:
+        viewed_user = request.user
+
+    # Hent progresjon for brukeren som vises
     try:
-        progression = UserProgression.objects.get(user=request.user)
+        progression = UserProgression.objects.get(user=viewed_user)
     except UserProgression.DoesNotExist:
         progression = None
 
-    # Skill level function
+    # Ferdighetsnivå
     def get_user_skill_level(score):
         if score <= 10:
             return 'beginner'
@@ -125,8 +132,10 @@ def profile(request):
     if progression:
         user_level = get_user_skill_level(progression.progression_score)
 
-    # Rewards and friends (unchanged)
-    user_rewards = UserRewards.objects.filter(user=request.user)
+    # Belønninger for brukeren som vises
+    user_rewards = UserRewards.objects.filter(user=viewed_user)
+
+    # Venner og forespørsler (relatert til innlogget bruker)
     friends = User.objects.filter(
         id__in=Friendship.objects.filter(user1=request.user).values('user2')
     )
@@ -136,29 +145,17 @@ def profile(request):
         status='pending'
     )
 
-    already_friends = False
-    request_sent = False
+    # Vennestatus
+    already_friends = Friendship.objects.filter(
+        Q(user1=request.user, user2=viewed_user) |
+        Q(user1=viewed_user, user2=request.user)
+    ).exists()
 
-    if 'user_id' in request.GET and request.GET['user_id'] != str(request.user.id):
-        viewed_user = get_object_or_404(User, id=request.GET['user_id'])
-        already_friends = viewed_user in friends
-        request_sent = FriendRequest.objects.filter(
-            sender=request.user,
-            receiver=viewed_user,
-            status='pending'
-        ).exists()
-    else:
-        viewed_user = request.user
-
-    if 'user_id' in request.GET:
-        viewed_user = get_object_or_404(User, id=request.GET['user_id'])
-        already_friends = Friendship.objects.filter(
-            (Q(user1=request.user, user2=viewed_user) |
-             Q(user1=viewed_user, user2=request.user))
-        ).exists()
-    else:
-        viewed_user = request.user
-        already_friends = False
+    request_sent = FriendRequest.objects.filter(
+        sender=request.user,
+        receiver=viewed_user,
+        status='pending'
+    ).exists()
 
     context = {
         'user': viewed_user,
@@ -171,6 +168,7 @@ def profile(request):
         'request_sent': request_sent
     }
     return render(request, 'profile.html', context)
+
 
 
 

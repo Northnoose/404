@@ -122,7 +122,13 @@
     <!-- Høyre kolonne: Mine Belønninger -->
     <div class="col-6 col-12-medium">
         <section class="box">
-            <h3>Mine Belønninger</h3>
+            <h3>
+                {% if user == request.user %}
+                    Mine Belønninger
+                {% else %}
+                    Belønninger for {{ user.username }}
+                {% endif %}
+            </h3>
             {% if user_rewards %}
                 <ul>
                     {% for reward in user_rewards %}
