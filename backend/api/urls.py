@@ -48,7 +48,7 @@ urlpatterns = [
 
     # Blokkbasert modul
     path('blokkbasert-instruksjoner/', views.blokkbasert_instruksjoner, name='blokkbasert_instruksjoner'),
-    path('blokkbasert-koding/', views.blokkbasert_koding, name='block_coding'),
+    path('blokkbasert-koding/', views.blokkbasert_koding, name='block_coding_module'),
     path('blokkbasert-koding/result/', blokkbasert_koding_result_view, name='blokkbasert_koding_result'),
 
     # OOP-modul 
