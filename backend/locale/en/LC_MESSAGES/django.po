@@ -1,0 +1,14 @@
+msgid "Moduler"
+msgstr "Modules"
+
+msgid "Profil"
+msgstr "Profile"
+
+msgid "Logg inn"
+msgstr "Login"
+
+msgid "Registrer deg"
+msgstr "Register"
+
+msgid "Scoreboard"
+msgstr "Scoreboard"

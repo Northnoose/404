@@ -1,4 +1,6 @@
 import os
+from django.utils.translation import gettext_lazy as _
+
 
 # Definer BASE_DIR ved hjelp av os.path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -67,3 +69,17 @@ LOGIN_URL = 'login'
 
 AUTH_USER_MODEL = 'api.User'
 
+
+
+LANGUAGE_CODE = 'nb'  # Norsk som standard
+
+LANGUAGES = [
+    ('nb', _('Norsk')),
+    ('en', _('Engelsk')),
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
+
+MIDDLEWARE.insert(1, 'django.middleware.locale.LocaleMiddleware')  # Legges etter SecurityMiddleware

@@ -1,17 +1,15 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE HTML>
-<html lang="no">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>{% block title %}Min Læringsplattform{% endblock %}</title>
+    <title>{% block title %}{% trans "Min Læringsplattform" %}{% endblock %}</title>
 
-    
     <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
 
-    
     <style>
-      
       #banner {
         background: url("{% static 'assets/images/pic01.jpg' %}") no-repeat center center;
         background-size: cover;
@@ -35,12 +33,10 @@
         margin: 0 auto;
       }
 
-      
       #header {
         padding-bottom: 0;
       }
 
-      
       #main {
         padding-top: 2em;
       }
@@ -51,52 +47,44 @@
 
         <!-- Header -->
         <section id="header">
-            <!-- Logo -->
-            <h1><a href="{% url 'home' %}">Min Læringsplattform</a></h1>
+            <h1><a href="{% url 'home' %}">{% trans "Min Læringsplattform" %}</a></h1>
 
-            <!-- Navigasjon -->
             <nav id="nav">
                 <ul>
                     <li class="{% if request.resolver_match.url_name == 'home' %}current{% endif %}">
-                        <a href="{% url 'home' %}">Hjem</a>
+                        <a href="{% url 'home' %}">{% trans "Hjem" %}</a>
                     </li>
                     <li class="{% if request.resolver_match.url_name == 'about' %}current{% endif %}">
-                        <a href="{% url 'about' %}">Om oss</a>
+                        <a href="{% url 'about' %}">{% trans "Om oss" %}</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="{% if request.resolver_match.url_name == 'profile' %}current{% endif %}">
-                            <a href="{% url 'profile' %}">Profil</a>
+                            <a href="{% url 'profile' %}">{% trans "Profil" %}</a>
                         </li>
                     {% else %}
                         <li class="{% if request.resolver_match.url_name == 'login' %}current{% endif %}">
-                            <a href="{% url 'login' %}">Logg inn</a>
+                            <a href="{% url 'login' %}">{% trans "Logg inn" %}</a>
                         </li>
                         <li class="{% if request.resolver_match.url_name == 'register' %}current{% endif %}">
-                            <a href="{% url 'register' %}">Registrer deg</a>
+                            <a href="{% url 'register' %}">{% trans "Registrer deg" %}</a>
                         </li>
                     {% endif %}
                     <li class="{% if request.resolver_match.url_name == 'module_overview' %}current{% endif %}">
-                        <a href="{% url 'module_overview' %}">Moduler</a>
+                        <a href="{% url 'module_overview' %}">{% trans "Moduler" %}</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="{% if request.resolver_match.url_name == 'scoreboard' %}current{% endif %}">
-                            <a href="{% url 'scoreboard' %}">Scoreboard</a>
+                            <a href="{% url 'scoreboard' %}">{% trans "Scoreboard" %}</a>
                         </li>
                     {% endif %}
                 </ul>
             </nav>
 
-            <!-- Banner: vises bare hvis vi er på 'home' -->
             {% if request.resolver_match.url_name == 'home' %}
             <section id="banner">
                 <header>
-                    <h2>Velkommen!</h2>
-                    <p>
-                        Her kan du lære objektorientert programmering på en engasjerende måte –
-                        med poeng, belønninger og mulighet til å sammenligne fremgangen din med
-                        venner. Utforsk modulene, løs interaktive oppgaver og få en praktisk
-                        innføring i koding, helt i ditt eget tempo.
-                    </p>
+                    <h2>{% trans "Velkommen!" %}</h2>
+                    <p>{% trans "Her kan du lære objektorientert programmering på en engasjerende måte – med poeng, belønninger og mulighet til å sammenligne fremgangen din med venner. Utforsk modulene, løs interaktive oppgaver og få en praktisk innføring i koding, helt i ditt eget tempo." %}</p>
                 </header>
             </section>
             {% endif %}
@@ -114,8 +102,19 @@
         <section id="footer">
             <div class="container">
                 <ul>
-                    <li><a href="{% url 'admin:index' %}">Admin Panel</a></li>
+                    <li><a href="{% url 'admin:index' %}">{% trans "Admin Panel" %}</a></li>
                 </ul>
+
+                <!-- Språkvelger -->
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <label for="language-select">{% trans "Velg språk:" %}</label>
+                    <select name="language" id="language-select" onchange="this.form.submit()">
+                        <option value="no" {% if LANGUAGE_CODE == 'no' %}selected{% endif %}>Norsk</option>
+                        <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                    </select>
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                </form>
             </div>
         </section>
     </div>

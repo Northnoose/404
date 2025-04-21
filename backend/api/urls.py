@@ -1,7 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static  
 from django.contrib import admin
+from django.conf.urls.i18n import i18n_patterns
+from django.views.i18n import set_language
 
 from . import views
 from .views import (
@@ -18,7 +20,13 @@ from .views import (
     user_search,
 )
 
+# Ikke-oversatte paths (valgfritt)
 urlpatterns = [
+    path('i18n/setlang/', set_language, name='set_language'),
+]
+
+# Alle språkavhengige paths
+urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
 
@@ -69,6 +77,7 @@ urlpatterns = [
 
     # Scoreboard
     path('scoreboard/', scoreboard, name='scoreboard'),
-]
+)
 
+# Statisk
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
