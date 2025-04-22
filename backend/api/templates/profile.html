@@ -145,4 +145,34 @@
     </div>
 
 </div> <!-- /row -->
+
+{% if show_tutorial %}
+<div id="tutorial-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+    <div style="background: white; padding: 30px 40px; width: 60%; max-width: 600px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.3); text-align: center;">
+        <h2 style="margin-bottom: 20px;">Velkommen til plattformen!</h2>
+        <p style="margin-bottom: 20px;">Her er en kort guide til hvordan alt fungerer:</p>
+        <ul style="list-style: none; padding: 0; text-align: left; line-height: 1.8;">
+            <li style="margin-bottom: 15px;">📚 <strong>Modulbaserte oppgaver:</strong> Start med leksjoner og fullfør oppgaver som drag & drop og blokkoding.</li>
+            <li style="margin-bottom: 15px;">🏆 <strong>Poeng og belønninger:</strong> Tjen poeng for hver oppgave, oppnå belønninger og se deg selv på rangeringen!</li>
+            <li style="margin-bottom: 15px;">👥 <strong>Venner:</strong> Legg til venner, se deres progresjon og konkurrer sammen.</li>
+            <li style="margin-bottom: 0;">💻 <strong>OOP-modul:</strong> For viderekomne – lær om klasser, arv og polymorfisme!</li>
+        </ul>
+        <button onclick="closeTutorial()" style="margin-top: 30px; padding: 12px 24px; background: #e63946; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer;">Kom i gang!</button>
+    </div>
+</div>
+
+<script>
+function closeTutorial() {
+    document.getElementById('tutorial-overlay').style.display = 'none';
+
+    // Send AJAX for å markere opplæring som sett
+    fetch("{% url 'mark_tutorial_seen' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+        }
+    });
+}
+</script>
+{% endif %}
 {% endblock %}

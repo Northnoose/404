@@ -17,6 +17,8 @@ from django.db.models import Q
 from django.db import models
 from django.contrib.auth import get_user_model
 from .models import Friendship
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 
 User = get_user_model()
@@ -56,57 +58,44 @@ def about(request):
     return render(request, 'about.html')
 
 def login_view(request):
-    if request.user.is_authenticated:
-        return redirect('profile')
-    
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        
-        user = authenticate(request, username = username, password = password)
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            # Hvis bruker ikke har sett opplæring, sett en session flagg
+            if not user.has_seen_tutorial:
+                request.session['show_tutorial'] = True
             return redirect('profile')
         else:
-            # feil melding ved ugyldig innlogg
-            messages.error(request, 'Invalid username or password.')
-    return render(request, "login.html")
+            messages.error(request, 'Ugyldig brukernavn eller passord.')
+    return render(request, 'login.html')
 
 def logout_view(request):
     logout(request)
-    return redirect('home')
+    return redirect('login')
 
 def register_view(request):
-    form = CustomUserCreationForm()
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            # Hent eller opprett standard UserPermission med user_type "Bruker"
-            default_permission, created = UserPermission.objects.get_or_create(
-                user_type="Bruker",
-                defaults={
-                    'access_right_Tasks': False,
-                    'access_right_Modules': False,
-                    'access_right_Self': False,
-                    'access_right_other_users': False,
-                    # Legg til andre felt etter behov
-                }
-            )
-            user.user_type = default_permission
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Brukernavnet finnes allerede.')
+        else:
+            user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
-            
-            # Legg brukeren automatisk til "Brukere"-gruppen
-            brukere_group, created = Group.objects.get_or_create(name='Brukere')
-            user.groups.add(brukere_group)
-            
+            messages.success(request, 'Bruker opprettet! Logg inn.')
             return redirect('login')
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'register.html')
 
 
 
 @login_required
 def profile(request):
+    show_tutorial = request.session.pop('show_tutorial', False)
     # Hvem sin profil skal vises?
     if 'user_id' in request.GET and request.GET['user_id'] != str(request.user.id):
         viewed_user = get_object_or_404(User, id=request.GET['user_id'])
@@ -165,7 +154,8 @@ def profile(request):
         'friends': friends,
         'pending_requests_count': pending_requests.count(),
         'already_friends': already_friends,
-        'request_sent': request_sent
+        'request_sent': request_sent,
+        'show_tutorial': show_tutorial
     }
     return render(request, 'profile.html', context)
 
@@ -728,7 +718,15 @@ OOP_QUIZ_QUESTIONS = [
     
 ]
 
-
+@login_required
+@csrf_exempt
+def mark_tutorial_seen(request):
+    if request.method == 'POST':
+        user = request.user
+        user.has_seen_tutorial = True
+        user.save()
+        return JsonResponse({'status': 'ok'})
+    return JsonResponse({'status': 'error'}, status=400)
 
 
 

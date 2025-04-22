@@ -40,6 +40,8 @@ urlpatterns += i18n_patterns(
     # Profil
     path('profile/', views.profile, name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
+    path('mark-tutorial-seen/', views.mark_tutorial_seen, name='mark_tutorial_seen'),
+    
 
     # Modulvisning
     path('modules/', views.module_overview, name='module_overview'),
