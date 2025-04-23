@@ -39,14 +39,17 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_password2(self):
         password = self.cleaned_data.get("password2")
         
+        if len(password) < 8:
+            forms.ValidationError("Passordet må være minst 8 tegn langt.")
+        
         if not re.search(r'[A-Z]', password):
-            raise forms.ValidationError("Passordet må inneholde minst én stor bokstav, minst ett tall og ett spesialtegn.")
+            forms.ValidationError("Passordet må inneholde minst én stor bokstav, minst ett tall og ett spesialtegn.")
         
         if not re.search(r'\d', password):
-            raise forms.ValidationError("Passordet må inneholde minst én stor bokstav, minst ett tall og ett spesialtegn")
+            forms.ValidationError("Passordet må inneholde minst én stor bokstav, minst ett tall og ett spesialtegn")
         
         if not re.search(r'[@$!%*?&]', password):
-            raise forms.ValidationError("Passordet må inneholde minst én stor bokstav, minst ett tall og ett spesialtegn")
+            forms.ValidationError("Passordet må inneholde minst én stor bokstav, minst ett tall og ett spesialtegn")
         
         return password
 
@@ -719,7 +722,6 @@ OOP_QUIZ_QUESTIONS = [
 ]
 
 @login_required
-@csrf_exempt
 def mark_tutorial_seen(request):
     if request.method == 'POST':
         user = request.user
