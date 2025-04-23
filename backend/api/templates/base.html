@@ -45,6 +45,14 @@
 <body class="homepage is-preload">
     <div id="page-wrapper">
 
+        {% if messages %}
+        <div style="margin: 1em; padding: 1em; border: 1px solid red; background: #ffe6e6;">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <!-- Header -->
         <section id="header">
             <h1><a href="{% url 'home' %}">{% trans "Min Læringsplattform" %}</a></h1>
@@ -115,6 +123,7 @@
                     </select>
                     <input type="hidden" name="next" value="{{ request.path }}">
                 </form>
+                <p>Trenger du hjelp? Kontakt <a href="mailto:support@404learn.no">support@404learn.no</a></p>
             </div>
         </section>
     </div>

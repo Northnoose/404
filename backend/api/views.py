@@ -19,6 +19,8 @@ from django.contrib.auth import get_user_model
 from .models import Friendship
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.contrib import messages
+
 
 
 User = get_user_model()
@@ -177,6 +179,7 @@ def edit_profile(request):
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
+            messages.success(request, "Profilen din ble oppdatert.")
             return redirect('profile')
     else:
         form = EditProfileForm(instance=request.user)
@@ -381,6 +384,9 @@ def python_quiz_result_view(request):
         "correct_count": correct_count,
         "total": len(QUIZ_QUESTIONS),
     }
+    
+    messages.success(request, f"Du fikk {correct_count} av {len(QUIZ_QUESTIONS)} riktige!")
+    
     return render(request, "quiz_python_result.html", context)
 
 def drag_and_drop_lesson_view(request):
@@ -476,6 +482,9 @@ def drag_and_drop_result_view(request):
         "correct_count": correct_count,
         "total": total,
     }
+    
+    messages.success(request, f"Du fikk {correct_count} av {total} riktige!")
+    
     return render(request, "drag_and_drop_result.html", context)
 
 
@@ -496,12 +505,14 @@ def blokkbasert_koding_result_view(request):
         "points_earned": points_earned,
         "total_points": user_progression.progression_score if request.user.is_authenticated else 0,
     }
+    
+    messages.success(request, f"Du tjente {points_earned} poeng! Totalt: {user_progression.progression_score}")
+
     return render(request, 'blokkbasert_koding_result.html', context)
 
 def scoreboard(request):
     user_progressions = UserProgression.objects.all().order_by('-progression_score')
     return render(request, 'scoreboard.html', {'user_progressions': user_progressions})
-
 
 
 def is_admin(user):
@@ -552,7 +563,7 @@ def reject_friend_request(request, request_id):
     if friend_request.status == 'pending':
         friend_request.status = 'rejected'
         friend_request.save()
-        messages.info(request, "Forespørsel avslått.")
+        messages.success(request, f"Du har avslått forespørselen fra {friend_request.sender.username}.")
     
     return redirect('friend_requests')
 
@@ -668,6 +679,9 @@ def oop_quiz_result_view(request):
         "correct_count": correct_count,
         "total": len(OOP_QUIZ_QUESTIONS),
     }
+    
+    messages.success(request, f"Du fikk {correct_count} av {len(OOP_QUIZ_QUESTIONS)} riktige!")
+
     return render(request, "quiz_oop_result.html", context)
 
 
