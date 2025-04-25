@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django import forms
-from .models import UserProgression  # Importer UserProgression-modellen
+from .models import UserProgression
 from .models import Module
 from .models import UserQuizScore
 from .models import UserPermission, User, QuizBlokkOppgave, UserScore, Rewards, UserRewards, UserProgression, Module, UserQuizScore, FriendRequest, Friendship
@@ -27,6 +27,7 @@ User = get_user_model()
 
 
 class CustomUserCreationForm(UserCreationForm):
+    """A custom user creation form that extends Django's UserCreationForm with additional email validation and password requirements."""
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
@@ -34,11 +35,13 @@ class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text="En gyldig e-postadresse er påkrevd.")
 
     def clean_email(self):
+        """Clean and validate the email field."""
         email = self.cleaned_data.get('email')
         return email
     
     
     def clean_password2(self):
+        """Validate that the password meets complexity requirements."""
         password = self.cleaned_data.get("password2")
         
         if len(password) < 8:
@@ -63,13 +66,13 @@ def about(request):
     return render(request, 'about.html')
 
 def login_view(request):
+    """Handle user login authentication."""
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Hvis bruker ikke har sett opplæring, sett en session flagg
             if not user.has_seen_tutorial:
                 request.session['show_tutorial'] = True
             return redirect('profile')
@@ -82,6 +85,7 @@ def logout_view(request):
     return redirect('login')
 
 def register_view(request):
+    """Handle new user registration."""
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -100,20 +104,18 @@ def register_view(request):
 
 @login_required
 def profile(request):
+    """Display user profile with progression, rewards, and friend information."""
     show_tutorial = request.session.pop('show_tutorial', False)
-    # Hvem sin profil skal vises?
     if 'user_id' in request.GET and request.GET['user_id'] != str(request.user.id):
         viewed_user = get_object_or_404(User, id=request.GET['user_id'])
     else:
         viewed_user = request.user
 
-    # Hent progresjon for brukeren som vises
     try:
         progression = UserProgression.objects.get(user=viewed_user)
     except UserProgression.DoesNotExist:
         progression = None
 
-    # Ferdighetsnivå
     def get_user_skill_level(score):
         if score <= 10:
             return 'beginner'
@@ -126,10 +128,8 @@ def profile(request):
     if progression:
         user_level = get_user_skill_level(progression.progression_score)
 
-    # Belønninger for brukeren som vises
     user_rewards = UserRewards.objects.filter(user=viewed_user)
 
-    # Venner og forespørsler (relatert til innlogget bruker)
     friends = User.objects.filter(
         id__in=Friendship.objects.filter(user1=request.user).values('user2')
     )
@@ -139,7 +139,6 @@ def profile(request):
         status='pending'
     )
 
-    # Vennestatus
     already_friends = Friendship.objects.filter(
         Q(user1=request.user, user2=viewed_user) |
         Q(user1=viewed_user, user2=request.user)
@@ -169,12 +168,14 @@ def profile(request):
 
 
 class EditProfileForm(forms.ModelForm):
+    """Form for editing user profile information."""
     class Meta:
         model = User
         fields = ['username', 'email']
 
 @login_required
 def edit_profile(request):
+    """Handle profile editing form submission."""
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -190,6 +191,7 @@ def edit_profile(request):
 
 @login_required
 def module_overview(request):
+    """Display overview of available learning modules based on user skill level."""
     user_progress, _ = UserProgression.objects.get_or_create(user=request.user)
 
     def get_user_skill_level(score):
@@ -203,7 +205,6 @@ def module_overview(request):
     skill_order = {'beginner': 1, 'intermediate': 2, 'advanced': 3}
     user_level = get_user_skill_level(user_progress.progression_score)
 
-    # Static modules: manually tag them with difficulty levels
     modules_info = [
     {
         "title": "Grunnleggende Quiz",
@@ -232,7 +233,6 @@ def module_overview(request):
 ]
 
 
-    # Add warning flag for modules above user level
     for module in modules_info:
         module["is_above_user_level"] = skill_order[module["difficulty"]] > skill_order[user_level]
 
@@ -273,6 +273,7 @@ QUIZ_QUESTIONS = [
 
 @login_required
 def python_quiz_view(request):
+    """Handle Python quiz submission and display results."""
     if request.method == "POST":
         correct_count = 0
         feedback = []
@@ -328,6 +329,7 @@ def python_quiz_view(request):
     return render(request, 'quiz_python.html')
 
 def python_quiz_result_view(request):
+    """Display Python quiz results and update user progression."""
     QUIZ_QUESTIONS = [
         {
             "question": "Hva er riktig måte å skrive en print-setning i Python?",
@@ -353,7 +355,6 @@ def python_quiz_result_view(request):
     feedback = []
     correct_count = 0
 
-    # Loop gjennom alle spørsmål og sjekk brukerens svar
     for i, question in enumerate(QUIZ_QUESTIONS):
         chosen_str = request.GET.get(f'answer_{i}', "")
         try:
@@ -373,10 +374,9 @@ def python_quiz_result_view(request):
             "explanation": question["explanation"] if not is_correct else ""
         })
 
-    # Update the user's progression score
     if request.user.is_authenticated:
         user_progression, created = UserProgression.objects.get_or_create(user=request.user)
-        user_progression.progression_score += correct_count  # Add points based on correct answers
+        user_progression.progression_score += correct_count
         user_progression.save()
 
     context = {
@@ -398,10 +398,9 @@ def drag_and_drop_exercise_view(request):
 def blokkbasert_instruksjoner(request):
     return render(request, 'blokkbasert_instruksjoner.html')
 
-# View for blokkbasert koding
 @login_required
 def blokkbasert_koding(request):
-    return render(request, 'block_coding.html')  # Renders the 'block_coding.html' template
+    return render(request, 'block_coding.html')
 
 def lesson_oop_view(request):
     return render(request, 'lesson_oop.html')
@@ -409,7 +408,11 @@ def lesson_oop_view(request):
 
 @login_required
 def drag_and_drop_result_view(request):
-    # Definer fasiten for hver dropzone med tilhørende forklaring
+    """
+    Evaluates the results of a drag-and-drop exercise, compares the user's answers to the correct answers,
+    provides feedback, and updates the user's progression score and quiz performance.
+    """
+
     dropzone_data = [
         {
             "question": "Setning 1 – if-setning",
@@ -441,7 +444,7 @@ def drag_and_drop_result_view(request):
     correct_count = 0
     feedback = []
 
-    # Loop gjennom alle dropzones og hent brukerens svar fra GET-parametere
+    # Loop through all the dropzones (questions), and check the user's answers from the GET parameters
     for i, dz in enumerate(dropzone_data):
         user_answer = request.GET.get(f'answer_{i}', "").strip()
         is_correct = (user_answer == dz["correct_answer"])
@@ -458,7 +461,7 @@ def drag_and_drop_result_view(request):
 
     total = len(dropzone_data)
 
-    # Sørg for at vi har et ekte User-objekt
+     # If the user is authenticated, update their progression score and quiz performance
     if request.user.is_authenticated:
         from django.contrib.auth import get_user_model
         User = get_user_model()
@@ -491,13 +494,13 @@ def drag_and_drop_result_view(request):
 
 @login_required
 def blokkbasert_koding_result_view(request):
-    # Example: Calculate points based on the user's performance
+    """Evaluate block-based coding exercise and display results."""
     points_earned = 10  # Replace with actual logic to calculate points
 
     # Update the user's progression score
     if request.user.is_authenticated:
         user_progression, created = UserProgression.objects.get_or_create(user=request.user)
-        user_progression.progression_score += points_earned  # Add points based on performance
+        user_progression.progression_score += points_earned
         user_progression.save()
 
     # Prepare context for the result page
@@ -511,22 +514,25 @@ def blokkbasert_koding_result_view(request):
     return render(request, 'blokkbasert_koding_result.html', context)
 
 def scoreboard(request):
+    """Display user scoreboard ranked by progression scores."""
     user_progressions = UserProgression.objects.all().order_by('-progression_score')
     return render(request, 'scoreboard.html', {'user_progressions': user_progressions})
 
 
 def is_admin(user):
+    """Check if user belongs to Administrators group."""
     return user.groups.filter(name='Administratorer').exists()
 
 @user_passes_test(is_admin)
 def admin_dashboard(request):
+    """Display admin dashboard with all users."""
     users = User.objects.all()
     return render(request, 'admin_dashboard.html', {'users': users})
 
 
 @login_required
-
 def send_friend_request(request, user_id):
+    """Send friend request to specified user."""
     receiver = get_object_or_404(User, id=user_id)
     
     if FriendRequest.objects.filter(sender=request.user, receiver=receiver).exists():
@@ -539,6 +545,7 @@ def send_friend_request(request, user_id):
 
 @login_required
 def accept_friend_request(request, request_id):
+    """Accept incoming friend request."""
     friend_request = get_object_or_404(FriendRequest, id=request_id, receiver=request.user)
 
     if friend_request.status == 'pending':
@@ -558,6 +565,7 @@ def accept_friend_request(request, request_id):
 
 @login_required
 def reject_friend_request(request, request_id):
+    """Reject incoming friend request."""
     friend_request = get_object_or_404(FriendRequest, id=request_id, receiver=request.user)
     
     if friend_request.status == 'pending':
@@ -569,6 +577,7 @@ def reject_friend_request(request, request_id):
 
 @login_required
 def friend_requests(request):
+    """Display pending friend requests."""
     received_requests = FriendRequest.objects.filter(
         receiver=request.user,
         status='pending'
@@ -586,6 +595,7 @@ def friend_requests(request):
 
 @login_required
 def remove_friend(request, friendship_id):
+    """Remove friend relationship."""
     friendship = get_object_or_404(Friendship, id=friendship_id)
     
     if request.user in [friendship.user1, friendship.user2]:
@@ -599,6 +609,7 @@ def remove_friend(request, friendship_id):
 
 @login_required
 def user_search(request):
+    """Search for users by username."""
     query = request.GET.get('q', '')
     users = User.objects.exclude(id=request.user.id)
     
@@ -625,6 +636,7 @@ def user_search(request):
     
 @login_required
 def friend_progression(request):
+    """Display friends' progression scores."""
     friend_ids = Friendship.objects.filter(user1=request.user).values_list('user2', flat=True)
 
     friends = User.objects.filter(id__in=friend_ids).select_related('userprogression')
@@ -645,6 +657,15 @@ def oop_quiz_view(request):
 
 @login_required
 def oop_quiz_result_view(request):
+    """
+    Evaluates the user's answers to the Object-Oriented Programming (OOP) quiz, provides feedback on each question,
+    updates the user's progression score if authenticated, and displays the results on a quiz result page.
+
+    This view retrieves the user's answers from the GET parameters, compares them with the correct answers, 
+    calculates the number of correct answers, and generates feedback for each question. If the user is authenticated, 
+    their progression score is updated based on the quiz performance.
+
+    """
     answers = []
     feedback = []
     correct_count = 0
@@ -737,6 +758,7 @@ OOP_QUIZ_QUESTIONS = [
 
 @login_required
 def mark_tutorial_seen(request):
+    """Mark tutorial as seen for current user."""
     if request.method == 'POST':
         user = request.user
         user.has_seen_tutorial = True

@@ -19,13 +19,13 @@ The course is module-based, allowing users to progress through levels at their o
 
 The necessary packages are listed in `requirements.txt`:
 
-asgiref==3.8.1
-Django==5.1.7
-djangorestframework==3.15.2
-psycopg2==2.9.10
-psycopg2-binary==2.9.10
-sqlparse==0.5.3
-tzdata==2025.1
+- asgiref==3.8.1
+- Django==5.1.7
+- djangorestframework==3.15.2
+- psycopg2==2.9.10
+- psycopg2-binary==2.9.10
+- sqlparse==0.5.3
+- tzdata==2025.1
 
 ### Installing
 
@@ -59,26 +59,26 @@ tzdata==2025.1
 
 ### Executing Program
 
-    To run the development server:
+To run the development server:
     python manage.py runserver
 
-    Then open your browser and go to:
-    http://127.0.0.1:8000/
+Then open your browser and go to:
+http://127.0.0.1:8000/
 
 ## Deployment
     
-    The project currently runs locally during development. Deployment to a platform may be considered later.
+The project currently runs locally during development. Deployment to a platform may be considered later.
     
 ## Help
     
-    Common issues and tips:
-    - Activate the virtual environment before running commands.
-    - Ensure all migrations are applied.
+Common issues and tips:
+- Activate the virtual environment before running commands.
+- Ensure all migrations are applied.
 
 ## Contributors
 
-    Project developed by a group of data engineering students, 404 Not Found.
+Project developed by a group of data engineering students, 404 Not Found.
 
 ## Lisence
 
-    This project is for educational purposes only and is not intended for commercial use.
+This project is for educational purposes only and is not intended for commercial use.
