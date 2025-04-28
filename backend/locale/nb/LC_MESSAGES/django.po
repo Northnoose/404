@@ -4,121 +4,121 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Min Læringsplattform"
-msgstr "My Learning Platform"
+msgstr "Min Læringsplattform"
 
 msgid "Hjem"
-msgstr "Home"
+msgstr "Hjem"
 
 msgid "Om oss"
-msgstr "About"
+msgstr "Om oss"
 
 msgid "Logg inn"
-msgstr "Login"
+msgstr "Logg inn"
 
 msgid "Registrer deg"
-msgstr "Register"
+msgstr "Registrer deg"
 
 msgid "Registrer deg her"
-msgstr "Register here"
+msgstr "Registrer deg her"
 
 msgid "Har du allerede en konto? Logg inn"
-msgstr "Already have an account? Log in"
+msgstr "Har du allerede en konto? Logg inn"
 
 msgid "Brukernavn"
-msgstr "Username"
+msgstr "Brukernavn"
 
 msgid "E-post"
-msgstr "Email"
+msgstr "E-post"
 
 msgid "Passord"
-msgstr "Password"
+msgstr "Passord"
 
 msgid "Moduler"
-msgstr "Modules"
+msgstr "Moduler"
 
 msgid "Profil"
-msgstr "Profile"
+msgstr "Profil"
 
 msgid "Scoreboard"
 msgstr "Scoreboard"
 
 msgid "Velkommen!"
-msgstr "Welcome!"
+msgstr "Velkommen!"
 
 msgid "Her kan du lære objektorientert programmering på en engasjerende måte – med poeng, belønninger og mulighet til å sammenligne fremgangen din med venner. Utforsk modulene, løs interaktive oppgaver og få en praktisk innføring i koding, helt i ditt eget tempo."
-msgstr "Here you can learn object-oriented programming in an engaging way – with points, rewards, and the ability to compare your progress with friends. Explore modules, solve interactive tasks, and get a hands-on introduction to coding at your own pace."
+msgstr "Her kan du lære objektorientert programmering på en engasjerende måte – med poeng, belønninger og mulighet til å sammenligne fremgangen din med venner. Utforsk modulene, løs interaktive oppgaver og få en praktisk innføring i koding, helt i ditt eget tempo."
 
 msgid "Admin Panel"
 msgstr "Admin Panel"
 
 msgid "Velg språk:"
-msgstr "Choose language:"
+msgstr "Velg språk:"
 
 msgid "Moduloversikt"
-msgstr "Module Overview"
+msgstr "Moduloversikt"
 
 msgid "Grunnleggende Quiz"
-msgstr "Basic Quiz"
+msgstr "Grunnleggende Quiz"
 
 msgid "Lær det helt grunnleggende om koding og test deg selv med en enkel quiz med flervalgsspørsmål. Perfekt for nybegynnere eller deg som ønsker en rask oppfriskning!"
-msgstr "Learn the basics of coding and test yourself with a simple multiple-choice quiz. Perfect for beginners or those wanting a quick refresher!"
+msgstr "Lær det helt grunnleggende om koding og test deg selv med en enkel quiz med flervalgsspørsmål. Perfekt for nybegynnere eller deg som ønsker en rask oppfriskning!"
 
 msgid "Vanskelighetsgrad"
-msgstr "Difficulty"
+msgstr "Vanskelighetsgrad"
 
 msgid "Nybegynner"
-msgstr "Beginner"
+msgstr "Nybegynner"
 
 msgid "Viderekommen"
-msgstr "Intermediate"
+msgstr "Viderekommen"
 
 msgid "Avansert"
-msgstr "Advanced"
+msgstr "Avansert"
 
 msgid "Denne modulen er mer avansert enn ditt ferdighetsnivå."
-msgstr "This module is more advanced than your skill level."
+msgstr "Denne modulen er mer avansert enn ditt ferdighetsnivå."
 
 msgid "Start modul"
-msgstr "Start module"
+msgstr "Start modul"
 
 msgid "Drag and Drop-oppgaver"
-msgstr "Drag and Drop Tasks"
+msgstr "Drag and Drop-oppgaver"
 
 msgid "Utforsk koding på en interaktiv måte ved å dra og slippe kodeblokker på riktig plass. Systemet gir deg umiddelbar tilbakemelding, slik at du raskt ser hva som fungerer og hva som ikke gjør det."
-msgstr "Explore coding interactively by dragging and dropping code blocks in the correct place. The system provides instant feedback to help you understand what works and what doesn’t."
+msgstr "Utforsk koding på en interaktiv måte ved å dra og slippe kodeblokker på riktig plass. Systemet gir deg umiddelbar tilbakemelding, slik at du raskt ser hva som fungerer og hva som ikke gjør det."
 
 msgid "Blokkbasert Koding"
-msgstr "Block-Based Coding"
+msgstr "Blokkbasert Koding"
 
 msgid "Sett sammen kodeblokker som representerer handlinger, løkker og betingelser for å lage små programmer – helt uten å skrive en eneste linje kode. Du får tilbakemelding underveis, slik at du enkelt kan justere løsningene dine."
-msgstr "Assemble code blocks representing actions, loops, and conditions to create small programs – all without writing a single line of code. You'll get feedback along the way to help you improve your solutions."
+msgstr "Sett sammen kodeblokker som representerer handlinger, løkker og betingelser for å lage små programmer – helt uten å skrive en eneste linje kode. Du får tilbakemelding underveis, slik at du enkelt kan justere løsningene dine."
 
 msgid "Objektorientert Programmering"
-msgstr "Object-Oriented Programming"
+msgstr "Objektorientert Programmering"
 
 msgid "Lær om klasser, objekter, arv og polymorfisme med praktiske quizoppgaver. Denne modulen er laget for viderekomne brukere som ønsker å forstå strukturert koding."
-msgstr "Learn about classes, objects, inheritance, and polymorphism with practical quiz exercises. This module is intended for advanced users who want to understand structured coding."
+msgstr "Lær om klasser, objekter, arv og polymorfisme med praktiske quizoppgaver. Denne modulen er laget for viderekomne brukere som ønsker å forstå strukturert koding."
 
 msgid "Rank"
-msgstr "Rank"
+msgstr "Rangering"
 
 msgid "Username"
-msgstr "Username"
+msgstr "Brukernavn"
 
 msgid "Score"
-msgstr "Score"
+msgstr "Poeng"
 
 msgid "Vi er en gruppe på seks studenter ved UiT, som sammen har utviklet denne spillbaserte læringsplattformen for å gjøre det enklere og mer engasjerende å lære koding. Prosjektet vårt bygger på en modulbasert progresjon, der brukerne kan lære seg objektorientert programmering i sitt eget tempo gjennom interaktive oppgaver, poeng, belønninger og sosiale funksjoner."
-msgstr "We are a group of six students at UiT who developed this game-based learning platform to make learning coding easier and more engaging. Our project is based on modular progression where users can learn object-oriented programming at their own pace through interactive tasks, points, rewards, and social features."
+msgstr "Vi er en gruppe på seks studenter ved UiT, som sammen har utviklet denne spillbaserte læringsplattformen for å gjøre det enklere og mer engasjerende å lære koding. Prosjektet vårt bygger på en modulbasert progresjon, der brukerne kan lære seg objektorientert programmering i sitt eget tempo gjennom interaktive oppgaver, poeng, belønninger og sosiale funksjoner."
 
 msgid "Plattformen er utviklet som en del av et forprosjekt i samarbeid med Morild Data BA og utdanningsinstitusjonen KnowItAll, der målet er å skape en engasjerende læringsopplevelse for et bredt spekter av brukere. Vi har fulgt Scrum-metodikken i seks sprintfaser, og lagt vekt på tilgjengelighet (WCAG), skalering og brukervennlighet underveis."
-msgstr "The platform was developed as part of a preliminary project in collaboration with Morild Data BA and the educational institution KnowItAll. Our goal was to create an engaging learning experience for a wide range of users. We followed the Scrum methodology across six sprints and emphasized accessibility (WCAG), scalability, and user-friendliness."
+msgstr "Plattformen er utviklet som en del av et forprosjekt i samarbeid med Morild Data BA og utdanningsinstitusjonen KnowItAll, der målet er å skape en engasjerende læringsopplevelse for et bredt spekter av brukere. Vi har fulgt Scrum-metodikken i seks sprintfaser, og lagt vekt på tilgjengelighet (WCAG), skalering og brukervennlighet underveis."
 
 msgid "Prosjektet er et resultat av faget vårt ved UiT, der vi har jobbet i teamet"
-msgstr "The project is the result of our course at UiT, where we worked in the team"
+msgstr "Prosjektet er et resultat av faget vårt ved UiT, der vi har jobbet i teamet"
 
 msgid "bestående av:"
-msgstr "consisting of:"
+msgstr "bestående av:"
 
 msgid "Vi håper denne nettsiden kan bidra til at flere oppdager hvor morsomt og lærerikt det er å kode, og at den spillbaserte tilnærmingen gjør det enda mer motiverende å lære nye ferdigheter!"
-msgstr "We hope this website helps more people discover how fun and educational coding can be, and that the game-based approach makes it even more motivating to learn new skills."
+msgstr "Vi håper denne nettsiden kan bidra til at flere oppdager hvor morsomt og lærerikt det er å kode, og at den spillbaserte tilnærmingen gjør det enda mer motiverende å lære nye ferdigheter!"

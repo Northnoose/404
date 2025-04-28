@@ -1,16 +1,17 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Scoreboard{% endblock %}
+{% block title %}{% trans "Scoreboard" %}{% endblock %}
 
 {% block content %}
 <div class="scoreboard-container">
-    <h1>Scoreboard</h1>
+    <h1>{% trans "Scoreboard" %}</h1>
     <table class="scoreboard-table">
         <thead>
             <tr>
-                <th>Rank</th>
-                <th>Username</th>
-                <th>Score</th>
+                <th>{% trans "Rank" %}</th>
+                <th>{% trans "Username" %}</th>
+                <th>{% trans "Score" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -25,4 +26,3 @@
     </table>
 </div>
 {% endblock %}
-

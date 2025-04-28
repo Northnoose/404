@@ -1,45 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Min Profil{% endblock %}
+{% block title %}{% trans "Min Profil" %}{% endblock %}
 
 {% block content %}
-<!-- Hovedoverskrift for profilsiden -->
 <h1>
     {% if user != request.user %}
-        {{ user.username }}s profil
+        {{ user.username }}{% trans "s profil" %}
     {% else %}
-        Min Profil
+        {% trans "Min Profil" %}
     {% endif %}
 </h1>
 
-<!-- Første rad: Brukerdetaljer + Venner/venneforespørsler -->
 <div class="row">
 
-    <!-- Venstre kolonne: Brukerdetaljer  -->
+    <!-- Brukerdetaljer -->
     <div class="col-6 col-12-medium">
         <section class="box">
-            <h3>Brukerdetaljer</h3>
-            <p><strong>Brukernavn:</strong> {{ user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Registrert siden:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
+            <h3>{% trans "Brukerdetaljer" %}</h3>
+            <p><strong>{% trans "Brukernavn" %}:</strong> {{ user.username }}</p>
+            <p><strong>{% trans "Email" %}:</strong> {{ user.email }}</p>
+            <p><strong>{% trans "Registrert siden" %}:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
 
             {% if user == request.user %}
             <div style="margin-top: 1em;">
-                <a href="{% url 'edit_profile' %}" class="button">Rediger Profil</a>
-                <a href="{% url 'logout' %}" class="button alt">Logg ut</a>
+                <a href="{% url 'edit_profile' %}" class="button">{% trans "Rediger Profil" %}</a>
+                <a href="{% url 'logout' %}" class="button alt">{% trans "Logg ut" %}</a>
             </div>
             {% endif %}
 
             {% if user != request.user %}
             <div style="margin-top: 1em;">
                 {% if already_friends %}
-                    <p style="color: green;">Du og {{ user.username }} er allerede venner!</p>
+                    <p style="color: green;">{% trans "Du og" %} {{ user.username }} {% trans "er allerede venner!" %}</p>
                 {% elif request_sent %}
-                    <p style="color: orange;">Venneforespørsel sendt - venter på svar</p>
+                    <p style="color: orange;">{% trans "Venneforespørsel sendt - venter på svar" %}</p>
                 {% else %}
                     <a href="{% url 'send_friend_request' user.id %}" class="button special">
-                        Send venneforespørsel
+                        {% trans "Send venneforespørsel" %}
                     </a>
                 {% endif %}
             </div>
@@ -47,11 +46,11 @@
         </section>
     </div>
 
-    <!-- Høyre kolonne: Dine venner og venneforespørsler -->
+    <!-- Venner og forespørsler -->
     <div class="col-6 col-12-medium">
         <section class="box">
             {% if user == request.user %}
-                <h3>Dine venner ({{ friends.count }})</h3>
+                <h3>{% blocktrans %}Dine venner ({{ friends.count }}){% endblocktrans %}</h3>
                 {% if friends %}
                     <ul>
                         {% for friend in friends %}
@@ -61,12 +60,12 @@
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <p>Ingen venner ennå.</p>
+                    <p>{% trans "Ingen venner ennå." %}</p>
                 {% endif %}
 
                 <div style="margin-top: 1em;">
                     <a href="{% url 'friend_requests' %}" class="button alt">
-                        Se venneforespørsler
+                        {% trans "Se venneforespørsler" %}
                         {% if pending_requests_count > 0 %}
                         <span style="background: red; color: #fff; padding: 0 6px; border-radius: 4px;">
                             {{ pending_requests_count }}
@@ -77,56 +76,53 @@
 
                 <div style="margin-top: 1em;">
                     <a href="{% url 'friend_progression' %}" class="button">
-                        Se progresjon for venner
+                        {% trans "Se progresjon for venner" %}
                     </a>
                 </div>
 
                 <div style="margin-top: 1em;">
-                    <h4>Søk etter venner</h4>
+                    <h4>{% trans "Søk etter venner" %}</h4>
                     <form method="get" action="{% url 'user_search' %}" style="display: flex; gap: 0.5em;">
-                        <input type="text" name="q" placeholder="Søk brukernavn..." style="flex: 1;">
-                        <button type="submit" class="button">Søk</button>
+                        <input type="text" name="q" placeholder="{% trans 'Søk brukernavn...' %}" style="flex: 1;">
+                        <button type="submit" class="button">{% trans "Søk" %}</button>
                     </form>
                 </div>
             {% else %}
-                <p>Informasjon om vennestatus vises i venstre kolonne.</p>
+                <p>{% trans "Informasjon om vennestatus vises i venstre kolonne." %}</p>
             {% endif %}
         </section>
     </div>
 
-</div> <!-- /row -->
+</div>
 
-
-<!-- Andre rad: Progresjon + Belønninger -->
 <div class="row">
-
-    <!-- Venstre kolonne: Progresjon -->
+    <!-- Progresjon -->
     <div class="col-6 col-12-medium">
         <section class="box">
-            <h3>Progresjon</h3>
+            <h3>{% trans "Progresjon" %}</h3>
             {% if progression %}
-                <p><strong>Poeng:</strong> {{ progression.progression_score }}%</p>
-                <p><strong>Ferdighetsnivå:</strong>
-                    {% if user_level == 'beginner' %}Nybegynner
-                    {% elif user_level == 'intermediate' %}Viderekommen
-                    {% elif user_level == 'advanced' %}Avansert
-                    {% else %}Ikke beregnet
+                <p><strong>{% trans "Poeng" %}:</strong> {{ progression.progression_score }}%</p>
+                <p><strong>{% trans "Ferdighetsnivå" %}:</strong>
+                    {% if user_level == 'beginner' %}{% trans "Nybegynner" %}
+                    {% elif user_level == 'intermediate' %}{% trans "Viderekommen" %}
+                    {% elif user_level == 'advanced' %}{% trans "Avansert" %}
+                    {% else %}{% trans "Ikke beregnet" %}
                     {% endif %}
                 </p>
             {% else %}
-                <p>Ikke tilgjengelig</p>
+                <p>{% trans "Ikke tilgjengelig" %}</p>
             {% endif %}
         </section>
     </div>
 
-    <!-- Høyre kolonne: Mine Belønninger -->
+    <!-- Belønninger -->
     <div class="col-6 col-12-medium">
         <section class="box">
             <h3>
                 {% if user == request.user %}
-                    Mine Belønninger
+                    {% trans "Mine Belønninger" %}
                 {% else %}
-                    Belønninger for {{ user.username }}
+                    {% blocktrans %}Belønninger for {{ user.username }}{% endblocktrans %}
                 {% endif %}
             </h3>
             {% if user_rewards %}
@@ -134,30 +130,29 @@
                     {% for reward in user_rewards %}
                     <li>
                         {{ reward.reward.description }}
-                        (Tildelt: {{ reward.date_awarded|date:"d.m.Y H:i" }})
+                        ({% trans "Tildelt" %}: {{ reward.date_awarded|date:"d.m.Y H:i" }})
                     </li>
                     {% endfor %}
                 </ul>
             {% else %}
-                <p>Ingen belønninger opptjent enda.</p>
+                <p>{% trans "Ingen belønninger opptjent enda." %}</p>
             {% endif %}
         </section>
     </div>
-
-</div> <!-- /row -->
+</div>
 
 {% if show_tutorial %}
 <div id="tutorial-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; display: flex; align-items: center; justify-content: center;">
     <div style="background: white; padding: 30px 40px; width: 60%; max-width: 600px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.3); text-align: center;">
-        <h2 style="margin-bottom: 20px;">Velkommen til plattformen!</h2>
-        <p style="margin-bottom: 20px;">Her er en kort guide til hvordan alt fungerer:</p>
+        <h2 style="margin-bottom: 20px;">{% trans "Velkommen til plattformen!" %}</h2>
+        <p style="margin-bottom: 20px;">{% trans "Her er en kort guide til hvordan alt fungerer:" %}</p>
         <ul style="list-style: none; padding: 0; text-align: left; line-height: 1.8;">
-            <li style="margin-bottom: 15px;">📚 <strong>Modulbaserte oppgaver:</strong> Start med leksjoner og fullfør oppgaver som drag & drop og blokkoding.</li>
-            <li style="margin-bottom: 15px;">🏆 <strong>Poeng og belønninger:</strong> Tjen poeng for hver oppgave, oppnå belønninger og se deg selv på rangeringen!</li>
-            <li style="margin-bottom: 15px;">👥 <strong>Venner:</strong> Legg til venner, se deres progresjon og konkurrer sammen.</li>
-            <li style="margin-bottom: 0;">💻 <strong>OOP-modul:</strong> For viderekomne – lær om klasser, arv og polymorfisme!</li>
+            <li style="margin-bottom: 15px;">📚 <strong>{% trans "Modulbaserte oppgaver:" %}</strong> {% trans "Start med leksjoner og fullfør oppgaver som drag & drop og blokkoding." %}</li>
+            <li style="margin-bottom: 15px;">🏆 <strong>{% trans "Poeng og belønninger:" %}</strong> {% trans "Tjen poeng for hver oppgave, oppnå belønninger og se deg selv på rangeringen!" %}</li>
+            <li style="margin-bottom: 15px;">👥 <strong>{% trans "Venner:" %}</strong> {% trans "Legg til venner, se deres progresjon og konkurrer sammen." %}</li>
+            <li style="margin-bottom: 0;">💻 <strong>{% trans "OOP-modul:" %}</strong> {% trans "For viderekomne – lær om klasser, arv og polymorfisme!" %}</li>
         </ul>
-        <button onclick="closeTutorial()" style="margin-top: 30px; padding: 12px 24px; background: #e63946; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer;">Kom i gang!</button>
+        <button onclick="closeTutorial()" style="margin-top: 30px; padding: 12px 24px; background: #e63946; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer;">{% trans "Kom i gang!" %}</button>
     </div>
 </div>
 
@@ -165,7 +160,6 @@
 function closeTutorial() {
     document.getElementById('tutorial-overlay').style.display = 'none';
 
-    // Send AJAX for å markere opplæring som sett
     fetch("{% url 'mark_tutorial_seen' %}", {
         method: "POST",
         headers: {

@@ -118,9 +118,10 @@
                     {% csrf_token %}
                     <label for="language-select">{% trans "Velg språk:" %}</label>
                     <select name="language" id="language-select" onchange="this.form.submit()">
-                        <option value="no" {% if LANGUAGE_CODE == 'no' %}selected{% endif %}>Norsk</option>
+                        <option value="nb" {% if LANGUAGE_CODE == 'nb' %}selected{% endif %}>Norsk</option>
                         <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
                     </select>
+                    
                     <input type="hidden" name="next" value="{{ request.path }}">
                 </form>
                 <p>Trenger du hjelp? Kontakt <a href="mailto:support@404learn.no">support@404learn.no</a></p>

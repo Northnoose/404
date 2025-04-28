@@ -1,10 +1,11 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% load static %}
+{% load i18n %}
 
-{% block title %}Moduloversikt{% endblock %}
+{% block title %}{% trans "Moduloversikt" %}{% endblock %}
 
 {% block content %}
-<h1 class="modules-title">Moduloversikt</h1>
+<h1 class="modules-title">{% trans "Moduloversikt" %}</h1>
 
 <div class="row">
 
@@ -12,23 +13,22 @@
     <div class="col-4 col-12-medium">
         <section class="box">
             <header>
-                <h2>Grunnleggende Quiz</h2>
+                <h2>{% trans "Grunnleggende Quiz" %}</h2>
             </header>
             <p>
-                Lær det helt grunnleggende om koding og test deg selv 
-                med en enkel quiz med flervalgsspørsmål. Perfekt for nybegynnere 
-                eller deg som ønsker en rask oppfriskning!
+                {% trans "Lær det helt grunnleggende om koding og test deg selv med en enkel quiz med flervalgsspørsmål. 
+                Perfekt for nybegynnere eller deg som ønsker en rask oppfriskning!" %}
                 <br><br>
-                <strong>Vanskelighetsgrad:</strong> Nybegynner
+                <strong>{% trans "Vanskelighetsgrad" %}:</strong> {% trans "Nybegynner" %}
                 {% if modules_info.0.is_above_user_level %}
                     <br>
                     <span style="color: darkorange; font-weight: bold;">
-                        ⚠️ Denne modulen er mer avansert enn ditt ferdighetsnivå.
+                        ⚠️ {% trans "Denne modulen er mer avansert enn ditt ferdighetsnivå." %}
                     </span>
                 {% endif %}
             </p>
             <footer>
-                <a href="{% url 'python_lesson' %}" class="button">Start modul</a>
+                <a href="{% url 'python_lesson' %}" class="button">{% trans "Start modul" %}</a>
             </footer>
         </section>
     </div>
@@ -37,23 +37,22 @@
     <div class="col-4 col-12-medium">
         <section class="box">
             <header>
-                <h2>Drag and Drop-oppgaver</h2>
+                <h2>{% trans "Drag and Drop-oppgaver" %}</h2>
             </header>
             <p>
-                Utforsk koding på en interaktiv måte ved å dra og slippe kodeblokker 
-                på riktig plass. Systemet gir deg umiddelbar tilbakemelding, 
-                slik at du raskt ser hva som fungerer og hva som ikke gjør det.
+                {% trans "Utforsk koding på en interaktiv måte ved å dra og slippe kodeblokker på riktig plass. 
+                Systemet gir deg umiddelbar tilbakemelding, slik at du raskt ser hva som fungerer og hva som ikke gjør det." %}
                 <br><br>
-                <strong>Vanskelighetsgrad:</strong> Viderekommen
+                <strong>{% trans "Vanskelighetsgrad" %}:</strong> {% trans "Viderekommen" %}
                 {% if modules_info.1.is_above_user_level %}
                     <br>
                     <span style="color: darkorange; font-weight: bold;">
-                        ⚠️ Denne modulen er mer avansert enn ditt ferdighetsnivå.
+                        ⚠️ {% trans "Denne modulen er mer avansert enn ditt ferdighetsnivå." %}
                     </span>
                 {% endif %}
             </p>
             <footer>
-                <a href="{% url 'drag_and_drop_lesson' %}" class="button">Start modul</a>
+                <a href="{% url 'drag_and_drop_lesson' %}" class="button">{% trans "Start modul" %}</a>
             </footer>
         </section>
     </div>
@@ -62,23 +61,23 @@
     <div class="col-4 col-12-medium">
         <section class="box">
             <header>
-                <h2>Blokkbasert Koding</h2>
+                <h2>{% trans "Blokkbasert Koding" %}</h2>
             </header>
             <p>
-                Sett sammen kodeblokker som representerer handlinger, løkker og betingelser 
-                for å lage små programmer – helt uten å skrive en eneste linje kode. 
-                Du får tilbakemelding underveis, slik at du enkelt kan justere løsningene dine.
+                {% trans "Sett sammen kodeblokker som representerer handlinger, løkker og betingelser 
+                for å lage små programmer – helt uten å skrive en eneste linje kode. Du får tilbakemelding underveis, 
+                slik at du enkelt kan justere løsningene dine." %}
                 <br><br>
-                <strong>Vanskelighetsgrad:</strong> Avansert
+                <strong>{% trans "Vanskelighetsgrad" %}:</strong> {% trans "Avansert" %}
                 {% if modules_info.2.is_above_user_level %}
                     <br>
                     <span style="color: darkorange; font-weight: bold;">
-                        ⚠️ Denne modulen er mer avansert enn ditt ferdighetsnivå.
+                        ⚠️ {% trans "Denne modulen er mer avansert enn ditt ferdighetsnivå." %}
                     </span>
                 {% endif %}
             </p>
             <footer>
-                <a href="{% url 'blokkbasert_instruksjoner' %}" class="button">Start modul</a>
+                <a href="{% url 'blokkbasert_instruksjoner' %}" class="button">{% trans "Start modul" %}</a>
             </footer>
         </section>
     </div>
@@ -87,22 +86,22 @@
     <div class="col-4 col-12-medium">
         <section class="box">
             <header>
-                <h2>Objektorientert Programmering</h2>
+                <h2>{% trans "Objektorientert Programmering" %}</h2>
             </header>
             <p>
-                Lær om klasser, objekter, arv og polymorfisme med praktiske quizoppgaver. 
-                Denne modulen er laget for viderekomne brukere som ønsker å forstå strukturert koding.
+                {% trans "Lær om klasser, objekter, arv og polymorfisme med praktiske quizoppgaver. 
+                Denne modulen er laget for viderekomne brukere som ønsker å forstå strukturert koding." %}
                 <br><br>
-                <strong>Vanskelighetsgrad:</strong> Viderekommen
+                <strong>{% trans "Vanskelighetsgrad" %}:</strong> {% trans "Viderekommen" %}
                 {% if user_level == "beginner" %}
                     <br>
                     <span style="color: darkorange; font-weight: bold;">
-                        ⚠️ Denne modulen er mer avansert enn ditt ferdighetsnivå.
+                        ⚠️ {% trans "Denne modulen er mer avansert enn ditt ferdighetsnivå." %}
                     </span>
                 {% endif %}
             </p>
             <footer>
-                <a href="{% url 'lesson_oop' %}" class="button">Start modul</a>
+                <a href="{% url 'lesson_oop' %}" class="button">{% trans "Start modul" %}</a>
             </footer>
         </section>
     </div>

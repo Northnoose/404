@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans "Logg inn" %}{% endblock %}
 
 {% block content %}
-    <h1>Login</h1>
+    <h1>{% trans "Logg inn" %}</h1>
 
     <!-- viser/display error messages -->
     {% if messages %}
@@ -16,10 +17,10 @@
 
     <form method="POST">
         {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit">Login</button>
+        <input type="text" name="username" placeholder="{% trans 'Brukernavn' %}" required><br>
+        <input type="password" name="password" placeholder="{% trans 'Passord' %}" required><br>
+        <button type="submit">{% trans "Logg inn" %}</button>
     </form>
 
-    <a href="{% url 'register' %}">Register Here</a>
+    <a href="{% url 'register' %}">{% trans "Registrer deg her" %}</a>
 {% endblock %}
