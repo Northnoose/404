@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Søkeresultater for "{{ query }}"</h2>
+    <h2>{% blocktrans %}Søkeresultater for "{{ query }}"{% endblocktrans %}</h2>
     
     {% if users %}
     <div class="list-group mt-3">
@@ -10,20 +11,20 @@
         <div class="list-group-item d-flex justify-content-between align-items-center">
             <span class="fw-bold">{{ user.username }}</span>
             <a href="{% url 'send_friend_request' user.id %}" class="btn btn-sm btn-success">
-                Send forespørsel
+                {% trans "Send forespørsel" %}
             </a>
         </div>
         {% endfor %}
     </div>
     {% elif query %}
     <div class="alert alert-info mt-3">
-        Ingen brukere funnet for "{{ query }}"
+        {% blocktrans %}Ingen brukere funnet for "{{ query }}"{% endblocktrans %}
     </div>
     {% endif %}
     
     <div class="mt-4">
         <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
-            Tilbake til profil
+            {% trans "Tilbake til profil" %}
         </a>
     </div>
 </div>

@@ -122,3 +122,174 @@ msgstr "consisting of:"
 
 msgid "Vi håper denne nettsiden kan bidra til at flere oppdager hvor morsomt og lærerikt det er å kode, og at den spillbaserte tilnærmingen gjør det enda mer motiverende å lære nye ferdigheter!"
 msgstr "We hope this website helps more people discover how fun and educational coding can be, and that the game-based approach makes it even more motivating to learn new skills."
+
+msgid "Rediger Profil"
+msgstr "Edit Profile"
+
+msgid "Lagre Endringer"
+msgstr "Save Changes"
+
+msgid "Progresjonsoverikt for Venner"
+msgstr "Friends Progress Overview"
+
+msgid "Venn"
+msgstr "Friend"
+
+msgid "Progresjon"
+msgstr "Progress"
+
+msgid "Venneforespørsler"
+msgstr "Friend Requests"
+
+msgid "%(username)s vil være venn med deg."
+msgstr "%(username)s wants to be your friend."
+
+msgid "Godta"
+msgstr "Accept"
+
+msgid "Avslå"
+msgstr "Reject"
+
+msgid "Ingen ventende forespørsler."
+msgstr "No pending requests."
+
+msgid "Søkeresultater for \"%(query)s\""
+msgstr "Search results for \"%(query)s\""
+
+msgid "Send forespørsel"
+msgstr "Send request"
+
+msgid "Ingen brukere funnet for \"%(query)s\""
+msgstr "No users found for \"%(query)s\""
+
+msgid "Tilbake til profil"
+msgstr "Back to profile"
+
+msgid "Min Profil"
+msgstr "My Profile"
+
+msgid "s profil"
+msgstr "'s profile"
+
+msgid "Brukerdetaljer"
+msgstr "User Details"
+
+msgid "Brukernavn"
+msgstr "Username"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Registrert siden"
+msgstr "Registered since"
+
+msgid "Rediger Profil"
+msgstr "Edit Profile"
+
+msgid "Logg ut"
+msgstr "Log out"
+
+msgid "Du og"
+msgstr "You and"
+
+msgid "er allerede venner!"
+msgstr "are already friends!"
+
+msgid "Venneforespørsel sendt - venter på svar"
+msgstr "Friend request sent - waiting for response"
+
+msgid "Send venneforespørsel"
+msgstr "Send friend request"
+
+msgid "Dine venner (%(count)s)"
+msgstr "Your Friends (%(count)s)"
+
+msgid "Ingen venner ennå."
+msgstr "No friends yet."
+
+msgid "Se venneforespørsler"
+msgstr "View friend requests"
+
+msgid "Se progresjon for venner"
+msgstr "View friends' progress"
+
+msgid "Søk etter venner"
+msgstr "Find Friends"
+
+msgid "Søk brukernavn..."
+msgstr "Search username..."
+
+msgid "Søk"
+msgstr "Search"
+
+msgid "Informasjon om vennestatus vises i venstre kolonne."
+msgstr "Friend status information is shown in the left column."
+
+msgid "Progresjon"
+msgstr "Progress"
+
+msgid "Poeng"
+msgstr "Points"
+
+msgid "Ferdighetsnivå"
+msgstr "Skill Level"
+
+msgid "Nybegynner"
+msgstr "Beginner"
+
+msgid "Viderekommen"
+msgstr "Intermediate"
+
+msgid "Avansert"
+msgstr "Advanced"
+
+msgid "Ikke beregnet"
+msgstr "Not calculated"
+
+msgid "Ikke tilgjengelig"
+msgstr "Not available"
+
+msgid "Mine Belønninger"
+msgstr "My Rewards"
+
+msgid "Belønninger for %(username)s"
+msgstr "Rewards for %(username)s"
+
+msgid "Tildelt"
+msgstr "Awarded"
+
+msgid "Ingen belønninger opptjent enda."
+msgstr "No rewards earned yet."
+
+msgid "Velkommen til plattformen!"
+msgstr "Welcome to the platform!"
+
+msgid "Her er en kort guide til hvordan alt fungerer:"
+msgstr "Here's a quick guide to how everything works:"
+
+msgid "Modulbaserte oppgaver:"
+msgstr "Module-based tasks:"
+
+msgid "Start med leksjoner og fullfør oppgaver som drag & drop og blokkoding."
+msgstr "Start with lessons and complete tasks like drag & drop and block coding."
+
+msgid "Poeng og belønninger:"
+msgstr "Points and rewards:"
+
+msgid "Tjen poeng for hver oppgave, oppnå belønninger og se deg selv på rangeringen!"
+msgstr "Earn points for each task, achieve rewards and see yourself on the leaderboard!"
+
+msgid "Venner:"
+msgstr "Friends:"
+
+msgid "Legg til venner, se deres progresjon og konkurrer sammen."
+msgstr "Add friends, track their progress and compete together."
+
+msgid "OOP-modul:"
+msgstr "OOP module:"
+
+msgid "For viderekomne – lær om klasser, arv og polymorfisme!"
+msgstr "For advanced users - learn about classes, inheritance and polymorphism!"
+
+msgid "Kom i gang!"
+msgstr "Get started!"

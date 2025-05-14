@@ -122,3 +122,174 @@ msgstr "bestående av:"
 
 msgid "Vi håper denne nettsiden kan bidra til at flere oppdager hvor morsomt og lærerikt det er å kode, og at den spillbaserte tilnærmingen gjør det enda mer motiverende å lære nye ferdigheter!"
 msgstr "Vi håper denne nettsiden kan bidra til at flere oppdager hvor morsomt og lærerikt det er å kode, og at den spillbaserte tilnærmingen gjør det enda mer motiverende å lære nye ferdigheter!"
+
+msgid "Rediger Profil"
+msgstr "Rediger Profil"
+
+msgid "Lagre Endringer"
+msgstr "Lagre Endringer"
+
+msgid "Progresjonsoverikt for Venner"
+msgstr "Progresjonsoverikt for Venner"
+
+msgid "Venn"
+msgstr "Venn"
+
+msgid "Progresjon"
+msgstr "Progresjon"
+
+msgid "Venneforespørsler"
+msgstr "Venneforespørsler"
+
+msgid "%(username)s vil være venn med deg."
+msgstr "%(username)s vil være venn med deg."
+
+msgid "Godta"
+msgstr "Godta"
+
+msgid "Avslå"
+msgstr "Avslå"
+
+msgid "Ingen ventende forespørsler."
+msgstr "Ingen ventende forespørsler."
+
+msgid "Søkeresultater for \"%(query)s\""
+msgstr "Søkeresultater for \"%(query)s\""
+
+msgid "Send forespørsel"
+msgstr "Send forespørsel"
+
+msgid "Ingen brukere funnet for \"%(query)s\""
+msgstr "Ingen brukere funnet for \"%(query)s\""
+
+msgid "Tilbake til profil"
+msgstr "Tilbake til profil"
+
+msgid "Min Profil"
+msgstr "Min Profil"
+
+msgid "s profil"
+msgstr "s profil"
+
+msgid "Brukerdetaljer"
+msgstr "Brukerdetaljer"
+
+msgid "Brukernavn"
+msgstr "Brukernavn"
+
+msgid "Email"
+msgstr "E-post"
+
+msgid "Registrert siden"
+msgstr "Registrert siden"
+
+msgid "Rediger Profil"
+msgstr "Rediger Profil"
+
+msgid "Logg ut"
+msgstr "Logg ut"
+
+msgid "Du og"
+msgstr "Du og"
+
+msgid "er allerede venner!"
+msgstr "er allerede venner!"
+
+msgid "Venneforespørsel sendt - venter på svar"
+msgstr "Venneforespørsel sendt - venter på svar"
+
+msgid "Send venneforespørsel"
+msgstr "Send venneforespørsel"
+
+msgid "Dine venner (%(count)s)"
+msgstr "Dine venner (%(count)s)"
+
+msgid "Ingen venner ennå."
+msgstr "Ingen venner ennå."
+
+msgid "Se venneforespørsler"
+msgstr "Se venneforespørsler"
+
+msgid "Se progresjon for venner"
+msgstr "Se progresjon for venner"
+
+msgid "Søk etter venner"
+msgstr "Søk etter venner"
+
+msgid "Søk brukernavn..."
+msgstr "Søk brukernavn..."
+
+msgid "Søk"
+msgstr "Søk"
+
+msgid "Informasjon om vennestatus vises i venstre kolonne."
+msgstr "Informasjon om vennestatus vises i venstre kolonne."
+
+msgid "Progresjon"
+msgstr "Progresjon"
+
+msgid "Poeng"
+msgstr "Poeng"
+
+msgid "Ferdighetsnivå"
+msgstr "Ferdighetsnivå"
+
+msgid "Nybegynner"
+msgstr "Nybegynner"
+
+msgid "Viderekommen"
+msgstr "Viderekommen"
+
+msgid "Avansert"
+msgstr "Avansert"
+
+msgid "Ikke beregnet"
+msgstr "Ikke beregnet"
+
+msgid "Ikke tilgjengelig"
+msgstr "Ikke tilgjengelig"
+
+msgid "Mine Belønninger"
+msgstr "Mine Belønninger"
+
+msgid "Belønninger for %(username)s"
+msgstr "Belønninger for %(username)s"
+
+msgid "Tildelt"
+msgstr "Tildelt"
+
+msgid "Ingen belønninger opptjent enda."
+msgstr "Ingen belønninger opptjent enda."
+
+msgid "Velkommen til plattformen!"
+msgstr "Velkommen til plattformen!"
+
+msgid "Her er en kort guide til hvordan alt fungerer:"
+msgstr "Her er en kort guide til hvordan alt fungerer:"
+
+msgid "Modulbaserte oppgaver:"
+msgstr "Modulbaserte oppgaver:"
+
+msgid "Start med leksjoner og fullfør oppgaver som drag & drop og blokkoding."
+msgstr "Start med leksjoner og fullfør oppgaver som drag & drop og blokkoding."
+
+msgid "Poeng og belønninger:"
+msgstr "Poeng og belønninger:"
+
+msgid "Tjen poeng for hver oppgave, oppnå belønninger og se deg selv på rangeringen!"
+msgstr "Tjen poeng for hver oppgave, oppnå belønninger og se deg selv på rangeringen!"
+
+msgid "Venner:"
+msgstr "Venner:"
+
+msgid "Legg til venner, se deres progresjon og konkurrer sammen."
+msgstr "Legg til venner, se deres progresjon og konkurrer sammen."
+
+msgid "OOP-modul:"
+msgstr "OOP-modul:"
+
+msgid "For viderekomne – lær om klasser, arv og polymorfisme!"
+msgstr "For viderekomne – lær om klasser, arv og polymorfisme!"
+
+msgid "Kom i gang!"
+msgstr "Kom i gang!"

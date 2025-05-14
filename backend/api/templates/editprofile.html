@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %} Rediger Profil {% endblock %}
+{% block title %}{% trans "Rediger Profil" %}{% endblock %}
 
 {% block content %}
-    <h1>Rediger Profil</h1>
+    <h1>{% trans "Rediger Profil" %}</h1>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Lagre Endringer</button>
+        <button type="submit">{% trans "Lagre Endringer" %}</button>
     </form>
 {% endblock %}

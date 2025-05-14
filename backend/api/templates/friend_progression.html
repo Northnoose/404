@@ -1,11 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {% block content %}
-<h1>Progresjonsoverikt for Venner</h1>
+<h1>{% trans "Progresjonsoverikt for Venner" %}</h1>
 <table>
   <thead>
     <tr>
-       <th>Venn</th>
-       <th>Progresjon</th>
+       <th>{% trans "Venn" %}</th>
+       <th>{% trans "Progresjon" %}</th>
     </tr>
   </thead>
   <tbody>

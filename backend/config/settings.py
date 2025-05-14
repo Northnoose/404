@@ -35,6 +35,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n', 
             ],
         },
     },
@@ -50,13 +51,13 @@ ALLOWED_HOSTS = ['*']  # Tillat alle for lokal utvikling
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Korrekt middleware
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # Sett standard auto-felt til BigAutoField
 
 
@@ -79,7 +80,6 @@ LANGUAGES = [
 ]
 
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale')
+    os.path.join(BASE_DIR, 'locale'),
 ]
 
-MIDDLEWARE.insert(1, 'django.middleware.locale.LocaleMiddleware')  # Legges etter SecurityMiddleware
