@@ -1,26 +1,26 @@
-# Use an official Python runtime as a parent image
+# Python runtime 
 FROM python:3.13-slim-bookworm
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Set work directory inside the container
+# Work dir i container
 WORKDIR /app
 
-# --- Adjustments for your file structure ---
-# Copy the requirements file from the backend subdirectory
+# Justeringer for vår spesielle filstruktur
 COPY backend/requirements.txt /app/
-# Install Python dependencies
+# Python dependencies
 RUN pip install -r requirements.txt
 
-# Copy the entire backend project code into the container's work directory
+
+# Kopi av backend code til container work dir
 COPY backend/ /app/
-# --- End of Adjustments ---
+
 
 RUN python manage.py collectstatic --noinput --clear
 
-# Expose the port the app runs on
+# Porten appen er tilgjengelig på
 EXPOSE 8000
 
 # Command to run the application using Gunicorn
