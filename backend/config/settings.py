@@ -1,5 +1,6 @@
 import os
 from django.utils.translation import gettext_lazy as _
+import dj_database_url
 
 
 # Definer BASE_DIR ved hjelp av os.path
@@ -17,12 +18,18 @@ INSTALLED_APPS = [
     'api'
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # Bruk os.path.join for å sette sammen stien
+
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=os.environ.get('DB_SSL_REQUIRE', 'False') == 'True')
     }
-}
+else:
+    {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # Bruk os.path.join for å sette sammen stien
+        }
+    }
 
 TEMPLATES = [
     {
