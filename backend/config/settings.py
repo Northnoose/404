@@ -43,13 +43,17 @@ TEMPLATES = [
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static') 
+]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 ALLOWED_HOSTS = ['*']  # Tillat alle for lokal utvikling
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',  
     'django.middleware.common.CommonMiddleware',
@@ -61,10 +65,10 @@ MIDDLEWARE = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # Sett standard auto-felt til BigAutoField
 
 
-DEBUG = True
+DEBUG = False
 
 # Sett en unik SECRET_KEY for ditt lokale miljø
-SECRET_KEY = 'your_generated_secret_key_here'  # Erstatt med din genererte hemmelige nøkkel
+SECRET_KEY = '££@asdDFSER#dsf42asd3574/****opirtyhd%"!!"¤%@€'  # Erstatt med din genererte hemmelige nøkkel
 
 LOGIN_URL = 'login' 
 
@@ -83,3 +87,4 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
 
+WSGI_APPLICATION = 'config.wsgi.application'
