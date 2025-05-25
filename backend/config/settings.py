@@ -19,6 +19,12 @@ INSTALLED_APPS = [
 ]
 
 
+#DATABASES = {
+#        'default': {
+#            'ENGINE': 'django.db.backends.sqlite3',
+#            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # Bruk os.path.join for å sette sammen stien
+#}}
+
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': dj_database_url.config(conn_max_age=600, ssl_require=os.environ.get('DB_SSL_REQUIRE', 'False') == 'True')
@@ -72,10 +78,10 @@ MIDDLEWARE = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # Sett standard auto-felt til BigAutoField
 
 
-DEBUG = False
+DEBUG = True
 
 # Sett en unik SECRET_KEY for ditt lokale miljø
-SECRET_KEY = '££@asdDFSER#dsf42asd3574/****opirtyhd%"!!"¤%@€'  # Erstatt med din genererte hemmelige nøkkel
+SECRET_KEY = '*'  # Erstatt med din genererte hemmelige nøkkel
 
 LOGIN_URL = 'login' 
 
