@@ -8,6 +8,9 @@ set -e
 echo "Applying database migrations..."
 python manage.py migrate --noinput
 
+echo "Loading admin user fixture..."
+python manage.py loaddata fixtures/admin.json
+
 echo "Collecting static files..."
 python manage.py collectstatic --noinput --clear
 
