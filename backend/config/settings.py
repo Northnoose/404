@@ -30,10 +30,10 @@ if 'DATABASE_URL' in os.environ:
         'default': dj_database_url.config(conn_max_age=600, ssl_require=os.environ.get('DB_SSL_REQUIRE', 'False') == 'True')
     }
 else:
-    {
+    DATABASES = { 
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # Bruk os.path.join for å sette sammen stien
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
 
@@ -78,7 +78,7 @@ MIDDLEWARE = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # Sett standard auto-felt til BigAutoField
 
 
-DEBUG = True
+DEBUG = False
 
 # Sett en unik SECRET_KEY for ditt lokale miljø
 SECRET_KEY = '*'  # Erstatt med din genererte hemmelige nøkkel
